@@ -42,29 +42,5 @@ namespace fcu_ucan.Controllers
         {
             return Redirect("https://ssc.fcu.edu.tw/");
         }
-
-        [HttpGet("introduce/competency")]
-        public IActionResult Competency()
-        {
-            return Redirect("https://ucan.moe.edu.tw/introduce/introduce_1.aspx");
-        }
-        
-        [HttpGet("introduce/common")]
-        public IActionResult Common()
-        {
-            return Redirect("https://ucan.moe.edu.tw/commsearch/search.aspx");
-        }
-        
-        [HttpGet("introduce/professional")]
-        public IActionResult Professional()
-        {
-            return Redirect("https://ucan.moe.edu.tw/search/search.aspx");
-        }
-        
-        [HttpGet("introduce/occupation")]
-        public IActionResult Occupation()
-        {
-            return Redirect("https://ucan.moe.edu.tw/Occupation/occupationSearch.aspx");
-        }
     }
 }

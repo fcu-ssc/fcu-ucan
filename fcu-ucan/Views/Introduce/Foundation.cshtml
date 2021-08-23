@@ -1,0 +1,212 @@
+@{
+    ViewData["Title"] = "認識 UCAN";
+}
+
+@section Styles {
+    <link rel="stylesheet" type="text/css" href="~/lib/bulma-responsive-tables/css/main.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/css/affix.css" asp-append-version="true" />
+}
+
+<section class="section">
+    <div class="container is-max-desktop">
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+            <ul>
+                <li><a asp-area="" asp-controller="Introduce" asp-action="About">認識 UCAN</a></li>
+                <li class="is-active"><a asp-area="" asp-controller="Introduce" asp-action="Foundation" aria-current="page">平台發展及依據</a></li>
+            </ul>
+        </nav>
+        <div class="box content">
+            <h1 class="title is-3">平台發展及依據</h1>
+            <hr />
+            <h2 class="title is-4">職涯類型(Cluster)的劃分</h2>
+            <p>職涯類型(Career Cluster)是由同一領域、或所需知識技能相近的工作所組成，可以提供給教育體系運用於職涯或學習發展規劃，有系統的養成相近的知識與技能。</p>
+            <p>本平台以主計處所公告「中華民國行業標準分類」為主架構，符合聯合國 ISIC(2008, Rev.4) 及 NAICS (2007Rev.4) 等國際職業分類標準，並依據實際產業概況及專家意見，歸納出 16 個職涯類型及 66 個就業途徑。</p>
+            <div class="table-container">
+                <table class="table is-bordered is-hoverable is-fullwidth">
+                    <thead>
+                        <tr>
+                            <th>職涯類型名稱</th>
+                            <th>就業途徑</th>
+                            <th>職涯類型名稱</th>
+                            <th>就業途徑</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th rowspan="6">天然資源、食品與農業</th>
+                            <td>自然資源保育</td>
+                            <th rowspan="4">資訊科技</th>
+                            <td>軟體開發及程式設計</td>
+                        </tr>
+                        <tr>
+                            <td>食品生產與加工</td>
+                            <td>資訊支援與服務</td>
+                        </tr>
+                        <tr>
+                            <td>動物研究發展與應用</td>
+                            <td>網路規劃與建置管理</td>
+                        </tr>
+                        <tr>
+                            <td>植物研究發展與應用</td>
+                            <td>數位內容與傳播</td>
+                        </tr>
+                        <tr>
+                            <td>農業經營</td>
+                            <th rowspan="2">教育與訓練</th>
+                            <td>行政</td>
+                        </tr>
+                        <tr>
+                            <td>環境保護與衛生</td>
+                            <td>教學</td>
+                        </tr>
+                        <tr>
+                            <th rowspan="4">休閒與觀光旅遊</th>
+                            <td>休閑遊憩管理</td>
+                            <th rowspan="4">物流運輸</th>
+                            <td>物流規劃及管理</td>
+                        </tr>
+                        <tr>
+                            <td>旅遊管理</td>
+                            <td>運輸工程</td>
+                        </tr>
+                        <tr>
+                            <td>旅館管理</td>
+                            <td>運輸作業</td>
+                        </tr>
+                        <tr>
+                            <td>餐飲管理</td>
+                            <td>運輸規劃及管理</td>
+                        </tr>
+                        <tr>
+                            <th rowspan="5">企業經營管理</th>
+                            <td>一般管理</td>
+                            <th rowspan="5">行銷與銷售</th>
+                            <td>市場分析研究</td>
+                        </tr>
+                        <tr>
+                            <td>人力資源管理</td>
+                            <td>行銷傳播</td>
+                        </tr>
+                        <tr>
+                            <td>企業資訊管理</td>
+                            <td>行銷管理</td>
+                        </tr>
+                        <tr>
+                            <td>行政支援</td>
+                            <td>專業銷售</td>
+                        </tr>
+                        <tr>
+                            <td>運籌管理</td>
+                            <td>零售與通路管理</td>
+                        </tr>
+                        <tr>
+                            <th rowspan="3">法律、公共安全</th>
+                            <td>公共安全</td>
+                            <th rowspan="3">政府及公共事務</th>
+                            <td>公共行政</td>
+                        </tr>
+                        <tr>
+                            <td>司法</td>
+                            <td>外交及國際事務</td>
+                        </tr>
+                        <tr>
+                            <td>法律服務</td>
+                            <td>國防</td>
+                        </tr>
+                        <tr>
+                            <th rowspan="4">個人及社會服務</th>
+                            <td>心理諮詢服務</td>
+                            <th rowspan="2">科學、技術、工程、數學</th>
+                            <td>工程及技術</td>
+                        </tr>
+                        <tr>
+                            <td>幼兒照護及教育</td>
+                            <td>數學及科學</td>
+                        </tr>
+                        <tr>
+                            <td>社會工作服務</td>
+                            <th rowspan="2">建築營造</th>
+                            <td>建築規劃設計</td>
+                        </tr>
+                        <tr>
+                            <td>個人照護服務</td>
+                            <td>營造及維護</td>
+                        </tr>
+                        <tr>
+                            <th rowspan="5">金融財務</th>
+                            <td>保險</td>
+                            <th rowspan="5">醫療保健</th>
+                            <td>公共衛生</td>
+                        </tr>
+                        <tr>
+                            <td>財務</td>
+                            <td>生技研發</td>
+                        </tr>
+                        <tr>
+                            <td>會計</td>
+                            <td>長期照護服務</td>
+                        </tr>
+                        <tr>
+                            <td>銀行金融業務</td>
+                            <td>健康產業及醫務管理</td>
+                        </tr>
+                        <tr>
+                            <td>證券及投資</td>
+                            <td>醫療服務</td>
+                        </tr>
+                        <tr>
+                            <th rowspan="6">藝文與影音傳播</th>
+                            <td>印刷出版</td>
+                            <th rowspan="6">製造業</th>
+                            <td>工業安全管理</td>
+                        </tr>
+                        <tr>
+                            <td>表演藝術</td>
+                            <td>生產管理</td>
+                        </tr>
+                        <tr>
+                            <td>通訊傳播</td>
+                            <td>品質管理</td>
+                        </tr>
+                        <tr>
+                            <td>視覺藝術</td>
+                            <td>設備安裝維護</td>
+                        </tr>
+                        <tr>
+                            <td>新聞傳播</td>
+                            <td>資材及庫存規劃</td>
+                        </tr>
+                        <tr>
+                            <td>影視傳播</td>
+                            <td>製程研發</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <h2 class="title is-4">職能的發展</h2>
+            <p>「職能」主要用來描述在執行某項工作時所需具備的關鍵能力，目的為找出並確認哪些是導致工作上卓越績效所需的能力及行為表現，以協助組織或個人瞭解如何提升其工作績效。</p>
+            <p>本平台參考國內外之產業職能模型，將職能分為職場共通職能、與專業職能二類，並透過國內外文獻研究及整合各產業專家意見，針對各重要的工作職類，歸納其所需具備的職能 (包含知識技能)，作為整體平台診斷、建議、諮詢及輔導所需之內涵依據。</p>
+            <ul>
+                <li>
+                    職場共通職能，代表從事各種不同的職業類型都需要具備的能力，職場共通職能發展過程透過
+                    <ol>
+                        <li>國內外文獻研究</li>
+                        <li>召開跨產業之產官學專家會議</li>
+                        <li>各領域在職人士大規模問卷調查驗證三個階段，經研究驗證歸納溝通表達、持續學習、人際互動、團隊合作、問題解決、創新、工作責任及紀律、資訊科技應用，職場共通職能項目及內容</li>
+                    </ol>
+                </li>
+                <li>
+                    專業職能係透過工作分析法(task analysis)，展開各項就業途徑工作者所需從事的工作任務、工作活動及具體展現的行為。<br />
+                    專業職能內容之發展透過焦點團體訪談，並進行各職類產學專家審定，而後透過各領域在職人士進行大規模問卷調查，加強內容驗證。
+                </li>
+            </ul>
+            <figure class="image">
+                <img src="~/images/foundation.gif" alt="">
+            </figure>
+            <h2 class="title is-4">職業興趣探索依據</h2>
+            <p>以 States' Career Clusters Initiative 的 The Career Clusters Interest Survey 為基礎，由受評者透過「我最喜歡哪些活動」、「我認為自己有哪些特質」、「我喜歡哪些科目」，選擇自己認為最適合的項目，以找出個人對不同職業類型的興趣強弱。</p>
+            <p>並透過專家會議、題庫分析及量表平行檢測等方式與 John Holland 的人境適配論中的 RIASEC 分類系統進行關聯分析，對應、區辨出 16 個職涯類型適切的 RIASEC 分類。</p>
+        </div>
+    </div>
+    <a href="https://ucan.moe.edu.tw/help/about_us_2.aspx" target="_blank" id="view-source" class="button is-success is-rounded">查看原文</a>
+</section>
