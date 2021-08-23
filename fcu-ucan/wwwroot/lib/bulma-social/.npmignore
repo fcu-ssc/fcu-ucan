@@ -1,0 +1,6 @@
+# npmignore
+
+docs
+.vscode
+.github
+.editorconfig
