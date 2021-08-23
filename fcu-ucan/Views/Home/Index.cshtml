@@ -1,8 +1,245 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "首頁";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@section Styles {
+    <link rel="stylesheet" type="text/css" href="~/lib/aos/dist/aos.css" />
+    <link rel="stylesheet" type="text/css" href="~/lib/bulma-carousel/dist/css/bulma-carousel.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/css/home.css" asp-append-version="true" />
+}
+
+<section class="hero is-fullheight">
+    <div class="hero-body">
+        <div class="container">
+            <div class="columns is-vcentered reverse-columns">
+                <div data-aos="fade-right" class="column is-12-mobile is-5-desktop is-offset-1-desktop">
+                    <h1 class="title is-2 mb-6">
+                        <span class="has-text-danger">U</span>niversity
+                        <span class="has-text-danger">C</span>areer
+                        and
+                        <span class="has-text-danger">C</span>ompetency
+                        <span class="has-text-danger">A</span>ssessment
+                        <span class="has-text-danger">N</span>etwork
+                    </h1>
+                    <h2 class="subtitle is-4 has-text-grey">大專校院就業職能平台</h2>
+                </div>
+                <div data-aos="fade-down" class="column is-12-mobile is-6-desktop" data-aos="fade-up">
+                    <figure class="image">
+                        <img src="~/images/ucan-logo.png" alt="">
+                    </figure>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="hero">
+    <div class="hero-body">
+        <h3 class="title is-4 has-text-centered">UCAN提供教務、輔導及校務研究應用完整服務</h3>
+        <div class="columns is-centered mt-6">
+            <div class="column is-flex is-justify-content-center" data-aos="fade-in" data-aos-easing="linear">
+                <figure class="image is-128x128">
+                    <img src="~/images/menu-1.png" alt="">
+                </figure>
+            </div>
+            <div class="column is-flex is-justify-content-center" data-aos="fade-in" data-aos-easing="linear">
+                <figure class="image is-128x128">
+                    <img src="~/images/menu-2.png" alt="">
+                </figure>
+            </div>
+            <div class="column is-flex is-justify-content-center" data-aos="fade-in" data-aos-easing="linear">
+                <figure class="image is-128x128">
+                    <img src="~/images/menu-3.png" alt="">
+                </figure>
+            </div>
+            <div class="column is-flex is-justify-content-center" data-aos="fade-in" data-aos-easing="linear">
+                <figure class="image is-128x128">
+                    <img src="~/images/menu-4.png" alt="">
+                </figure>
+            </div>
+            <div class="column is-flex is-justify-content-center" data-aos="fade-in" data-aos-easing="linear">
+                <figure class="image is-128x128">
+                    <img src="~/images/menu-5.png" alt="">
+                </figure>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="hero">
+    <div class="hero-body">
+        <h4 class="title is-4 has-text-centered">職能與職業查詢</h4>
+        <h5 class="subtitle is-5 has-text-centered has-text-grey has-text-weight-normal">Competency and career exploration</h5>
+        <div class="column is-full" data-aos="fade-in" data-aos-easing="linear">
+            <div class="card">
+                <div class="card-content">
+                    <div class="content">
+                        <h6>職能介紹</h6>
+                        <p>提供職能概念、其他相關職能資源以及本平台職能應用說明。</p>
+                        <a asp-area="" asp-controller="Home" asp-action="Competency" target="_blank">更多</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="column is-full" data-aos="fade-in" data-aos-easing="linear">
+            <div class="card">
+                <div class="card-content">
+                    <div class="content">
+                        <h6>職場共通職能查詢</h6>
+                        <p>提供檢視與查詢職場共通職能資訊，內容包含職場共通職能介紹、相關養成活動資訊、具體的知識技能以及主要目標。</p>
+                        <a asp-area="" asp-controller="Home" asp-action="Common" target="_blank">更多</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="column is-full" data-aos="fade-in" data-aos-easing="linear">
+            <div class="card">
+                <div class="card-content">
+                    <div class="content">
+                        <h6>專業職能查詢</h6>
+                        <p>
+                            提供檢視各項職涯類型與就業途徑介紹以及專業職能內涵。<br />
+                            詳細內容包含就業途徑簡介與該就業途徑相關執業資格、勞動部技能檢定、教育部彙整、公告各中央目的事業主管機關所轄產業之執照、專業職能內涵（包含第一層工作任務職能、第二層工作活動、具體行為、知識與技能）以及相關職業說明。詳細內容包含就業途徑簡介與該就業途徑相關執業資格
+                        </p>
+                        <a asp-area="" asp-controller="Home" asp-action="Professional" target="_blank">更多</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="column is-full" data-aos="fade-in" data-aos-easing="linear">
+            <div class="card">
+                <div class="card-content">
+                    <div class="content">
+                        <h6>職業查詢</h6>
+                        <p>利用關鍵字、職涯類型、科系領域...等條件進行職業查詢。</p>
+                        <a asp-area="" asp-controller="Home" asp-action="Occupation" target="_blank">更多</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="has-text-centered">
+        <h4 class="title is-4">職業興趣探索</h4>
+        <h5 class="subtitle is-5 has-text-grey has-text-weight-normal">Career Interest survey</h5>
+    </div>
+    <div class="container mt-6">
+        <div id="carousel-demo1" class="carousel" style="overflow: hidden">
+            <div class="container is-max-desktop">
+                <figure class="image is-256x256 container">
+                    <img src="~/images/career-interest-survey-1.jpg" alt=""/>
+                </figure>
+            </div>
+            <div class="container is-max-desktop">
+                <figure class="image is-256x256 container">
+                    <img src="~/images/career-interest-survey-2.jpg" alt=""/>
+                </figure>
+            </div>
+            <div class="container is-max-desktop">
+                <figure class="image is-256x256 container">
+                    <img src="~/images/career-interest-survey-3.jpg" alt=""/>
+                </figure>
+            </div>
+            <div class="container is-max-desktop">
+                <figure class="image is-256x256 container">
+                    <img src="~/images/career-interest-survey-4.jpg" alt=""/>
+                </figure>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="hero">
+    <div class="hero-body">
+        <h4 class="title is-4 has-text-centered">職能診斷</h4>
+        <h5 class="subtitle is-5 has-text-centered has-text-grey has-text-weight-normal">Competency assessment</h5>
+        <div class="column is-full" data-aos="fade-in" data-aos-easing="linear">
+            <div class="card">
+                <div class="card-image carousel" id="carousel-demo2" style="overflow: hidden">
+                    <div class="container is-max-desktop">
+                        <figure class="image is-256x256 container">
+                            <img src="~/images/competency-assessment-1.jpg" alt=""/>
+                        </figure>
+                    </div>
+                    <div class="container is-max-desktop">
+                        <figure class="image is-256x256 container">
+                            <img src="~/images/competency-assessment-2.jpg" alt=""/>
+                        </figure>
+                    </div>
+                    <div class="container is-max-desktop">
+                        <figure class="image is-256x256 container">
+                            <img src="~/images/competency-assessment-3.jpg" alt=""/>
+                        </figure>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="content">
+                        <h6>職場共通職能</h6>
+                        <p>職場共通職能，代表從事各種不同的職業類型都需要具備的能力，以下這個自我診斷測驗，將幫助你檢視目前對各項職場共通能力的具備程度， 幫助你及早進行職涯規劃與學習準備。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="column is-full" data-aos="fade-in" data-aos-easing="linear">
+            <div class="card">
+                <div class="card-image carousel" id="carousel-demo3" style="overflow: hidden">
+                    <div class="container is-max-desktop">
+                        <figure class="image is-256x256 container">
+                            <img src="~/images/pr_1.jpg" alt=""/>
+                        </figure>
+                    </div>
+                    <div class="container is-max-desktop">
+                        <figure class="image is-256x256 container">
+                            <img src="~/images/pr_2.jpg" alt=""/>
+                        </figure>
+                    </div>
+                    <div class="container is-max-desktop">
+                        <figure class="image is-256x256 container">
+                            <img src="~/images/pr_3.jpg" alt=""/>
+                        </figure>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="content">
+                        <h6>專業職能</h6>
+                        <p>
+                            從事各種不同的職業都需要不同的專業知識與技能，而這些用來描述在執行某項工作時所需具備的關鍵能力稱之為「職能」，根據許多研究指出，職能與工作績效有密切的正向關聯，因此瞭解職業所需的職能及行為表現，有助於掌握該職業的工作樣貌，以及應該如何加強自我能力。
+                            本平台根據每一個職涯類型下，不同的發展途徑所需要具備的專業職能，規劃為自我診斷測驗，透過測驗， 將可幫助你了解自己在特定領域所需要具備專業職能的程度。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="hero is-fullheight">
+    <div class="hero-body">
+        <div class="container">
+            <div class="columns  is-vcentered reverse-columns">
+                <div class="column is-12-mobile is-5-desktop is-offset-1-desktop" data-aos="fade-down">
+                    <h4 class="title is-4 mb-6">能力養成計劃</h4>
+                    <h5 class="subtitle has-text-grey is-5 has-text-weight-normal">Competency development plan</h5>
+                    <p class="mb-5">透過職能診斷結果，你可以依能力狀況，規劃自己的能力養成計畫，並做階段性的檢視紀錄。</p>
+                    <div class="buttons">
+                        <button class="button is-info">進行職場共通職能能力養成計劃</button>
+                        <button class="button is-link">進行專業職能能力養成計劃</button>
+                    </div>
+                </div>
+                <div data-aos="fade-right" class="column is-12-mobile is-6-desktop">
+                    <figure class="image">
+                        <img src="~/images/competency-development-plan.gif" alt="">
+                    </figure>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/lib/aos/dist/aos.js"></script>
+    <script src="~/lib/bulma-carousel/dist/js/bulma-carousel.min.js"></script>
+    <script src="~/js/home.js" asp-append-version="true"></script>
+}
