@@ -1,7 +1,5 @@
-﻿using fcu_ucan.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Diagnostics;
 
 namespace fcu_ucan.Controllers
 {
@@ -45,12 +43,6 @@ namespace fcu_ucan.Controllers
             return Redirect("https://ssc.fcu.edu.tw/");
         }
 
-        [HttpGet("privacy")]
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-        
         [HttpGet("introduce/competency")]
         public IActionResult Competency()
         {
