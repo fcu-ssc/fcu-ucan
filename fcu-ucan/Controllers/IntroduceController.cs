@@ -40,7 +40,7 @@ namespace fcu_ucan.Controllers
         [HttpGet("competency")]
         public IActionResult Competency()
         {
-            return Redirect("https://ucan.moe.edu.tw/introduce/introduce_1.aspx");
+            return View();
         }
         
         [HttpGet("common")]
