@@ -1,3 +1,5 @@
+using System;
+using fcu_ucan.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -19,6 +21,18 @@ namespace fcu_ucan
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            
+            services.AddHttpClient("NID", c =>
+            {
+                c.BaseAddress = new Uri(Configuration["NID:Url"]);
+            });
+            
+            services.AddHttpClient("UCAN", c =>
+            {
+                c.BaseAddress = new Uri(Configuration["Domain"]);
+            });
+            
+            services.AddScoped<IOAuthService, OAuthService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -32,6 +46,9 @@ namespace fcu_ucan
             {
                 app.UseExceptionHandler("/error");
             }
+            
+            app.UseHttpsRedirection();
+            
             app.UseStaticFiles();
 
             app.UseRouting();
