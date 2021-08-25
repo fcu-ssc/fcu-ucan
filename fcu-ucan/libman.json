@@ -16,6 +16,15 @@
       "files": [
         "css/all.min.css"
       ]
+    },
+    {
+      "provider": "unpkg",
+      "library": "bulma-carousel@4.0.24",
+      "destination": "wwwroot/lib/bulma-carousel/",
+      "files": [
+        "dist/css/bulma-carousel.min.css",
+        "dist/js/bulma-carousel.min.js"
+      ]
     }
   ]
 }
