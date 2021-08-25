@@ -25,6 +25,14 @@
         "dist/css/bulma-carousel.min.css",
         "dist/js/bulma-carousel.min.js"
       ]
+    },
+    {
+      "library": "aos@2.3.4",
+      "destination": "wwwroot/lib/aos/",
+      "files": [
+        "aos.js",
+        "aos.css"
+      ]
     }
   ]
 }

@@ -1,7 +1,3 @@
-[submodule "fcu-ucan/wwwroot/lib/aos"]
-	path = fcu-ucan/wwwroot/lib/aos
-	url = https://github.com/michalsnik/aos.git
-	branch = master
 [submodule "fcu-ucan/wwwroot/lib/fontawesome"]
 	path = fcu-ucan/wwwroot/lib/fontawesome
 	url = https://github.com/FortAwesome/Font-Awesome.git
