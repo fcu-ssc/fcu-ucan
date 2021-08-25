@@ -21,8 +21,7 @@ namespace fcu_ucan.Controllers
             _configuration = configuration;
             _oAuthService = oAuthService;
         }
-        
-        
+
         [HttpGet("login")]
         public IActionResult Login()
         {
@@ -34,7 +33,7 @@ namespace fcu_ucan.Controllers
         }
         
         [HttpPost]
-        public async Task<IActionResult> NIDLogin([FromForm] RespondViewModel model)
+        public async Task<IActionResult> HandleLogin([FromForm] RespondViewModel model)
         {
             _logger.LogInformation($"NID 登入: {model.Status}, {model.Message}, {model.UserCode}");
             switch (model.Status)
