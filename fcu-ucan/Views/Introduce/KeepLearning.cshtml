@@ -1,0 +1,58 @@
+﻿@{
+    ViewData["Title"] = "認識 UCAN";
+}
+
+@section Styles {
+    <environment include="Development">
+        <link rel="stylesheet" type="text/css" href="~/css/affix.css" asp-append-version="true" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" type="text/css" href="~/css/affix.min.css" asp-append-version="true" />
+    </environment>
+}
+
+<section class="section">
+    <div class="container is-max-desktop">
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+            <ul>
+                <li><a asp-area="" asp-controller="Introduce" asp-action="About">認識 UCAN</a></li>
+                <li><a asp-area="" asp-controller="Introduce" asp-action="Common">職場共通職能查詢</a></li>
+                <li class="is-active"><a asp-area="" asp-controller="Introduce" asp-action="KeepLearning" aria-current="page">持續學習</a></li>
+            </ul>
+        </nav>
+        <div class="box content">
+            <h1 class="title is-3">持續學習</h1>
+            <p>了解能力發展的重要性，並能探索、規劃和有效管理自身的能力，並保持繼續成長的企圖心。</p>
+            <h2 class="tile is-4">主要指標</h2>
+            <ul>
+                <li>能夠持續表現出對學習新事物及知識技能的好奇心。</li>
+                <li>能明確掌握個人職涯發展所需知識、技能和必要條件。</li>
+                <li>能夠對自己能力的成長訂定具體目標</li>
+                <li>了解並進行職涯發展上所需的持續學習和訓練。</li>
+                <li>能夠持續因應產業趨勢進行專業能力發展 。</li>
+                <li>能從與他人的互動中，汲取正面有益的經驗。</li>
+                <li>持續應用各種方法及管道提升自己的能力。</li>
+            </ul>
+            <h2 class="tile is-4">相關知識技能</h2>
+            <ul>
+                <li>生涯規劃</li>
+                <li>時間管理</li>
+                <li>目標管理</li>
+                <li>終身學習</li>
+                <li>持續學習</li>
+            </ul>
+            <h2 class="tile is-4">相關活動</h2>
+            <ul>
+                <li>經常閱讀。</li>
+                <li>隨時記錄有用資訊。</li>
+                <li>參加相關專業學會。</li>
+                <li>參加專題競賽或研究。</li>
+                <li>參與自我成長/教育活動。</li>
+                <li>利用課堂、演講等機會，勇於發問問題。</li>
+                <li>透過期刊、雜誌、網站、專業協會和其他資源掌握對目前職場發展趨勢與機會。</li>
+                <li>關心社會及全球性議題(如環境保護、生物保育、貧窮、人權、經貿與科技研究等) 。</li>
+            </ul>
+        </div>
+    </div>
+    <a href="https://ucan.moe.edu.tw/commsearch/search_1.aspx?id=12" target="_blank" id="view-source" class="button is-success is-rounded">查看原文</a>
+</section>

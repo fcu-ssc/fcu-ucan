@@ -1,0 +1,54 @@
+﻿@{
+    ViewData["Title"] = "認識 UCAN";
+}
+
+@section Styles {
+    <environment include="Development">
+        <link rel="stylesheet" type="text/css" href="~/css/affix.css" asp-append-version="true" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" type="text/css" href="~/css/affix.min.css" asp-append-version="true" />
+    </environment>
+}
+
+<section class="section">
+    <div class="container is-max-desktop">
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+            <ul>
+                <li><a asp-area="" asp-controller="Introduce" asp-action="About">認識 UCAN</a></li>
+                <li><a asp-area="" asp-controller="Introduce" asp-action="Common">職場共通職能查詢</a></li>
+                <li class="is-active"><a asp-area="" asp-controller="Introduce" asp-action="ProblemSolved" aria-current="page">問題解決</a></li>
+            </ul>
+        </nav>
+        <div class="box content">
+            <h1 class="title is-3">問題解決</h1>
+            <p>遇到狀況時能釐清問題，透過系統化的資訊蒐集與分析，提出解決方案。</p>
+            <h2 class="tile is-4">主要指標</h2>
+            <ul>
+                <li>系統化的收集與所發生狀況相關的資訊</li>
+                <li>能夠根據事實證據、謹慎評估並合理判斷可能的問題所在</li>
+                <li>能夠以系統化的方式釐清問題</li>
+                <li>透過各種管道蒐集相關資料及意見，提供解決問題的各種可能方案</li>
+                <li>能夠評估各種解決方案的利弊，找出最佳問題解決方案</li>
+                <li>為可能發生的問題預作準備，找出解決問題可能需要的資訊</li>
+            </ul>
+            <h2 class="tile is-4">相關知識技能</h2>
+            <ul>
+                <li>獨立思考</li>
+                <li>批判性思考</li>
+                <li>問題分析能力</li>
+                <li>邏輯能力</li>
+                <li>問題解決</li>
+            </ul>
+            <h2 class="tile is-4">相關活動</h2>
+            <ul>
+                <li>經常閱讀。</li>
+                <li>參加專題競賽或研究。</li>
+                <li>從事思考類休閒活動，如圍棋、象棋、跳棋。</li>
+                <li>養成動手做的習慣。</li>
+                <li>參加圖書館資訊檢索研習課程，熟悉資訊檢索策略及工具。</li>
+            </ul>
+        </div>
+    </div>
+    <a href="https://ucan.moe.edu.tw/commsearch/search_1.aspx?id=15" target="_blank" id="view-source" class="button is-success is-rounded">查看原文</a>
+</section>

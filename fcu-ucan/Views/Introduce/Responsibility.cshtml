@@ -1,0 +1,56 @@
+﻿@{
+    ViewData["Title"] = "認識 UCAN";
+}
+
+@section Styles {
+    <environment include="Development">
+        <link rel="stylesheet" type="text/css" href="~/css/affix.css" asp-append-version="true" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" type="text/css" href="~/css/affix.min.css" asp-append-version="true" />
+    </environment>
+}
+
+<section class="section">
+    <div class="container is-max-desktop">
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+            <ul>
+                <li><a asp-area="" asp-controller="Introduce" asp-action="About">認識 UCAN</a></li>
+                <li><a asp-area="" asp-controller="Introduce" asp-action="Common">職場共通職能查詢</a></li>
+                <li class="is-active"><a asp-area="" asp-controller="Introduce" asp-action="Responsibility" aria-current="page">工作責任及紀律</a></li>
+            </ul>
+        </nav>
+        <div class="box content">
+            <h1 class="title is-3">工作責任及紀律</h1>
+            <p>瞭解並執行個人在組織中的責任，遵守組織及專業上對倫理、制度及誠信的要求。</p>
+            <h2 class="tile is-4">主要指標</h2>
+            <ul>
+                <li>能夠認同組織的目標或價值，並積極為組織的利益努力。</li>
+                <li>能了解並積極完成自己應負責的工作任務及確保產出品質。</li>
+                <li>了解並確實遵循組織的紀律、制度與工作規範。</li>
+                <li>能注意確保個人的工作安全與身心健康。</li>
+                <li>找出自我排解壓力的適當方式，並勇於承擔需要面對的壓力。</li>
+                <li>了解並遵循組織倫理及各部門及人員合理的互動關係與方式。</li>
+                <li>以誠信為行事原則，瞭解違反組織及專業上的道德法律標準之後果，並落實責任與紀律於日常工作表現。</li>
+            </ul>
+            <h2 class="tile is-4">相關知識技能</h2>
+            <ul>
+                <li>工作倫理</li>
+                <li>誠信</li>
+                <li>職場安全</li>
+                <li>健康管理</li>
+                <li>職場道德</li>
+                <li>公民教育</li>
+                <li>工作責任及紀律</li>
+            </ul>
+            <h2 class="tile is-4">相關活動</h2>
+            <ul>
+                <li>透過企業參訪、企業實習、短期工讀，體驗工作環境。</li>
+                <li>參與各類社團的運作或擔任幹部。</li>
+                <li>關心新聞時事案例與人權、法律議題。</li>
+                <li>志工服務。</li>
+            </ul>
+        </div>
+    </div>
+    <a href="https://ucan.moe.edu.tw/commsearch/search_1.aspx?id=17" target="_blank" id="view-source" class="button is-success is-rounded">查看原文</a>
+</section>

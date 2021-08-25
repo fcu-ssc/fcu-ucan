@@ -38,8 +38,7 @@ namespace fcu_ucan
                 {
                     "image/svg+xml",
                     "image/webp",
-                    "application/manifest+json",
-                    "font/woff2"
+                    "application/manifest+json"
                 });
             });
 

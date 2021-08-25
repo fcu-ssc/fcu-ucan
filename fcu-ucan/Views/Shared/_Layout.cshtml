@@ -18,7 +18,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar is-transparent is-fixed-top" role="navigation" aria-label="main navigation">
+        <nav class="navbar is-transparent is-fixed-top has-shadow" role="navigation" aria-label="main navigation">
             <div class="container">
                 <div class="navbar-brand">
                     <a class="navbar-item" asp-area="" asp-controller="Home" asp-action="Index">
@@ -32,8 +32,22 @@
                 </div>
                 <div id="navMenu" class="navbar-menu">
                     <div class="navbar-start">
-                        <a class="navbar-item" asp-area="" asp-controller="Home" asp-action="Index">首頁</a>
-                        <a class="navbar-item" asp-area="" asp-controller="Privacy" asp-action="Privacy">隱私權</a>
+                        <a class="navbar-item @Html.IsSelected(controllers: "Home", actions: "Index")" asp-area="" asp-controller="Home" asp-action="Index">首頁</a>
+                        <div class="navbar-item has-dropdown is-hoverable">
+                            <a asp-area="" asp-controller="Introduce" asp-action="About" class="navbar-link @Html.IsSelected(controllers: "Introduce", actions: "About,Intent,Foundation,Feature,Competency,Common,Communication,ProblemSolved,KeepLearning,Innovation,InterpersonalInteraction,Responsibility,Teamwork,InformationTechnology,Professional,Occupation")">
+                                認識 UCAN
+                            </a>
+                            <div class="navbar-dropdown is-boxed">
+                                <a asp-area="" asp-controller="Introduce" asp-action="Intent" class="navbar-item @Html.IsSelected(controllers: "Introduce", actions: "Intent")">平台緣起及建置目的</a>
+                                <a asp-area="" asp-controller="Introduce" asp-action="Foundation" class="navbar-item @Html.IsSelected(controllers: "Introduce", actions: "Foundation")">平台發展及依據</a>
+                                <a asp-area="" asp-controller="Introduce" asp-action="Feature" class="navbar-item @Html.IsSelected(controllers: "Introduce", actions: "Feature")">主要功能簡介</a>
+                                <a asp-area="" asp-controller="Introduce" asp-action="Competency" class="navbar-item @Html.IsSelected(controllers: "Introduce", actions: "Competency")">職能介紹</a>
+                                <a asp-area="" asp-controller="Introduce" asp-action="Common" class="navbar-item @Html.IsSelected(controllers: "Introduce", actions: "Common,Communication,ProblemSolved,KeepLearning,Innovation,InterpersonalInteraction,Responsibility,Teamwork,InformationTechnology")">職場共通職能查詢</a>
+                                <a asp-area="" asp-controller="Introduce" asp-action="Professional" class="navbar-item @Html.IsSelected(controllers: "Introduce", actions: "Professional")">專業職能查詢</a>
+                                <a asp-area="" asp-controller="Introduce" asp-action="Occupation" class="navbar-item @Html.IsSelected(controllers: "Introduce", actions: "Occupation")">職業查詢</a>
+                            </div>
+                        </div>
+                        <a class="navbar-item @Html.IsSelected(controllers: "Privacy", actions: "Privacy,Personal,Terms,Announcement,Protection,Rights,Statement")" asp-area="" asp-controller="Privacy" asp-action="Privacy">隱私權</a>
                     </div>
                     <div class="navbar-end">
                         <div class="navbar-item">

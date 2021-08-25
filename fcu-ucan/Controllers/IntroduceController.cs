@@ -46,7 +46,55 @@ namespace fcu_ucan.Controllers
         [HttpGet("common")]
         public IActionResult Common()
         {
-            return Redirect("https://ucan.moe.edu.tw/commsearch/search.aspx");
+            return View();
+        }
+
+        [HttpGet("common/communication")]
+        public IActionResult Communication()
+        {
+            return View();
+        }
+        
+        [HttpGet("common/problem-solved")]
+        public IActionResult ProblemSolved()
+        {
+            return View();
+        }
+        
+        [HttpGet("common/keep-learning")]
+        public IActionResult KeepLearning()
+        {
+            return View();
+        }
+        
+        [HttpGet("common/innovation")]
+        public IActionResult Innovation()
+        {
+            return View();
+        }
+        
+        [HttpGet("common/interpersonal-interaction")]
+        public IActionResult InterpersonalInteraction()
+        {
+            return View();
+        }
+        
+        [HttpGet("common/responsibility")]
+        public IActionResult Responsibility()
+        {
+            return View();
+        }
+        
+        [HttpGet("common/teamwork")]
+        public IActionResult Teamwork()
+        {
+            return View();
+        }
+        
+        [HttpGet("common/information-technology")]
+        public IActionResult InformationTechnology()
+        {
+            return View();
         }
         
         [HttpGet("professional")]

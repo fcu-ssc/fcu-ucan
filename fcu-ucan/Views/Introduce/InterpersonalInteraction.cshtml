@@ -1,0 +1,56 @@
+﻿@{
+    ViewData["Title"] = "認識 UCAN";
+}
+
+@section Styles {
+    <environment include="Development">
+        <link rel="stylesheet" type="text/css" href="~/css/affix.css" asp-append-version="true" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" type="text/css" href="~/css/affix.min.css" asp-append-version="true" />
+    </environment>
+}
+
+<section class="section">
+    <div class="container is-max-desktop">
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+            <ul>
+                <li><a asp-area="" asp-controller="Introduce" asp-action="About">認識 UCAN</a></li>
+                <li><a asp-area="" asp-controller="Introduce" asp-action="Common">職場共通職能查詢</a></li>
+                <li class="is-active"><a asp-area="" asp-controller="Introduce" asp-action="InterpersonalInteraction" aria-current="page">人際互動</a></li>
+            </ul>
+        </nav>
+        <div class="box content">
+            <h1 class="title is-3">人際互動</h1>
+            <p>依不同情境，運用適當方法及個人風格，與他人互動或共事。</p>
+            <h2 class="tile is-4">主要指標</h2>
+            <ul>
+                <li>能以同理心主動瞭解他人的需求與感受，藉以建立良好的人際關係。</li>
+                <li>能夠分析自己的領域，主動找出需要建立或改善的重要關係。</li>
+                <li>會尋找或製造機會去接觸他人，並與其建立人脈關係。</li>
+                <li>工作時對於能提供資訊或協助的人會主動表達善意。</li>
+                <li>工作上能提供他人協助及支持，以建立彼此未來的互惠合作關係。</li>
+                <li>會運用適當方法有系統地管理人脈資源。</li>
+            </ul>
+            <h2 class="tile is-4">相關知識技能</h2>
+            <ul>
+                <li>溝通協調</li>
+                <li>傾聽技巧</li>
+                <li>人際心理</li>
+                <li>衝突管理</li>
+                <li>情緒管理</li>
+                <li>同理心</li>
+                <li>人脈管理</li>
+                <li>人際互動</li>
+            </ul>
+            <h2 class="tile is-4">相關活動</h2>
+            <ul>
+                <li>透過書報雜誌、傳播媒體、旅行、日常生活的觀察，探索多元生活環境與接觸不同領域及文化的人。</li>
+                <li>參加校內外之有益身心活動，增進與他人(家人、師長、朋友、同學、陌生人)互動。</li>
+                <li>參與學科或主題的討論(如團體討論、讀書會、演講活動)分享個人觀點並提供他人回饋。</li>
+                <li>參與服務學習活動。</li>
+            </ul>
+        </div>
+    </div>
+    <a href="https://ucan.moe.edu.tw/commsearch/search_1.aspx?id=13" target="_blank" id="view-source" class="button is-success is-rounded">查看原文</a>
+</section>

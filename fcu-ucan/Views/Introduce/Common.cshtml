@@ -1,0 +1,90 @@
+﻿@{
+    ViewData["Title"] = "認識 UCAN";
+}
+
+@section Styles {
+    <environment include="Development">
+        <link rel="stylesheet" type="text/css" href="~/css/affix.css" asp-append-version="true" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" type="text/css" href="~/css/affix.min.css" asp-append-version="true" />
+    </environment>
+}
+
+<section class="section">
+    <div class="container is-max-desktop">
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+            <ul>
+                <li><a asp-area="" asp-controller="Introduce" asp-action="About">認識 UCAN</a></li>
+                <li class="is-active"><a asp-area="" asp-controller="Introduce" asp-action="Common" aria-current="page">職場共通職能查詢</a></li>
+            </ul>
+        </nav>
+        <div class="box content">
+            <h1 class="title is-3">職場共通職能查詢</h1>
+            <p>您可以直接點選下列職場共通職能名稱，即可檢視該職場共通職能的簡介及相關說明。</p>
+            <p>各項職場共通職能包含：</p>
+            <ul>
+                <li>職場共通職能簡介</li>
+                <li>主要指標</li>
+                <li>相關知識技能</li>
+                <li>相關活動</li>
+            </ul>
+            <hr />
+            <div class="columns is-multiline is-centered">
+                <div class="column is-4">
+                    <figure class="image">
+                        <i class="far fa-comments fa-7x"></i>
+                    </figure>
+                    <a asp-area="" asp-controller="Introduce" asp-action="Communication" class="button is-link is-inverted is-fullwidth">溝通表達</a>
+                </div>
+                <div class="column is-4">
+                    <figure class="image">
+                        <i class="far fa-check-square fa-7x"></i>
+                    </figure>
+                    <a asp-area="" asp-controller="Introduce" asp-action="ProblemSolved" class="button is-link is-inverted is-fullwidth">問題解決</a>
+                </div>
+                <div class="column is-4">
+                    <figure class="image">
+                        <i class="fas fa-pencil-alt fa-7x"></i>
+                    </figure>
+                    <a asp-area="" asp-controller="Introduce" asp-action="KeepLearning" class="button is-link is-inverted is-fullwidth">持續學習</a>
+                </div>
+            </div>
+            <div class="columns is-multiline is-centered">
+                <div class="column is-4">
+                    <figure class="image">
+                        <i class="far fa-lightbulb fa-7x"></i>
+                    </figure>
+                    <a asp-area="" asp-controller="Introduce" asp-action="Innovation" class="button is-link is-inverted is-fullwidth">創新</a>
+                </div>
+                <div class="column is-4">
+                    <figure class="image">
+                        <i class="fas fa-user-friends fa-7x"></i>
+                    </figure>
+                    <a asp-area="" asp-controller="Introduce" asp-action="InterpersonalInteraction" class="button is-link is-inverted is-fullwidth">人際互動</a>
+                </div>
+                <div class="column is-4">
+                    <figure class="image">
+                        <i class="fas fa-gavel fa-7x"></i>
+                    </figure>
+                    <a asp-area="" asp-controller="Introduce" asp-action="Responsibility" class="button is-link is-inverted is-fullwidth">工作責任及紀律</a>
+                </div>
+            </div>
+            <div class="columns is-multiline is-centered">
+                <div class="column is-4">
+                    <figure class="image">
+                        <i class="far fa-handshake fa-7x"></i>
+                    </figure>
+                    <a asp-area="" asp-controller="Introduce" asp-action="Teamwork" class="button is-link is-inverted is-fullwidth">團隊合作</a>
+                </div>
+                <div class="column is-4">
+                    <figure class="image">
+                        <i class="fas fa-atom fa-7x"></i>
+                    </figure>
+                    <a asp-area="" asp-controller="Introduce" asp-action="InformationTechnology" class="button is-link is-inverted is-fullwidth">資訊科技應用</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="https://ucan.moe.edu.tw/commsearch/search.aspx" target="_blank" id="view-source" class="button is-success is-rounded">查看原文</a>
+</section>
