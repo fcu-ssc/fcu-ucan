@@ -1,0 +1,39 @@
+@{
+    ViewData["Title"] = "隱私權";
+}
+
+@section Styles {
+    <environment include="Development">
+        <link rel="stylesheet" type="text/css" href="~/css/affix.css" asp-append-version="true" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" type="text/css" href="~/css/affix.min.css" asp-append-version="true" />
+    </environment>
+}
+
+<section class="section">
+    <div class="container is-max-desktop">
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+            <ul>
+                <li><a asp-area="" asp-controller="Privacy" asp-action="Privacy">隱私權</a></li>
+                <li class="is-active"><a asp-area="" asp-controller="Privacy" asp-action="Rights" aria-current="page">個人資料權利行使</a></li>
+            </ul>
+        </nav>
+        <div class="box content">
+            <h1 class="title is-3">
+                個人資料權利行使
+                <span class="tag is-success is-light is-pulled-right">FCU</span>
+            </h1>
+            <p>依據個人資料保護法第三條規定，當事人就其個人資料可行使之當事人權利，包含：</p>
+            <ul>
+                <li>查詢或請求閱覽。</li>
+                <li>請求製給複製本(含資料可攜權)。</li>
+                <li>請求補充或更正。</li>
+                <li>請求停止蒐集、處理或利用。</li>
+                <li>請求刪除(含被遺忘權)。</li>
+            </ul>
+            <p>若您對本校所蒐集的個人資料要行使當事人權利，請填寫附件表格並寄至 <a href="mailto:hlyang@fcu.edu.tw">hlyang@fcu.edu.tw</a>，我們將會與您聯繫。</p>
+        </div>
+    </div>
+    <a href="https://www.fcu.edu.tw/news/逢甲大學個人資料保護政策與個人資料權利行使/" target="_blank" id="view-source" class="button is-success is-rounded">查看原文</a>
+</section>

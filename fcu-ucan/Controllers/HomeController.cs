@@ -1,14 +1,9 @@
-﻿using fcu_ucan.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace fcu_ucan.Controllers
 {
+    [Route("")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -18,20 +13,34 @@ namespace fcu_ucan.Controllers
             _logger = logger;
         }
 
+        [HttpGet("")]
         public IActionResult Index()
         {
             return View();
         }
-
-        public IActionResult Privacy()
+        
+        [HttpGet("facebook")]
+        public IActionResult Facebook()
         {
-            return View();
+            return Redirect("https://www.facebook.com/fcussc/");
         }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        
+        [HttpGet("instagram")]
+        public IActionResult Instagram()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return Redirect("https://www.instagram.com/fcu.cdc/");
+        }
+        
+        [HttpGet("github")]
+        public IActionResult GitHub()
+        {
+            return Redirect("https://github.com/fcu-ssc/");
+        }
+        
+        [HttpGet("site")]
+        public IActionResult Site()
+        {
+            return Redirect("https://ssc.fcu.edu.tw/");
         }
     }
 }

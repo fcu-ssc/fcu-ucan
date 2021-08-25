@@ -1,0 +1,51 @@
+@{
+    ViewData["Title"] = "隱私權";
+}
+
+@section Styles {
+    <environment include="Development">
+        <link rel="stylesheet" type="text/css" href="~/css/affix.css" asp-append-version="true" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" type="text/css" href="~/css/affix.min.css" asp-append-version="true" />
+    </environment>
+}
+
+<section class="section">
+    <div class="container is-max-desktop">
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+            <ul>
+                <li><a asp-area="" asp-controller="Privacy" asp-action="Privacy">隱私權</a></li>
+                <li class="is-active"><a asp-area="" asp-controller="Privacy" asp-action="Personal" aria-current="page">個人資料蒐集、處理及利用之告知說明</a></li>
+            </ul>
+        </nav>
+        <div class="box content">
+            <h1 class="title is-3">
+                個人資料蒐集、處理及利用之告知說明
+                <span class="tag is-primary is-light is-pulled-right">UCAN</span>
+            </h1>
+            <p>教育部及教育部授權之專案管理單位(以下簡稱「專案管理單位」)為了執行 「大專校院學生能力與評量平臺推動與管理計畫及相關事務性勞務工作委辦案」，依法告知下列事項：</p>
+            <h2 class="title is-4">一、蒐集目的：</h2>
+            <p>提供給學校教務及就業輔導等校務行政單位作為公務行政及輔導使用；以及辦理教育部「大專校院學生能力與評量平臺推動與管理計畫及相關事務性勞務工作委辦案」相關事宜。</p>
+            <h2 class="title is-4">二、個資類別：</h2>
+            <p>姓名、出生年月日及聯絡方式等申請本平台帳號時所需提供之個資；以及於本平台進行職業興趣探索診斷及職能診斷時所提供之個資。</p>
+            <h2 class="title is-4">三、利用期間：</h2>
+            <p>至蒐集目的消失為止。</p>
+            <h2 class="title is-4">四、利用地區：</h2>
+            <p>中華民國地區及專案管理單位之駐點及辦事處所在地區。</p>
+            <h2 class="title is-4">五、利用者：</h2>
+            <p>教育部、專案管理單位、學校及其他與教育部或專案管理單位有業務往來之公務及非公務機關。</p>
+            <h2 class="title is-4">六、利用方式：</h2>
+            <p>在不違反蒐集目的的前提下，以網際網路、電子郵件、書面、傳真及其他合法方式利用之。</p>
+            <h2 class="title is-4">七、您得以書面主張下列權利：</h2>
+            <p>（一）查詢或請求閱覽。</p>
+            <p>（二）請求製給複製本。</p>
+            <p>（三）請求補充或更正。</p>
+            <p>（四）請求停止蒐集、處理或利用。</p>
+            <p>（五）請求刪除。</p>
+            <h2 class="title is-4">八、您若不簽署本告知暨同意書，專案管理單位可能無法對您提供完整的服務，亦可能無法維護您的權益。</h2>
+            <h2 class="title is-4">九、教育部及專案管理單位會按照政府相關法規妥善保管您的個資。</h2>
+        </div>
+    </div>
+    <a href="https://ucan.moe.edu.tw/Account/Consent_form2.aspx" target="_blank" id="view-source" class="button is-success is-rounded">查看原文</a>
+</section>

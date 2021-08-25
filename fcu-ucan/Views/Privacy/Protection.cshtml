@@ -1,0 +1,40 @@
+@{
+    ViewData["Title"] = "隱私權";
+}
+
+@section Styles {
+    <environment include="Development">
+        <link rel="stylesheet" type="text/css" href="~/css/affix.css" asp-append-version="true" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" type="text/css" href="~/css/affix.min.css" asp-append-version="true" />
+    </environment>
+}
+
+<section class="section">
+    <div class="container is-max-desktop">
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+            <ul>
+                <li><a asp-area="" asp-controller="Privacy" asp-action="Privacy">隱私權</a></li>
+                <li class="is-active"><a asp-area="" asp-controller="Privacy" asp-action="Protection" aria-current="page">個人資料保護政策</a></li>
+            </ul>
+        </nav>
+        <div class="box content">
+            <h1 class="title is-3">
+                個人資料保護政策聲明
+                <span class="tag is-success is-light is-pulled-right">FCU</span>
+            </h1>
+            <p>逢甲大學(以下簡稱本校)認知個人資料保護的重要性，為展現對個人資料與隱私保護之決心，特訂定下列政策聲明為本校個資保護最高指導方針。</p>
+            <br>
+            <p>本校只會基於合法的組織目的，蒐集最少的必要個人資料，並採行適當安全措施，確保個人資料被公平合法的處理利用。</p>
+            <p>本校將維持一份學校處理的個人資料檔案清單。</p>
+            <p>本校將維持所經手個人資料於正確與最新狀態。</p>
+            <p>本校尊重個人對其個人資料所受保障的相關權利。</p>
+            <p>本校僅在確實必要且有適當充分保護的狀況下，將個人資料移轉到其他的地方。</p>
+            <p>本校將發展和實行個人資料管理系統，落實個人資料保護政策。</p>
+            <p>本校針對涉及個人資料之個案，會確認內部和外部的利害關係人，以及這些利害關係人涉及學校個人資料管理系統治理的程度。</p>
+            <p>本校會確保個人資料管理系統之管理皆由特定職責且承擔責任的人員負責。</p>
+        </div>
+    </div>
+    <a href="https://www.fcu.edu.tw/news/逢甲大學個人資料保護政策與個人資料權利行使/" target="_blank" id="view-source" class="button is-success is-rounded">查看原文</a>
+</section>

@@ -1,0 +1,58 @@
+@{
+    ViewData["Title"] = "認識 UCAN";
+}
+
+<section class="hero is-medium">
+    <div class="hero-body">
+        <div class="container is-max-desktop">
+            <article class="message">
+                <div class="message-body">所有資訊以 UCAN 官方為主</div>
+            </article>
+            <article class="panel is-info">
+                <p class="panel-heading">@ViewData["Title"]</p>
+                <a asp-area="" asp-controller="Introduce" asp-action="Intent" class="panel-block">
+                    <span class="panel-icon">
+                        <i class="fas fa-info-circle" aria-hidden="true"></i>
+                    </span>
+                    平台緣起及建置目的
+                </a>
+                <a asp-area="" asp-controller="Introduce" asp-action="Foundation" class="panel-block">
+                    <span class="panel-icon">
+                        <i class="fas fa-info-circle" aria-hidden="true"></i>
+                    </span>
+                    平台發展及依據
+                </a>
+                <a asp-area="" asp-controller="Introduce" asp-action="Feature" class="panel-block">
+                    <span class="panel-icon">
+                        <i class="fas fa-info-circle" aria-hidden="true"></i>
+                    </span>
+                    主要功能簡介
+                </a>
+                <a asp-area="" asp-controller="Introduce" asp-action="Competency" class="panel-block">
+                    <span class="panel-icon">
+                        <i class="fas fa-info-circle" aria-hidden="true"></i>
+                    </span>
+                    職能介紹
+                </a>
+                <a asp-area="" asp-controller="Introduce" asp-action="Common" class="panel-block">
+                    <span class="panel-icon">
+                        <i class="fas fa-external-link-alt" aria-hidden="true"></i>
+                    </span>
+                    職場共通職能查詢
+                </a>
+                <a asp-area="" asp-controller="Introduce" asp-action="Professional" class="panel-block">
+                    <span class="panel-icon">
+                        <i class="fas fa-external-link-alt" aria-hidden="true"></i>
+                    </span>
+                    專業職能查詢
+                </a>
+                <a asp-area="" asp-controller="Introduce" asp-action="Occupation" class="panel-block">
+                    <span class="panel-icon">
+                        <i class="fas fa-external-link-alt" aria-hidden="true"></i>
+                    </span>
+                    職業查詢
+                </a>
+            </article>
+        </div>
+    </div>
+</section>

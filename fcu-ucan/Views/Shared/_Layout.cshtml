@@ -1,48 +1,88 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant" class="has-navbar-fixed-top">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - fcu_ucan</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>@ViewData["Title"] - FCU x UCAN</title>
+    @await Html.PartialAsync("_Favicons")
+    <link rel="stylesheet" type="text/css" href="~/lib/fontawesome/css/all.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/lib/bulma/css/bulma.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/lib/bulma-social/css/all.min.css" />
+    <environment include="Development">
+        <link rel="stylesheet" type="text/css" href="~/css/site.css" asp-append-version="true" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" type="text/css" href="~/css/site.min.css" asp-append-version="true" />
+    </environment>
+    @await RenderSectionAsync("Styles", required: false)
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar is-transparent is-fixed-top" role="navigation" aria-label="main navigation">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">fcu_ucan</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
+                <div class="navbar-brand">
+                    <a class="navbar-item" asp-area="" asp-controller="Home" asp-action="Index">
+                        <img src="~/images/ssc-logo-dark.svg" alt="" height="28" asp-append-version="true" />
+                    </a>
+                    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navMenu">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
+                </div>
+                <div id="navMenu" class="navbar-menu">
+                    <div class="navbar-start">
+                        <a class="navbar-item" asp-area="" asp-controller="Home" asp-action="Index">首頁</a>
+                        <a class="navbar-item" asp-area="" asp-controller="Privacy" asp-action="Privacy">隱私權</a>
+                    </div>
+                    <div class="navbar-end">
+                        <div class="navbar-item">
+                            <a asp-area="" asp-controller="NID" asp-action="Login" class="button is-primary">登入</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2021 - fcu_ucan - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <main role="main">@RenderBody()</main>
+    <footer class="footer">
+        <div class="content has-text-centered">Copyright &copy; 2021 成就學生中心</div>
+        <div class="buttons is-centered">
+            <a asp-area="" asp-controller="Home" asp-action="Facebook" target="_blank" class="button is-medium is-facebook">
+                <span class="icon">
+                    <i class="fab fa-facebook-f fa-lg"></i>
+                </span>
+            </a>
+            <a asp-area="" asp-controller="Home" asp-action="Instagram" target="_blank" class="button is-medium is-instagram">
+                <span class="icon">
+                    <i class="fab fa-instagram fa-lg"></i>
+                </span>
+            </a>
+            <a asp-area="" asp-controller="Home" asp-action="Site" target="_blank" class="button is-medium">
+                <span class="icon">
+                    <i class="fas fa-link fa-lg"></i>
+                </span>
+            </a>
+            <a asp-area="" asp-controller="Home" asp-action="GitHub" target="_blank" class="button is-medium is-github">
+                <span class="icon">
+                    <i class="fab fa-github fa-lg"></i>
+                </span>
+            </a>
+            <a asp-area="" asp-controller="Account" asp-action="Login" class="button is-medium is-warning">
+                <span class="icon">
+                    <i class="fas fa-sign-in-alt fa-lg"></i>
+                </span>
+            </a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <environment include="Development">
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+    </environment>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

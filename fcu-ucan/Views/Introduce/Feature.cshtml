@@ -1,0 +1,307 @@
+@{
+    ViewData["Title"] = "認識 UCAN";
+}
+
+@section Styles {
+    <environment include="Development">
+        <link rel="stylesheet" type="text/css" href="~/css/affix.css" asp-append-version="true" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" type="text/css" href="~/css/affix.min.css" asp-append-version="true" />
+    </environment>
+}
+
+<section class="section">
+    <div class="container is-max-desktop">
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+            <ul>
+                <li><a asp-area="" asp-controller="Introduce" asp-action="About">認識 UCAN</a></li>
+                <li class="is-active"><a asp-area="" asp-controller="Introduce" asp-action="Feature" aria-current="page">主要功能簡介</a></li>
+            </ul>
+        </nav>
+        <div class="box content">
+            <h1 class="title is-3">主要功能簡介</h1>
+            <p>UCAN 平台的主要功能包含職業查詢、職業興趣探索、職場共通職能診斷、專業職能診斷、能力養成計畫、診斷諮詢服務及檔案紀錄，使用者可依實際需要選擇不同使用流程，概念如下：</p>
+            <figure class="image">
+                <img src="~/images/competency-development-plan.webp" alt="" class="image-modal" data-target="#competency-development-plan" asp-append-version="true" />
+            </figure>
+            <div id="competency-development-plan" class="modal">
+                <div class="modal-background"></div>
+                <div class="modal-content">
+                    <p class="image">
+                        <img src="~/images/competency-development-plan.webp" alt="" asp-append-version="true" />
+                    </p>
+                </div>
+                <button class="modal-close is-large" aria-label="close"></button>
+            </div>
+            <h2 class="title is-4">職能與職業查詢</h2>
+            <p>提供職能介紹、職場共通職能查詢、專業職能查詢以及職業查詢內容。</p>
+            <ul>
+                <li>職能介紹：包含職能概念、職能資源以及職能應用說明。</li>
+                <li>職場共通職能查詢：可查詢八大職場共通職能查詢、相關養成活動，具體的知識技能以及主要指標。</li>
+                <li>
+                    專業職能查詢：可查詢 16 種職涯類型、66 項就業途徑以及 900 多項相關職業，以「休閒與觀光旅遊」為例，其下就業途徑有四：休閒遊憩規劃、餐飲管理、旅館管理、旅遊規劃。
+                    各就業途徑下亦有其詳細介紹，詳細內容包含就業途徑簡介、與該就業途徑相關執業資格、勞動部技能檢定、教育部採認知民間證照、專業職能內涵(包括第一層工作任務職能、第二層工作活動、具體行為、知識與技能)以及相關職業說明。
+                </li>
+                <li>職業查詢：可依關鍵字或條件查詢相關職業，包含職業敘述與職業職能基準。</li>
+            </ul>
+            <p class="has-text-weight-bold">職能與職業查詢對使用者之用途：</p>
+            <table class="table is-bordered is-hoverable is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>使用者</th>
+                        <th>用途</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>學生</th>
+                        <td>
+                            <ul>
+                                <li>了解職能概念以及查詢職能資源協助提升職場就業力。</li>
+                                <li>建立對該類職涯類型的概略性認識。</li>
+                                <li>瞭解不同就業途徑應該具備的專業職能及國家相關執照、技能檢定及證照。</li>
+                                <li>了解未來可能從事的相關職業，有助於掌握職業的樣貌。</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>教師</th>
+                        <td>
+                            <ul>
+                                <li>了解職能概念以及查詢職能資源，提供更多元的資訊教育學生。</li>
+                                <li>可查詢不同就業途徑應該具備的專業職能及相關職業，作為提供學生就業諮詢意見時的參考資源。</li>
+                                <li>可針對職能架構規劃以能力為導向之教學內容、具體化教學目標。</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <h2 class="title is-4">職業興趣探索</h2>
+            <p>提供個人對不同職涯類型的興趣強弱測驗。</p>
+            <ul>
+                <li>本測驗共 194 題，平均完成時間約為 15 分鐘，題項包含三大部分：「我最喜歡哪些活動」、「我認為自己有哪些特質」、「我喜歡哪些科目」，填答者勾選自己認為最適合的項目。</li>
+                <li>測驗結果包含16職涯興趣分數以及職業性格類型(Holland Code)，系統可以保留最近四次的施測結果。</li>
+            </ul>
+            <p class="has-text-weight-bold">職業興趣探索對使用者之用途：</p>
+            <table class="table is-bordered is-hoverable is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>使用者</th>
+                        <th>用途</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>學生</th>
+                        <td>
+                            <ul>
+                                <li>了解個人的興趣偏好，作為未來職涯發展的參考方向。</li>
+                                <li>作為學習過程中，選擇與自己興趣相符的課程或學習活動的參考依據。</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>教師</th>
+                        <td>
+                            <ul>
+                                <li>作為提供學生職涯輔導時的工具。</li>
+                                <li>可透過各校後端管理介面下載診斷結果統計報表，分析全校 ( 系 ) 同學之興趣概況。</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <h2 class="title is-4">職能診斷</h2>
+            <p>提供「職場共通職能」與「專業職能」診斷測驗，透過自我職能評估，協助瞭解個人能力強弱。</p>
+            <ul>
+                <li>
+                    職場共通職能：指從事各種不同的職業類型都需要具備的能力。
+                    共有八項共通職能，包含：溝通表達、持續學習、人際互動、團隊合作、問題解決、創新、工作責任及紀律、資訊科技應用。
+                    本測驗總共有 54 題，平均完成時間約為 10 分鐘。
+                </li>
+                <li>
+                    專業職能：指從事 66 項專業就業途徑的相關職業時所須具備的專業能力。
+                    本測驗題目依所選的就業途徑而定，系統可依系所相關之就業途徑或使用者興趣前三高之職涯類型進行預設，使用者可依需求選擇合適之就業途徑進行診斷。
+                </li>
+            </ul>
+            <p class="has-text-weight-bold">職能診斷對使用者之用途：</p>
+            <table class="table is-bordered is-hoverable is-fullwidth">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>使用者</th>
+                        <th>用途</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th rowspan="2">職場共通職能診斷</th>
+                        <th>學生</th>
+                        <td>
+                            <ul>
+                                <li>自我評量在職場共通職能所具備的程度。</li>
+                                <li>了解自我職能缺口，提早為進入職場進行準備。</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>教師</th>
+                        <td>
+                            <ul>
+                                <li>可透過各校後端管理介面下載診斷結果統計報表分析全校(系)同學之職場共通職能能力概況，作為規劃相關學習或活動的依據。</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th rowspan="2">專業職能診斷</th>
+                        <th>學生</th>
+                        <td>
+                            <ul>
+                                <li>自我評量在特定領域所具備專業職能的程度。</li>
+                                <li>了解自我職能缺口，協助擬定學習強化專業能力的方向。</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>教師</th>
+                        <td>
+                            <ul>
+                                <li>協助學習者了解掌握專業領域所需要具備專業職能輪廓及個人未來應強化之處。</li>
+                                <li>可透過各校後端管理介面下載診斷結果統計報表分析全校(系)同學之專業職能強弱概況，作為規劃相關課程學程或其他教學活動的參考。</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <h2 class="title is-4">職能養成教學能量回饋</h2>
+            <p>提供職能養成之教學能量學生意見調查，幫助學校檢視校內相關職能的養成是否提供足夠與有效的課程或學習活動，作為學校課程規劃調整的參考。</p>
+            <p>在前述職能診斷之後，依據職能診斷類別及專業職能診斷就業途徑是否與系所相關，分A、B、C三類問卷</p>
+            <ul>
+                <li>A 類：就進行共通職能診斷之學生，共有 5 大題以及應屆畢業生總體性問項，平均完成時間約為 5 分鐘。</li>
+                <li>B 類：就進行專業職能診斷就業途徑與就讀系所相關之學生，共有 5 大題以及應屆畢業生總體性問項，平均完成時間約為 5 分鐘。</li>
+                <li>
+                    C 類：就進行專業職能診斷就業途徑與就讀系所無關之學生，共有 4 題，平均完成時間約為 3 分鐘。
+                    其中，系所相關就業途徑除系統預設外，學校管理者亦可自行調整增修與系所相關的就業途徑。
+                    此對應可一對多，一個系所可選擇一個以上的就業途徑。
+                </li>
+            </ul>
+            <p class="has-text-weight-bold">職能養成教學能量回饋對使用者之用途：</p>
+            <table class="table is-bordered is-hoverable is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>使用者</th>
+                        <th>用途</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>學生</th>
+                        <td>
+                            <ul>
+                                <li>綜整校內學習經驗回饋予學校。</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>教師</th>
+                        <td>
+                            <ul>
+                                <li>利用後台報表之二維分析可盤點需加強教學之職能以及調整相關課程。</li>
+                                <li>了解學生職能養成之教學滿意度、職能與課程連結之理解度、應屆畢整體就業準備之充分度等。</li>
+                                <li>篩選出潛在非適性學習學生，並瞭解各系所或系所內學生可能不適性的因素及比例，以及學校跨領域學習與系所教學滿意度的狀況提供學校學生輔導參考。</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <h2 class="title is-4">能力養成計畫</h2>
+            <p>提供「職場共通職能」及「專業職能」各項職能相關的知識技能及有關的學習活動項目，以引導學習者依個人所需，規劃個人能力養成計畫。</p>
+            <p>透過選擇養成項目、規劃及管理能力養成計畫的歷程，協助學生規劃並養成所需職能。</p>
+            <p>使用者可以透過此項功能查詢校內外相關課程(學校可上傳課程資料，提供學生查詢校內課程)</p>
+            <p class="has-text-weight-bold">能力養成計畫對使用者之用途：</p>
+            <table class="table is-bordered is-hoverable is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>使用者</th>
+                        <th>用途</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>學生</th>
+                        <td>
+                            <ul>
+                                <li>可針對需強化的職能，查詢校內或其他外部培訓機構的相關課程。</li>
+                                <li>提供自我編輯規劃、紀錄及管理能力養成計畫功能，作為自我學習歷程的紀錄。</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>教師</th>
+                        <td>
+                            <ul>
+                                <li>配合診斷結果，協助及輔導學生規劃能力計畫。</li>
+                                <li>持續觀察追蹤輔導學生能力養成進度及狀況。</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <h2 class="title is-4">諮詢及診斷紀錄</h2>
+            <p>提供「歷次診斷結果」、「諮詢服務」及「諮詢紀錄」功能。</p>
+            <p>「歷次診斷結果」包含職業興趣探索、共通職能及專業職能，皆可紀錄最近四次的診斷結果；也可選擇查詢最新一次診斷結果，或下載簡要版診斷報告（最新一次）、 下載完整版診斷報告（四次診斷結果）。</p>
+            <p>「諮詢服務」幫助使用者於本平台進行職業興趣或職能診斷後，回答各項關於平台使用功能、診斷結果或職涯規劃的相關問題。</p>
+            <p>如有任何疑問，可點選發問對象向本校師長諮詢相關職涯輔導問題，若是對使用介面或網站系統有問題，可向UCAN系統管理人員提問。</p>
+            <p>「諮詢紀錄」則以表列方式呈現所有曾於「諮詢服務」中的提問及答覆。</p>
+            <figure class="image">
+                <img src="~/images/feature.webp" alt="" class="image-modal" data-target="#feature" asp-append-version="true" />
+            </figure>
+            <div id="feature" class="modal">
+                <div class="modal-background"></div>
+                <div class="modal-content">
+                    <p class="image">
+                        <img src="~/images/feature.webp" alt="" asp-append-version="true" /> 
+                    </p>
+                </div>
+                <button class="modal-close is-large" aria-label="close"></button>
+            </div>
+            <h2 class="title is-4">學校管理功能</h2>
+            <p>學校可申請一個總管理者帳號，並依據校內狀況分設一般管理者、系所管理者、班級管理者、課程管理者與報表管理者等，登入後，可於「後台管理」檢視學生職業興趣及職能診斷結果統計分析資料，作為學校相關就業輔導業務推動及課程學程規劃的參考。</p>
+            <p class="has-text-weight-bold">能力養成計畫對使用者之用途：</p>
+            <table class="table is-bordered is-hoverable is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>使用者</th>
+                        <th>用途</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>學校</th>
+                        <td>
+                            <ul>
+                                <li>查詢及管理學校使用者。</li>
+                                <li>匯入及管理本校課程。</li>
+                                <li>提供即時報表、排程報表及智慧分析報表，以支援學校整體管理。</li>
+                                <li>透過檢視診斷結果及能力養成計畫，可了解整體及個別學生專業能力的強弱，協助學生有目標的養成能力。</li>
+                                <li>學校同學所諮詢問題回覆及管理。</li>
+                                <li>下載相關推廣簡報及檔案。</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <a href="https://ucan.moe.edu.tw/help/about_us_3.aspx" target="_blank" id="view-source" class="button is-success is-rounded">查看原文</a>
+</section>
+
+@section Scripts {
+    <environment include="Development">
+            <script src="~/js/image-modal.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/js/image-modal.min.js" asp-append-version="true"></script>
+    </environment>
+}

@@ -1,0 +1,59 @@
+@{
+    ViewData["Title"] = "隱私權";
+}
+
+@section Styles {
+    <environment include="Development">
+        <link rel="stylesheet" type="text/css" href="~/css/affix.css" asp-append-version="true" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" type="text/css" href="~/css/affix.min.css" asp-append-version="true" />
+    </environment>
+}
+
+<section class="section">
+    <div class="container is-max-desktop">
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+            <ul>
+                <li><a asp-area="" asp-controller="Privacy" asp-action="Privacy">隱私權</a></li>
+                <li class="is-active"><a asp-area="" asp-controller="Privacy" asp-action="Announcement" aria-current="page">個資保護宣導事項</a></li>
+            </ul>
+        </nav>
+        <div class="box content">
+            <h1 class="title is-3">
+                個資保護宣導事項（師生座談會）
+                <span class="tag is-success is-light is-pulled-right">FCU</span>
+            </h1>
+            <p>新版個資法已經於2012年10月1日正式施行，其目的為規範個人資料之蒐集、處理及利用，以避免人格權受侵害，並促進個人資料之合理利用。</p>
+            <p>個資法的規範對象包括公務及非公務機關，只要有蒐集、處理或利用個人資料的個人行為也包含在內。</p>
+            <p>違反個資法規定，將可能面臨對當事人每人五百至二萬元、同一事件最高二億元的損害賠償，以及兩年以下有期徒刑、拘役或科或併科二十萬元以下罰金的刑事責任。</p>
+            <h2 class="title is-4">面對個資法請大家共同注意：</h2>
+            <ol>
+                <li>個人資料的蒐集處理與利用，應明確告知當事者相關事項(如蒐集目的與個資類別)並取得書面同意，且對於個資的利用不得逾越蒐集之特定目的。學校基於教育行政與學生資料管理等目的，蒐集、處理與利用同學各項個資，學校已製作個人資料保護同意書提供同學簽署，當學生登入校務資訊應用服務網(APPS)時，若尚未簽署過之同學，將會顯示告知此同意書，並請同學確認同意，而未來新生將於NID啟用時，進行告知與同意。</li>
+                <li>個資蒐集告知的建議作法。各系學會或學生社團，執行各項業務或辦理各項活動時，若牽涉個人資料蒐集、處理或利用時，亦須遵守個資法的規定，應告知蒐集目的與取得書面同意。學校提供公版個資保護同意書與個資蒐集聲明使用說明可供參考，同學可於表單文件上加註相關聲明事項，來達到告知與書面同意要求。</li>
+                <li>請作好個人電腦保護措施，避免個資不當外洩。每個人的電腦上存放有各項資料，當然也包含個人資料檔案，因此個人電腦須做好安全保護措施，以避免遭受入侵而導致個資外洩。</li>
+            </ol>
+            <h2 class="title is-4">個人電腦的安全設定</h2>
+            <ul>
+                <li>如設定密碼、防火牆、裝防毒軟體、定時進行軟體更新。</li>
+                <li>密碼至少每六個月更換一次，長度應至少8碼，且包含文數字。</li>
+                <li>使用螢幕保護程式，設定螢幕保護密碼。</li>
+                <li>個人電腦或相關設備如需報廢或移轉他用時，應確實將資料銷毀。</li>
+                <li>設定瀏覽器安全設定。</li>
+            </ul>
+            <h2 class="title is-4">個人資料檔案的保護</h2>
+            <ul>
+                <li>個人資料檔案應有適當保護措施(如文件上鎖、檔案加密)。</li>
+                <li>個人資料檔案使用完畢後，應立即退出應用程式。</li>
+                <li>交換個人資料檔案時(如Email 傳輸個人資料檔案)，應對資料檔案加密，或是透過加密通道傳送。</li>
+            </ul>
+            <h2 class="title is-4">社交工程攻擊的防範</h2>
+            <ul>
+                <li>不明來源信件不要任意開啟、連結與下載。</li>
+                <li>正確設定電子郵件收信軟體 (關閉郵件預覽及不自動開啟外部圖片)。</li>
+            </ul>
+            <blockquote>再次提醒，不蒐集、儲存或顯示不必要的個資；個資檔案愈多，風險愈高。</blockquote>
+        </div>
+    </div>
+    <a href="https://www.fcu.edu.tw/news/個資保護宣導事項（師生座談會）/" target="_blank" id="view-source" class="button is-success is-rounded">查看原文</a>
+</section>
