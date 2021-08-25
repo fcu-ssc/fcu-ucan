@@ -11,3 +11,6 @@
 [submodule "fcu-ucan/wwwroot/lib/bulma"]
 	path = fcu-ucan/wwwroot/lib/bulma
 	url = https://github.com/jgthms/bulma.git
+[submodule "fcu-ucan/wwwroot/lib/fontawesome"]
+	path = fcu-ucan/wwwroot/lib/fontawesome
+	url = https://github.com/FortAwesome/Font-Awesome.git
