@@ -3,7 +3,12 @@
 }
 
 @section Styles {
-    <link rel="stylesheet" type="text/css" href="~/css/affix.css" asp-append-version="true" />
+    <environment include="Development">
+        <link rel="stylesheet" type="text/css" href="~/css/affix.css" asp-append-version="true" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" type="text/css" href="~/css/affix.min.css" asp-append-version="true" />
+    </environment>
 }
 
 <section class="section">

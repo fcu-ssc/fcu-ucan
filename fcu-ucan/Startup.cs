@@ -2,6 +2,7 @@ using System;
 using fcu_ucan.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -49,7 +50,14 @@ namespace fcu_ucan
             
             app.UseHttpsRedirection();
             
-            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                OnPrepareResponse = ctx =>
+                {
+                    // 靜態檔案快取一年
+                    ctx.Context.Response.Headers.Append("Cache-Control", "public, max-age=31536000");
+                }
+            });
 
             app.UseRouting();
 
