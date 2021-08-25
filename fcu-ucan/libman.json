@@ -8,6 +8,14 @@
       "files": [
         "css/bulma.min.css"
       ]
+    },
+    {
+      "provider": "unpkg",
+      "library": "bulma-social@2.0.0",
+      "destination": "wwwroot/lib/bulma-social/",
+      "files": [
+        "css/all.min.css"
+      ]
     }
   ]
 }

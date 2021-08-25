@@ -1,6 +1,3 @@
-[submodule "fcu-ucan/wwwroot/lib/bulma-social"]
-	path = fcu-ucan/wwwroot/lib/bulma-social
-	url = https://github.com/aldi/bulma-social.git
 [submodule "fcu-ucan/wwwroot/lib/aos"]
 	path = fcu-ucan/wwwroot/lib/aos
 	url = https://github.com/michalsnik/aos.git
