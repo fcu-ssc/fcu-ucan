@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using fcu_ucan.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -65,7 +66,15 @@ namespace fcu_ucan
             services.AddHttpClient("UCAN", c =>
             {
                 c.BaseAddress = new Uri(Configuration["Domain"]);
-            });
+            })
+                .ConfigurePrimaryHttpMessageHandler(() =>
+                {
+                    return new HttpClientHandler
+                    {
+                        ClientCertificateOptions = ClientCertificateOption.Manual,
+                        ServerCertificateCustomValidationCallback = (_, _, _, _) => true
+                    };
+                });
             
             services.AddScoped<IOAuthService, OAuthService>();
         }

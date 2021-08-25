@@ -70,7 +70,7 @@ namespace fcu_ucan.Services
                       $"username={username}&" +
                       $"school={_configuration["UCAN:School"]}";
             var request = new HttpRequestMessage(HttpMethod.Get, url);
-            var client = _clientFactory.CreateClient("ucan");
+            var client = _clientFactory.CreateClient("UCAN");
             _logger.LogInformation($"獲取 Ucan Token 開始: {url}");
             try
             {

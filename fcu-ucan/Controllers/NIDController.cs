@@ -71,7 +71,7 @@ namespace fcu_ucan.Controllers
                             return RedirectToAction("UcanError", "Error");
                         default:
                             _logger.LogInformation("Ucan Token 解析成功");
-                            var url = $"{_configuration["BaseHTTPUrl"]}/ucann_school/sso.aspx?" +
+                            var url = $"{_configuration["Domain"]}/ucann_school/sso.aspx?" +
                                       $"Plugin=o_hdu&" +
                                       $"Action=ohduschoolssologin&" +
                                       $"username={user.StuId}&" +
