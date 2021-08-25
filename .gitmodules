@@ -8,3 +8,6 @@
 [submodule "fcu-ucan/wwwroot/lib/bulma-carousel"]
 	path = fcu-ucan/wwwroot/lib/bulma-carousel
 	url = https://github.com/Wikiki/bulma-carousel.git
+[submodule "fcu-ucan/wwwroot/lib/bulma"]
+	path = fcu-ucan/wwwroot/lib/bulma
+	url = https://github.com/jgthms/bulma.git
