@@ -33,6 +33,13 @@
         "aos.js",
         "aos.css"
       ]
+    },
+    {
+      "library": "font-awesome@5.15.4",
+      "destination": "wwwroot/lib/font-awesome/",
+      "files": [
+        "js/all.min.js"
+      ]
     }
   ]
 }
