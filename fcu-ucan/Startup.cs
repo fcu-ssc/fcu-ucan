@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Serilog;
 
 namespace fcu_ucan
 {
@@ -83,6 +84,8 @@ namespace fcu_ucan
                 app.UseExceptionHandler("/error");
                 app.UseHsts();
             }
+
+            app.UseSerilogRequestLogging();
             
             app.UseHttpsRedirection();
             
