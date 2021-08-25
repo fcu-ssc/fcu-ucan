@@ -5,3 +5,6 @@
 	path = fcu-ucan/wwwroot/lib/aos
 	url = https://github.com/michalsnik/aos.git
 	branch = master
+[submodule "fcu-ucan/wwwroot/lib/bulma-carousel"]
+	path = fcu-ucan/wwwroot/lib/bulma-carousel
+	url = https://github.com/Wikiki/bulma-carousel.git
