@@ -1,0 +1,50 @@
+﻿@{
+    ViewData["Title"] = "認識 UCAN";
+}
+
+@section Styles {
+    <environment include="Development">
+        <link rel="stylesheet" type="text/css" href="~/css/affix.css" asp-append-version="true" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" type="text/css" href="~/css/affix.min.css" asp-append-version="true" />
+    </environment>
+}
+
+<section class="section">
+    <div class="container is-max-desktop">
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+            <ul>
+                <li><a asp-area="" asp-controller="Intro" asp-action="Index">認識 UCAN</a></li>
+                <li><a asp-area="" asp-controller="Professional" asp-action="Index">專業職能查詢</a></li>
+                <li class="is-active"><a asp-area="" asp-controller="Professional" asp-action="Education" aria-current="page">教育與訓練</a></li>
+            </ul>
+        </nav>
+        <div class="box content">
+            <h1 class="title is-3">教育與訓練</h1>
+            <hr />
+            <h2 class="title is-5">職涯類別簡介</h2>
+            <h3 class="subtitle is-6 has-text-grey">Introduction for Career cluster</h3>
+            <p>評估內外在環境、資源，規劃符合教學組織需求的目標，推動與發展相關業務或校務，並依據組織的目標及學習者的需求，配合各種教學理論、工具與策略，規劃適切、有效的教學活動及學習計畫。</p>
+            <h2 class="title is-5">就業途徑</h2>
+            <h3 class="subtitle is-6 has-text-grey">Career Pathway</h3>
+            <p>這個職涯類型，在就業的選擇上，可分為以下幾個就業途徑，你可以依照自己的背景及興趣選擇瀏覽，更進一步了解不同就業方向的相關資訊。</p>
+            <hr />
+            <div class="buttons is-centered">
+                <a href="https://ucan.moe.edu.tw/search/search_1.aspx?f1=EDC&f2=20" target="_blank" class="button is-link is-outlined is-rounded is-underlined">
+                    <span class="icon">
+                        <i class="fas fa-external-link-alt"></i>
+                    </span>
+                    <span>教育行政</span>
+                </a>
+                <a href="https://ucan.moe.edu.tw/search/search_1.aspx?f1=EDC&f2=21" target="_blank" class="button is-link is-outlined is-rounded is-underlined">
+                    <span class="icon">
+                        <i class="fas fa-external-link-alt"></i>
+                    </span>
+                    <span>教學</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <a href="https://ucan.moe.edu.tw/search/search.aspx" target="_blank" id="view-source" class="button is-success is-rounded">查看原文</a>
+</section>

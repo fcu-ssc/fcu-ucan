@@ -14,45 +14,24 @@ namespace fcu_ucan.Controllers
         }
         
         [HttpGet("")]
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-        
+        public IActionResult Index() => View();
+
         [HttpGet("ucan/personal")]
-        public IActionResult Personal()
-        {
-            return View();
-        }
-        
+        public IActionResult Personal() => View();
+
         [HttpGet("ucan/terms")]
-        public IActionResult Terms()
-        {
-            return View();
-        }
-        
+        public IActionResult Terms() => View();
+
         [HttpGet("fcu/announcement")]
-        public IActionResult Announcement()
-        {
-            return View();
-        }
-        
+        public IActionResult Announcement() => View();
+
         [HttpGet("fcu/protection")]
-        public IActionResult Protection()
-        {
-            return View();
-        }
-        
+        public IActionResult Protection() => View();
+
         [HttpGet("fcu/rights")]
-        public IActionResult Rights()
-        {
-            return View();
-        }
-        
+        public IActionResult Rights() => View();
+
         [HttpGet("fcu/statement")]
-        public IActionResult Statement()
-        {
-            return View();
-        }
+        public IActionResult Statement() => View();
     }
 }

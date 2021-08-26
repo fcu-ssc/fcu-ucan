@@ -1,0 +1,56 @@
+﻿@{
+    ViewData["Title"] = "認識 UCAN";
+}
+
+@section Styles {
+    <environment include="Development">
+        <link rel="stylesheet" type="text/css" href="~/css/affix.css" asp-append-version="true" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" type="text/css" href="~/css/affix.min.css" asp-append-version="true" />
+    </environment>
+}
+
+<section class="section">
+    <div class="container is-max-desktop">
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+            <ul>
+                <li><a asp-area="" asp-controller="Intro" asp-action="Index">認識 UCAN</a></li>
+                <li><a asp-area="" asp-controller="Professional" asp-action="Index">專業職能查詢</a></li>
+                <li class="is-active"><a asp-area="" asp-controller="Professional" asp-action="CompulsorySocialSecurity" aria-current="page">司法、法律與公共安全</a></li>
+            </ul>
+        </nav>
+        <div class="box content">
+            <h1 class="title is-3">司法、法律與公共安全</h1>
+            <hr />
+            <h2 class="title is-5">職涯類別簡介</h2>
+            <h3 class="subtitle is-6 has-text-grey">Introduction for Career cluster</h3>
+            <p>從事與凡法律、公共安全與確保民眾生命及財產等相關之專業和技術的服務，包含受當事人之委託或依法令之規定執行律師職務或處理法律事務之人員；預防火災並搶救災害及緊急救護；實際執行警察勤務、偵查刑事案件、督導管理矯正機關之收容人。</p>
+            <h2 class="title is-5">就業途徑</h2>
+            <h3 class="subtitle is-6 has-text-grey">Career Pathway</h3>
+            <p>這個職涯類型，在就業的選擇上，可分為以下幾個就業途徑，你可以依照自己的背景及興趣選擇瀏覽，更進一步了解不同就業方向的相關資訊。</p>
+            <hr />
+            <div class="buttons is-centered">
+                <a href="https://ucan.moe.edu.tw/search/search_1.aspx?f1=LWC&f2=51" target="_blank" class="button is-link is-outlined is-rounded is-underlined">
+                    <span class="icon">
+                        <i class="fas fa-external-link-alt"></i>
+                    </span>
+                    <span>司法</span>
+                </a>
+                <a href="https://ucan.moe.edu.tw/search/search_1.aspx?f1=LWC&f2=53" target="_blank" class="button is-link is-outlined is-rounded is-underlined">
+                    <span class="icon">
+                        <i class="fas fa-external-link-alt"></i>
+                    </span>
+                    <span>公共安全</span>
+                </a>
+                <a href="https://ucan.moe.edu.tw/search/search_1.aspx?f1=LWC&f2=55" target="_blank" class="button is-link is-outlined is-rounded is-underlined">
+                    <span class="icon">
+                        <i class="fas fa-external-link-alt"></i>
+                    </span>
+                    <span>法律服務</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <a href="https://ucan.moe.edu.tw/search/search.aspx" target="_blank" id="view-source" class="button is-success is-rounded">查看原文</a>
+</section>

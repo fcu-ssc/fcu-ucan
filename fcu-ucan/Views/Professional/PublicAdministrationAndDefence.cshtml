@@ -1,0 +1,56 @@
+﻿@{
+    ViewData["Title"] = "認識 UCAN";
+}
+
+@section Styles {
+    <environment include="Development">
+        <link rel="stylesheet" type="text/css" href="~/css/affix.css" asp-append-version="true" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" type="text/css" href="~/css/affix.min.css" asp-append-version="true" />
+    </environment>
+}
+
+<section class="section">
+    <div class="container is-max-desktop">
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+            <ul>
+                <li><a asp-area="" asp-controller="Intro" asp-action="Index">認識 UCAN</a></li>
+                <li><a asp-area="" asp-controller="Professional" asp-action="Index">專業職能查詢</a></li>
+                <li class="is-active"><a asp-area="" asp-controller="Professional" asp-action="PublicAdministrationAndDefence" aria-current="page">政府公共事務</a></li>
+            </ul>
+        </nav>
+        <div class="box content">
+            <h1 class="title is-3">政府公共事務</h1>
+            <hr />
+            <h2 class="title is-5">職涯類別簡介</h2>
+            <h3 class="subtitle is-6 has-text-grey">Introduction for Career cluster</h3>
+            <p>執行政府功能，包括國家和地方各層級的管理、國家安全、外交、規劃、稅收、法規及地方行政管理。</p>
+            <h2 class="title is-5">就業途徑</h2>
+            <h3 class="subtitle is-6 has-text-grey">Career Pathway</h3>
+            <p>這個職涯類型，在就業的選擇上，可分為以下幾個就業途徑，你可以依照自己的背景及興趣選擇瀏覽，更進一步了解不同就業方向的相關資訊。</p>
+            <hr />
+            <div class="buttons is-centered">
+                <a href="https://ucan.moe.edu.tw/search/search_1.aspx?f1=GVC&f2=28" target="_blank" class="button is-link is-outlined is-rounded is-underlined">
+                    <span class="icon">
+                        <i class="fas fa-external-link-alt"></i>
+                    </span>
+                    <span>國防</span>
+                </a>
+                <a href="https://ucan.moe.edu.tw/search/search_1.aspx?f1=GVC&f2=29" target="_blank" class="button is-link is-outlined is-rounded is-underlined">
+                    <span class="icon">
+                        <i class="fas fa-external-link-alt"></i>
+                    </span>
+                    <span>外交與國際事務</span>
+                </a>
+                <a href="https://ucan.moe.edu.tw/search/search_1.aspx?f1=GVC&f2=33" target="_blank" class="button is-link is-outlined is-rounded is-underlined">
+                    <span class="icon">
+                        <i class="fas fa-external-link-alt"></i>
+                    </span>
+                    <span>公共行政</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <a href="https://ucan.moe.edu.tw/search/search.aspx" target="_blank" id="view-source" class="button is-success is-rounded">查看原文</a>
+</section>
