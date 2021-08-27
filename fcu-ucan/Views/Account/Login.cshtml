@@ -1,8 +1,6 @@
+@model LoginViewModel
 @{
     ViewData["Title"] = "登入";
-}
-
-@section Styles {
 }
 
 <section class="hero is-medium">
@@ -18,28 +16,40 @@
                 </div>
                 <div class="column box">
                     <h1 class="title is-3 has-text-centered">@ViewData["Title"]</h1>
-                    <form>
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        @foreach (var modelError in ViewData.ModelState.SelectMany(keyValuePair => keyValuePair.Value.Errors))
+                        {
+                            <div class="notification is-danger">
+                                <button class="delete"></button>
+                                @modelError.ErrorMessage
+                            </div>
+                        }
+                    }
+                    <form asp-area="" asp-controller="Account" asp-action="Login" method="post" role="form">
                         <div class="field mb-5">
-                            <label class="label">帳號</label>
+                            <label asp-for="UserName" class="label">帳號</label>
                             <div class="control has-icons-left">
-                                <input class="input" type="text" placeholder="請輸入帳號">
+                                <input asp-for="UserName" class="input" type="text" placeholder="請輸入帳號"/>
                                 <span class="icon is-small is-left">
                                     <i class="fas fa-user"></i>
                                 </span>
                             </div>
+                            <span asp-validation-for="UserName" class="help is-danger"></span>
                         </div>
                         <div class="field mb-5">
-                            <label class="label">密碼</label>
+                            <label asp-for="Password" class="label">密碼</label>
                             <div class="control has-icons-left">
-                                <input class="input" type="password" placeholder="請輸入密碼">
+                                <input asp-for="Password" class="input" type="password" placeholder="請輸入密碼"/>
                                 <span class="icon is-small is-left">
                                     <i class="fas fa-lock"></i>
                                 </span>
                             </div>
+                            <span asp-validation-for="Password" class="help is-danger"></span>
                         </div>
                         <div class="field is-grouped">
                             <div class="control">
-                                <button class="button is-link is-light">登入</button>
+                                <button class="button is-link is-light" type="submit">登入</button>
                             </div>
                             <div class="control">
                                 <button asp-area="" asp-controller="NID" asp-action="Login" class="button is-link">使用 NID 登入</button>
@@ -53,4 +63,11 @@
 </section>
 
 @section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+    <environment include="Development">
+        <script src="~/js/notification-close.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/js/notification-close.minjs" asp-append-version="true"></script>
+    </environment>
 }

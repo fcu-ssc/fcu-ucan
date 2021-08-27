@@ -33,6 +33,10 @@
                 <div id="navMenu" class="navbar-menu">
                     <div class="navbar-start">
                         <a class="navbar-item @Html.IsSelected(controllers: "Home", actions: "Index")" asp-area="" asp-controller="Home" asp-action="Index">首頁</a>
+                        @if (User.IsInRole("Administrator"))
+                        {
+                            <a class="navbar-item @Html.IsSelected(controllers: "Manage", actions: "Index")" asp-area="" asp-controller="Manage" asp-action="Index">管理</a>
+                        }
                         <div class="navbar-item has-dropdown is-hoverable">
                             <a id="intro-link" asp-area="" asp-controller="Intro" asp-action="Index" class="navbar-link">
                                 認識 UCAN
@@ -62,7 +66,14 @@
                     </div>
                     <div class="navbar-end">
                         <div class="navbar-item">
-                            <a asp-area="" asp-controller="NID" asp-action="Login" class="button is-primary">登入</a>
+                            @if (User.Claims.Any(x => x.Type == Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames.Jti))
+                            {
+                                <a asp-area="" asp-controller="Account" asp-action="Logout" class="button is-primary is-light">登出</a>
+                            }
+                            else
+                            {
+                                <a asp-area="" asp-controller="NID" asp-action="Login" class="button is-primary">登入</a>
+                            }
                         </div>
                     </div>
                 </div>
@@ -93,11 +104,22 @@
                     <i class="fab fa-github fa-lg"></i>
                 </span>
             </a>
-            <a asp-area="" asp-controller="Account" asp-action="Login" class="button is-medium is-warning">
-                <span class="icon">
-                    <i class="fas fa-sign-in-alt fa-lg"></i>
-                </span>
-            </a>
+            @if (User.Claims.Any(x => x.Type == Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames.Jti))
+            {
+                <a asp-area="" asp-controller="Account" asp-action="Logout" class="button is-medium is-warning is-light">
+                    <span class="icon">
+                        <i class="fas fa-sign-out-alt fa-lg"></i>
+                    </span>
+                </a>
+            }
+            else
+            {
+                <a asp-area="" asp-controller="Account" asp-action="Login" class="button is-medium is-warning">
+                    <span class="icon">
+                        <i class="fas fa-sign-in-alt fa-lg"></i>
+                    </span>
+                </a>
+            }
         </div>
     </footer>
     <script src="~/lib/font-awesome/js/all.min.js"></script>

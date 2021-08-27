@@ -40,6 +40,17 @@
     "sourceMap": false
   },
   {
+    "outputFileName": "wwwroot/js/notification-close.min.js",
+    "inputFiles": [
+      "wwwroot/js/notification-close.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
     "outputFileName": "wwwroot/js/site.min.js",
     "inputFiles": [
       "wwwroot/js/site.js"
