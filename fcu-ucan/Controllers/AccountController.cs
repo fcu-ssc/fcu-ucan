@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using fcu_ucan.Entities;
 using fcu_ucan.Models.Account;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -119,6 +120,7 @@ namespace fcu_ucan.Controllers
             return View(model);
         }
         
+        [Authorize]
         [HttpGet("logout")]
         public IActionResult Logout()
         {
