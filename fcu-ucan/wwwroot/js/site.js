@@ -41,4 +41,9 @@
     } else {
         $("#privacy-link").removeClass('has-text-link');
     }
+    if (path[1] === 'manage') {
+        $("#manage-link").addClass('has-text-link');
+    } else {
+        $("#manage-link").removeClass('has-text-link');
+    }
 });

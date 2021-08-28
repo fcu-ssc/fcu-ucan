@@ -35,7 +35,7 @@
                         <a class="navbar-item @Html.IsSelected(controllers: "Home", actions: "Index")" asp-area="" asp-controller="Home" asp-action="Index">首頁</a>
                         @if (User.IsInRole("Administrator"))
                         {
-                            <a class="navbar-item @Html.IsSelected(controllers: "Manage", actions: "Index")" asp-area="" asp-controller="Manage" asp-action="Index">管理</a>
+                            <a id="manage-link" class="navbar-item" asp-area="" asp-controller="Manage" asp-action="Index">管理</a>
                         }
                         <div class="navbar-item has-dropdown is-hoverable">
                             <a id="intro-link" asp-area="" asp-controller="Intro" asp-action="Index" class="navbar-link">

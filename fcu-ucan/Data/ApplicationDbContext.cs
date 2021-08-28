@@ -25,6 +25,8 @@ namespace fcu_ucan.Data
 
         public override DbSet<ApplicationRoleClaim> RoleClaims { get; set; }
 
+        public DbSet<Member> Members { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -75,6 +77,8 @@ namespace fcu_ucan.Data
             builder.Entity<ApplicationRole>();
             
             builder.Entity<ApplicationRoleClaim>();
+
+            builder.Entity<Member>();
         }
     }
 }

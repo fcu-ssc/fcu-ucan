@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Text;
 using fcu_ucan.Data;
 using fcu_ucan.Entities;
+using fcu_ucan.Repositories;
 using fcu_ucan.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -133,6 +134,8 @@ namespace fcu_ucan
                 });
 
             services.AddScoped<IOAuthService, OAuthService>();
+            
+            services.AddScoped<IMemberRepository, MemberRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
