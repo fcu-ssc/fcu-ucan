@@ -61,6 +61,14 @@
       "files": [
         "jquery.validate.unobtrusive.min.js"
       ]
+    },
+    {
+      "provider": "unpkg",
+      "library": "bulma-responsive-tables@1.2.3",
+      "destination": "wwwroot/lib/bulma-responsive-tables/",
+      "files": [
+        "css/main.min.css"
+      ]
     }
   ]
 }
