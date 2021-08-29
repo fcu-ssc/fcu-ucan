@@ -1,6 +1,6 @@
 using System;
 
-namespace fcu_ucan.Models
+namespace fcu_ucan.Models.Error
 {
     public class ErrorViewModel
     {

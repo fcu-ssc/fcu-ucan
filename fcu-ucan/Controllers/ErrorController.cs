@@ -1,5 +1,5 @@
 using System.Diagnostics;
-using fcu_ucan.Models;
+using fcu_ucan.Models.Error;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 

@@ -1,4 +1,4 @@
-namespace fcu_ucan.Models
+namespace fcu_ucan.Models.Error
 {
     /// <summary>
     /// NID 錯誤

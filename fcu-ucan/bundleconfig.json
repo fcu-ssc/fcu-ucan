@@ -18,6 +18,17 @@
     ]
   },
   {
+    "outputFileName": "wwwroot/js/delete-modal.min.js",
+    "inputFiles": [
+      "wwwroot/js/delete-modal.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
     "outputFileName": "wwwroot/js/home.min.js",
     "inputFiles": [
       "wwwroot/js/home.js"

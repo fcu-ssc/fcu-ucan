@@ -1,0 +1,112 @@
+﻿@model MemberViewModel
+@{
+    ViewData["Title"] = "成員詳情";
+}
+
+<section class="section is-medium">
+    <div class="container is-max-desktop">
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+            <ul>
+                <li><a asp-area="" asp-controller="Manage" asp-action="Index">管理</a></li>
+                <li><a asp-area="" asp-controller="Manage" asp-action="Members">成員</a></li>
+                <li class="is-active"><a asp-area="" asp-controller="Manage" asp-action="MemberDetail" asp-route-memberId="" aria-current="page">@ViewData["Title"]</a></li>
+            </ul>
+        </nav>
+        <div class="box content">
+            <h1 class="title is-3">@ViewData["Title"]</h1>
+            <hr />
+            <form role="form">
+                <div class="field mb-5">
+                    <label asp-for="Id" class="label">識別碼</label>
+                    <div class="control has-icons-left">
+                        <input asp-for="Id" class="input" type="text" placeholder="請輸入識別碼" disabled />
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-key"></i>
+                        </span>
+                    </div>
+                    <span asp-validation-for="NetworkId" class="help is-danger"></span>
+                </div>
+                <div class="field mb-5">
+                    <label asp-for="NetworkId" class="label">NID 帳號</label>
+                    <div class="control has-icons-left">
+                        <input asp-for="NetworkId" class="input" type="text" placeholder="請輸入 NID 帳號" disabled />
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-user"></i>
+                        </span>
+                    </div>
+                    <span asp-validation-for="NetworkId" class="help is-danger"></span>
+                </div>
+                <div class="field mb-5">
+                    <label asp-for="StudentId" class="label">UCAN 帳號</label>
+                    <div class="control has-icons-left">
+                        <input asp-for="StudentId" class="input" type="text" placeholder="請輸入 UCAN 帳號" disabled />
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-user"></i>
+                        </span>
+                    </div>
+                    <span asp-validation-for="StudentId" class="help is-danger"></span>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <a asp-area="" asp-controller="Manage" asp-action="MemberEdit" asp-route-memberId="@Model.Id" class="button is-link">編輯</a>
+                        <button id="delete-btn" class="button is-danger" type="button">刪除</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div id="delete-modal" class="modal">
+        <div class="modal-background"></div>
+        <form asp-area="" asp-controller="Manage" asp-action="MemberDelete" asp-route-memberId="@Model.Id" method="post" role="form" class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">您確定要刪除?</p>
+                <button class="delete" aria-label="close" data-bulma-modal="close" type="button"></button>
+            </header>
+            <section class="modal-card-body">
+                <div class="field mb-5">
+                    <label asp-for="Id" class="label">識別碼</label>
+                    <div class="control has-icons-left">
+                        <input asp-for="Id" class="input" type="text" placeholder="請輸入識別碼" disabled/>
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-key"></i>
+                        </span>
+                    </div>
+                    <span asp-validation-for="NetworkId" class="help is-danger"></span>
+                </div>
+                <div class="field mb-5">
+                    <label asp-for="NetworkId" class="label">NID 帳號</label>
+                    <div class="control has-icons-left">
+                        <input asp-for="NetworkId" class="input" type="text" placeholder="請輸入 NID 帳號" disabled/>
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-user"></i>
+                        </span>
+                    </div>
+                    <span asp-validation-for="NetworkId" class="help is-danger"></span>
+                </div>
+                <div class="field mb-5">
+                    <label asp-for="StudentId" class="label">UCAN 帳號</label>
+                    <div class="control has-icons-left">
+                        <input asp-for="StudentId" class="input" type="text" placeholder="請輸入 UCAN 帳號" disabled/>
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-user"></i>
+                        </span>
+                    </div>
+                    <span asp-validation-for="StudentId" class="help is-danger"></span>
+                </div>
+            </section>
+            <footer class="modal-card-foot">
+                <button class="button is-danger" type="submit">確定</button>
+                <button class="button" data-bulma-modal="close" type="button">取消</button>
+            </footer>
+        </form>
+    </div>
+</section>
+
+@section Scripts {
+    <environment include="Development">
+        <script src="~/js/delete-modal.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/js/delete-modal.min.js" asp-append-version="true"></script>
+    </environment>
+}

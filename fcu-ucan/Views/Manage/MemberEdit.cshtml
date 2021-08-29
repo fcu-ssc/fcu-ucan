@@ -1,0 +1,48 @@
+﻿@model MemberEditViewModel
+@{
+    ViewData["Title"] = "編輯成員";
+}
+
+<section class="section is-medium">
+    <div class="container is-max-desktop">
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+            <ul>
+                <li><a asp-area="" asp-controller="Manage" asp-action="Index">管理</a></li>
+                <li><a asp-area="" asp-controller="Manage" asp-action="Members">成員</a></li>
+                <li><a asp-area="" asp-controller="Manage" asp-action="MemberDetail" asp-route-memberId="@Context.Request.RouteValues["memberId"]">成員詳情</a></li>
+                <li class="is-active"><a asp-area="" asp-controller="Manage" asp-action="MemberEdit" asp-route-memberId="" aria-current="page">@ViewData["Title"]</a></li>
+            </ul>
+        </nav>
+        <div class="box content">
+            <h1 class="title is-3">@ViewData["Title"]</h1>
+            <hr/>
+            <form asp-area="" asp-controller="Manage" asp-action="MemberEdit" asp-route-memberId="@Context.Request.RouteValues["memberId"]" method="post" role="form">
+                <div class="field mb-5">
+                    <label asp-for="NetworkId" class="label">NID 帳號</label>
+                    <div class="control has-icons-left">
+                        <input asp-for="NetworkId" class="input" type="text" placeholder="請輸入 NID 帳號" />
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-user"></i>
+                        </span>
+                    </div>
+                    <span asp-validation-for="NetworkId" class="help is-danger"></span>
+                </div>
+                <div class="field mb-5">
+                    <label asp-for="StudentId" class="label">UCAN 帳號</label>
+                    <div class="control has-icons-left">
+                        <input asp-for="StudentId" class="input" type="text" placeholder="請輸入 UCAN 帳號" />
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-user"></i>
+                        </span>
+                    </div>
+                    <span asp-validation-for="StudentId" class="help is-danger"></span>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <button class="button is-link" type="submit">修改</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

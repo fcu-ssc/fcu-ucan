@@ -1,0 +1,21 @@
+﻿@model UserEditViewModel
+@{
+    ViewData["Title"] = "編輯使用者";
+}
+
+<section class="section is-medium">
+    <div class="container is-max-desktop">
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+            <ul>
+                <li><a asp-area="" asp-controller="Manage" asp-action="Index">管理</a></li>
+                <li><a asp-area="" asp-controller="Manage" asp-action="Users">使用者</a></li>
+                <li><a asp-area="" asp-controller="Manage" asp-action="UserDetail" asp-route-userId="">使用者詳情</a></li>
+                <li class="is-active"><a asp-area="" asp-controller="Manage" asp-action="UserEdit" asp-route-userId="" aria-current="page">@ViewData["Title"]</a></li>
+            </ul>
+        </nav>
+        <div class="box content">
+            <h1 class="title is-3">@ViewData["Title"]</h1>
+            <hr/>
+        </div>
+    </div>
+</section>

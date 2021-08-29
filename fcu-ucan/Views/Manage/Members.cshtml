@@ -1,5 +1,10 @@
-﻿@{
+﻿@model IEnumerable<MemberViewModel>
+@{
     ViewData["Title"] = "成員";
+}
+
+@section Styles {
+    <link rel="stylesheet" type="text/css" href="~/lib/bulma-responsive-tables/css/main.min.css" />
 }
 
 <section class="section is-medium">
@@ -11,8 +16,78 @@
             </ul>
         </nav>
         <div class="box content">
-            <h1 class="title is-3">@ViewData["Title"]</h1>
+            <div class="is-flex is-justify-content-space-between">
+                <h1 class="title is-3">@ViewData["Title"]</h1>
+                <div class="field has-addons is-hidden-tablet-only is-hidden-desktop-only is-hidden-widescreen-only">
+                    <p class="control">
+                        <a asp-area="" asp-controller="Manage" asp-action="MemberAdd" class="button">
+                            <span class="icon is-small">
+                                <i class="fas fa-plus"></i>
+                            </span>
+                        </a>
+                    </p>
+                    <p class="control">
+                        <a class="button">
+                            <span class="icon is-small">
+                                <i class="fas fa-upload"></i>
+                            </span>
+                        </a>
+                    </p>
+                </div>
+                <div class="field has-addons is-hidden-mobile">
+                    <p class="control">
+                        <a asp-area="" asp-controller="Manage" asp-action="MemberAdd" class="button">
+                            <span class="icon is-small">
+                                <i class="fas fa-plus"></i>
+                            </span>
+                            <span>新增</span>
+                        </a>
+                    </p>
+                    <p class="control">
+                        <a class="button">
+                            <span class="icon is-small">
+                                <i class="fas fa-upload"></i>
+                            </span>
+                            <span>匯入</span>
+                        </a>
+                    </p>
+                </div>
+            </div>
             <hr/>
+            <div class="b-table">
+                <div class="table-wrapper has-mobile-cards">
+                    <table class="table is-fullwidth is-striped is-fullwidth">
+                        <thead>
+                        <tr>
+                            <th>識別碼</th>
+                            <th>NID 帳號</th>
+                            <th>UCAN 帳號</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var member in Model)
+                            {
+                                <tr>
+                                    <td data-label="識別碼">@member.Id</td>
+                                    <td data-label="NID 帳號">@member.NetworkId</td>
+                                    <td data-label="UCAN 帳號">@member.StudentId</td>
+                                    <td class="is-actions-cell">
+                                        <div class="buttons">
+                                            <a asp-area="" asp-controller="Manage" asp-action="MemberDetail" asp-route-memberId="@member.Id" class="button is-link is-inverted is-underlined">
+                                                <span class="icon is-small">
+                                                    <i class="far fa-newspaper"></i>
+                                                </span>
+                                                <span>詳情</span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </section>
