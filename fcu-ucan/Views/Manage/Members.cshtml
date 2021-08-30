@@ -27,11 +27,11 @@
                         </a>
                     </p>
                     <p class="control">
-                        <a class="button">
+                        <button id="upload-btn-1" class="button" type="button">
                             <span class="icon is-small">
                                 <i class="fas fa-upload"></i>
                             </span>
-                        </a>
+                        </button>
                     </p>
                 </div>
                 <div class="field has-addons is-hidden-mobile">
@@ -44,12 +44,12 @@
                         </a>
                     </p>
                     <p class="control">
-                        <a class="button">
+                        <button id="upload-btn-2" class="button" type="button">
                             <span class="icon is-small">
                                 <i class="fas fa-upload"></i>
                             </span>
                             <span>匯入</span>
-                        </a>
+                        </button>
                     </p>
                 </div>
             </div>
@@ -118,4 +118,43 @@
             </div>
         </div>
     </div>
+    <div id="upload-modal" class="modal">
+        <div class="modal-background"></div>
+        <form asp-area="" asp-controller="Manage" asp-action="MemberImport" method="post" role="form" enctype="multipart/form-data" class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">匯入成員</p>
+                <button class="delete" aria-label="close" data-bulma-modal="close" type="button"></button>
+            </header>
+            <section class="modal-card-body is-flex is-flex-direction-column is-align-items-center">
+                <p class="mb-3">第一行請擺學號，第二行請擺帳號，不要有標題</p>
+                <div class="file is-primary is-boxed has-name">
+                    <label class="file-label">
+                        <input class="file-input" type="file" name="file"/>
+                        <span class="file-cta">
+                            <span class="file-icon">
+                                <i class="fas fa-upload"></i>
+                            </span>
+                            <span class="file-label">點這選擇檔案</span>
+                        </span>
+                        <span class="file-name">
+                            <p>只限上傳 <code>.xlsx</code> 檔案</p>
+                        </span>
+                    </label>
+                </div>
+            </section>
+            <footer class="modal-card-foot">
+                <button class="button is-link" type="submit">上傳</button>
+                <button class="button" data-bulma-modal="close" type="button">取消</button>
+            </footer>
+        </form>
+    </div>
 </section>
+
+@section Scripts {
+    <environment include="Development">
+        <script src="~/js/upload-modal.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/js/upload-modal.min.js" asp-append-version="true"></script>
+    </environment>
+}

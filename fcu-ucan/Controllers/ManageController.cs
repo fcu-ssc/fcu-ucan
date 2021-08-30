@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using ClosedXML.Excel;
 using fcu_ucan.Data;
 using fcu_ucan.Entities;
 using fcu_ucan.Helpers;
@@ -10,6 +12,7 @@ using fcu_ucan.Models;
 using fcu_ucan.Models.Member;
 using fcu_ucan.Models.User;
 using fcu_ucan.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -299,6 +302,31 @@ namespace fcu_ucan.Controllers
                 }
             }
             return View(model);
+        }
+
+        /// <summary>
+        /// 匯入成員
+        /// </summary>
+        [AuthAuthorize(Roles = "Member")]
+        [HttpPost("members/import")]
+        public async Task<IActionResult> MemberImport(IFormFile file)
+        {
+            using (var wbook = new XLWorkbook(file.OpenReadStream()))
+            {
+                var worksheet = wbook.Worksheet(1);
+                var entities = new List<Member>();
+                foreach (IXLRow row in worksheet.Rows())
+                {
+                    entities.Add(new Member
+                    {
+                        NetworkId = row.Cell(1).Value.ToString(),
+                        StudentId = row.Cell(2).Value.ToString()
+                    });
+                }
+                await _dbContext.Members.AddRangeAsync(entities);
+                await _dbContext.SaveChangesAsync();
+            }
+            return RedirectToAction("Members", "Manage");
         }
 
         /// <summary>
