@@ -1,8 +1,10 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
+using fcu_ucan.Data;
 using fcu_ucan.Models.NID;
 using fcu_ucan.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
@@ -14,12 +16,18 @@ namespace fcu_ucan.Controllers
         private readonly ILogger<NIDController> _logger;
         private readonly IConfiguration _configuration;
         private readonly IOAuthService _oAuthService;
+        private readonly ApplicationDbContext _dbContext;
 
-        public NIDController(ILogger<NIDController> logger, IConfiguration configuration, IOAuthService oAuthService)
+        public NIDController(
+            ILogger<NIDController> logger, 
+            IConfiguration configuration,
+            IOAuthService oAuthService, 
+            ApplicationDbContext dbContext)
         {
             _logger = logger;
             _configuration = configuration;
             _oAuthService = oAuthService;
+            _dbContext = dbContext;
         }
 
         [HttpGet("login")]
@@ -47,7 +55,15 @@ namespace fcu_ucan.Controllers
                 case 200:
                     var user = await _oAuthService.GetLoginUser(model.UserCode);
                     _logger.LogInformation($"NID 登入成功: {user.Status}, {user.Message}, {user.StuId}");
-                    var token = await _oAuthService.GetToken(user.StuId);
+                    var member = await _dbContext.Members
+                        .AsNoTracking()
+                        .SingleOrDefaultAsync(x => x.NetworkId == user.StuId);
+                    if (member != null)
+                    {
+                        _logger.LogInformation($"{user.StuId} 換成 member.StudentId");
+                    }
+                    var token = await _oAuthService
+                        .GetToken(member == null ? user.StuId : member.StudentId);
                     _logger.LogInformation($"獲取 Ucan Token 成功: {token}");
                     switch (token[0])
                     {
