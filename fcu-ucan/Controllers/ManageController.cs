@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using fcu_ucan.Data;
@@ -10,6 +9,7 @@ using fcu_ucan.Helpers;
 using fcu_ucan.Models;
 using fcu_ucan.Models.Member;
 using fcu_ucan.Models.User;
+using fcu_ucan.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -26,13 +26,20 @@ namespace fcu_ucan.Controllers
         private readonly ApplicationDbContext _dbContext;
         private readonly IMapper _mapper;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IMailService _mailService;
 
-        public ManageController(ILogger<ManageController> logger, ApplicationDbContext dbContext, IMapper mapper, UserManager<ApplicationUser> userManager)
+        public ManageController(
+            ILogger<ManageController> logger, 
+            ApplicationDbContext dbContext, 
+            IMapper mapper, 
+            UserManager<ApplicationUser> userManager, 
+            IMailService mailService)
         {
             _logger = logger;
             _dbContext = dbContext;
             _mapper = mapper;
             _userManager = userManager;
+            _mailService = mailService;
         }
         
         [HttpGet("")]
@@ -143,7 +150,7 @@ namespace fcu_ucan.Controllers
                     {
                         await _userManager.AddToRoleAsync(entity, "User");
                     }
-                    // TODO: 寄信
+                    await _mailService.SendRegisterEmailAsync(model.Email, entity.SecurityStamp);
                     return RedirectToAction("Users", "Manage");
                 }
             }

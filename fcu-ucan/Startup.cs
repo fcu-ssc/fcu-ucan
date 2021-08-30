@@ -135,6 +135,8 @@ namespace fcu_ucan
 
             services.AddScoped<IOAuthService, OAuthService>();
             
+            services.AddSingleton<IMailService, MailService>();
+
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }
 
