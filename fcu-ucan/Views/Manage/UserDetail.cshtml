@@ -3,6 +3,10 @@
     ViewData["Title"] = "使用者詳情";
 }
 
+@section Styles {
+    <link rel="stylesheet" type="text/css" href="~/lib/bulma-switch/dist/css/bulma-switch.min.css" />
+}
+
 <section class="section is-medium">
     <div class="container is-max-desktop">
         <nav class="breadcrumb" aria-label="breadcrumbs">
@@ -15,6 +19,78 @@
         <div class="box content">
             <h1 class="title is-3">@ViewData["Title"]</h1>
             <hr/>
+            <form role="form">
+                <div class="field mb-5">
+                    <label asp-for="Id" class="label">識別碼</label>
+                    <div class="control has-icons-left">
+                        <input asp-for="Id" class="input" type="text" placeholder="請輸入識別碼" disabled />
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-key"></i>
+                        </span>
+                    </div>
+                    <span asp-validation-for="Id" class="help is-danger"></span>
+                </div>
+                <div class="field mb-5">
+                    <label asp-for="UserName" class="label">使用者名稱</label>
+                    <div class="control has-icons-left">
+                        <input asp-for="UserName" class="input" type="text" placeholder="請輸入使用者名稱" disabled />
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-user"></i>
+                        </span>
+                    </div>
+                    <span asp-validation-for="UserName" class="help is-danger"></span>
+                </div>
+                <div class="field mb-5">
+                    <label asp-for="Email" class="label">電子郵件</label>
+                    <div class="control has-icons-left">
+                        <input asp-for="Email" class="input" type="email" placeholder="請輸入電子郵件" disabled />
+                        <span class="icon is-small is-left">
+                            <i class="far fa-envelope"></i>
+                        </span>
+                    </div>
+                    <span asp-validation-for="Email" class="help is-danger"></span>
+                </div>
+                <div class="field mb-5">
+                    <input asp-for="EmailConfirmed" class="switch is-rounded is-rtl" type="checkbox" disabled />
+                    <label asp-for="EmailConfirmed" class="label">電子郵件驗證</label>
+                    <span asp-validation-for="EmailConfirmed" class="help is-danger"></span>
+                </div>
+                <div class="field mb-5">
+                    <label asp-for="PhoneNumber" class="label">手機號碼</label>
+                    <div class="control has-icons-left">
+                        <input asp-for="PhoneNumber" class="input" type="tel" placeholder="請輸入手機號碼" disabled />
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-mobile-alt"></i>
+                        </span>
+                    </div>
+                    <span asp-validation-for="PhoneNumber" class="help is-danger"></span>
+                </div>
+                <div class="field mb-5">
+                    <input asp-for="PhoneNumberConfirmed" class="switch is-rounded is-rtl" type="checkbox" disabled />
+                    <label asp-for="PhoneNumberConfirmed" class="label">手機號碼驗證</label>
+                    <span asp-validation-for="PhoneNumberConfirmed" class="help is-danger"></span>
+                </div>
+                <div class="field mb-5">
+                    <input asp-for="IsEnable" class="switch is-rounded is-rtl" type="checkbox" disabled />
+                    <label asp-for="IsEnable" class="label">啟用帳戶</label>
+                    <span asp-validation-for="IsEnable" class="help is-danger"></span>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <a asp-area="" asp-controller="Manage" asp-action="UserEdit" asp-route-userId="@Model.Id" class="button is-link">編輯</a>
+                        <button id="delete-btn" class="button is-danger" type="button">刪除</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </section>
+
+@section Scripts {
+    <environment include="Development">
+        <script src="~/js/delete-modal.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/js/delete-modal.min.js" asp-append-version="true"></script>
+    </environment>
+}

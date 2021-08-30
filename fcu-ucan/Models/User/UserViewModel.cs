@@ -29,22 +29,6 @@ namespace fcu_ucan.Models.User
         [JsonPropertyName("PhoneNumberConfirmed")]
         [Display(Name = "手機號碼驗證")]
         public bool PhoneNumberConfirmed { get; set; }
-        
-        [JsonPropertyName("TwoFactorEnabled")]
-        [Display(Name = "雙因素驗證")]
-        public bool TwoFactorEnabled { get; set; }
-        
-        [JsonPropertyName("LockoutEnd")]
-        [Display(Name = "使用者鎖定結束時間")]
-        public DateTimeOffset? LockoutEnd { get; set; }
-        
-        [JsonPropertyName("LockoutEnabled")]
-        [Display(Name = "可以鎖定使用者")]
-        public bool LockoutEnabled { get; set; }
-
-        [JsonPropertyName("AccessFailedCount")]
-        [Display(Name = "失敗登入嘗試次數")]
-        public int AccessFailedCount { get; set; }
 
         [JsonPropertyName("IsEnable")]
         [Display(Name = "啟用帳戶")]

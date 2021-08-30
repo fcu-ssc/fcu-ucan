@@ -5,9 +5,10 @@ using System.Threading.Tasks;
 using AutoMapper;
 using fcu_ucan.Data;
 using fcu_ucan.Entities;
+using fcu_ucan.Helpers;
+using fcu_ucan.Models;
 using fcu_ucan.Models.Member;
 using fcu_ucan.Models.User;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +17,7 @@ using MimeTypes;
 
 namespace fcu_ucan.Controllers
 {
-    [Authorize(Roles = "Administrator")]
+    [AuthAuthorize(Roles = "Recorder,Member,User")]
     [Route("manage")]
     public class ManageController : Controller
     {
@@ -42,6 +43,7 @@ namespace fcu_ucan.Controllers
         /// <summary>
         /// 日誌頁面
         /// </summary>
+        [AuthAuthorize(Roles = "Recorder")]
         [HttpGet("logs")]
         public ActionResult<FileInfo[]> Logs()
         {
@@ -54,6 +56,7 @@ namespace fcu_ucan.Controllers
         /// 日誌下載
         /// </summary>
         /// <param name="fileName"></param>
+        [AuthAuthorize(Roles = "Recorder")]
         [HttpGet("logs/{fileName}")]
         public IActionResult Logs([FromRoute] string fileName)
         {
@@ -70,19 +73,25 @@ namespace fcu_ucan.Controllers
         /// <summary>
         /// 使用者頁面
         /// </summary>
+        [AuthAuthorize(Roles = "User")]
         [HttpGet("users")]
-        public async Task<ActionResult<IEnumerable<UserViewModel>>> Users()
+        public async Task<ActionResult<PaginatedList<UserViewModel>>> Users([FromQuery] int? page)
         {
             var entities = await _dbContext.Users
                 .AsNoTracking()
+                .Skip((page ?? 1 - 1) * 30)
+                .Take(30)
                 .ToListAsync();
-            var models = _mapper.Map<IEnumerable<UserViewModel>>(entities);
-            return View(models);
+            var count = await _dbContext.Users.CountAsync();
+            var models = _mapper.Map<List<UserViewModel>>(entities);
+            var paginatedModels = new PaginatedList<UserViewModel>(models, count, page ?? 1, 30);
+            return View(paginatedModels);
         }
-        
+
         /// <summary>
         /// 使用者詳情頁面
         /// </summary>
+        [AuthAuthorize(Roles = "User")]
         [HttpGet("users/{userId}")]
         public async Task<ActionResult<UserViewModel>> UserDetail([FromRoute] string userId)
         {
@@ -96,10 +105,42 @@ namespace fcu_ucan.Controllers
             var model = _mapper.Map<UserViewModel>(entity);
             return View(model);
         }
-        
+
+        /// <summary>
+        /// 邀請使用者頁面
+        /// </summary>
+        [AuthAuthorize(Roles = "User")]
+        [HttpGet("users/invite")]
+        public IActionResult UserInvite() => View();
+
+        /// <summary>
+        /// 邀請使用者
+        /// </summary>
+        [AuthAuthorize(Roles = "User")]
+        [HttpPost("users/invite")]
+        public async Task<ActionResult<UserInviteViewModel>> UserInvite([FromForm] UserInviteViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (await _dbContext.Users.AnyAsync(x => x.NormalizedEmail == model.Email.ToUpperInvariant()))
+                {
+                    ModelState.AddModelError("Email", "電子郵件已經被使用");
+                }
+                if (ModelState.IsValid)
+                {
+                    var entity = _mapper.Map<ApplicationUser>(model);
+                    await _userManager.CreateAsync(entity);
+                    // TODO: 寄信、權限
+                    return RedirectToAction("Users", "Manage");
+                }
+            }
+            return View(model);
+        }
+
         /// <summary>
         /// 編輯使用者頁面
         /// </summary>
+        [AuthAuthorize(Roles = "User")]
         [HttpGet("users/{userId}/edit")]
         public async Task<ActionResult<UserEditViewModel>> UserEdit([FromRoute] string userId)
         {
@@ -117,6 +158,7 @@ namespace fcu_ucan.Controllers
         /// <summary>
         /// 編輯使用者
         /// </summary>
+        [AuthAuthorize(Roles = "User")]
         [HttpPost("users/{userId}/edit")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult<UserEditViewModel>> UserEdit([FromRoute] string userId, [FromForm] UserEditViewModel model)
@@ -129,11 +171,18 @@ namespace fcu_ucan.Controllers
             }
             if (ModelState.IsValid)
             {
+                if (model.Email != entity.Email)
+                {
+                    if (await _dbContext.Users.AnyAsync(x => x.NormalizedEmail == model.Email.ToUpperInvariant()))
+                    {
+                        ModelState.AddModelError("Email", "電子郵件已經被使用");
+                    }
+                }
                 if (string.IsNullOrEmpty(model.PhoneNumber) && model.PhoneNumber != entity.PhoneNumber)
                 {
                     if (await _dbContext.Users.AnyAsync(x => x.PhoneNumber == model.PhoneNumber))
                     {
-                        ModelState.AddModelError("", "");
+                        ModelState.AddModelError("PhoneNumber", "手機號碼已經被使用");
                     }
                 }
                 if (ModelState.IsValid)
@@ -149,6 +198,7 @@ namespace fcu_ucan.Controllers
         /// <summary>
         /// 刪除使用者
         /// </summary>
+        [AuthAuthorize(Roles = "User")]
         [HttpPost("users/{userId}/delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UserDelete([FromRoute] string userId)
@@ -166,19 +216,25 @@ namespace fcu_ucan.Controllers
         /// <summary>
         /// 成員頁面
         /// </summary>
+        [AuthAuthorize(Roles = "Member")]
         [HttpGet("members")]
-        public async Task<ActionResult<IEnumerable<MemberViewModel>>> Members()
+        public async Task<ActionResult<PaginatedList<MemberViewModel>>> Members([FromQuery] int? page)
         {
             var entities = await _dbContext.Members
                 .AsNoTracking()
+                .Skip((page ?? 1 - 1) * 30)
+                .Take(30)
                 .ToListAsync();
-            var models = _mapper.Map<IEnumerable<MemberViewModel>>(entities);
-            return View(models);
+            var count = await _dbContext.Members.CountAsync();
+            var models = _mapper.Map<List<MemberViewModel>>(entities);
+            var paginatedModels = new PaginatedList<MemberViewModel>(models, count, page ?? 1, 30);
+            return View(paginatedModels);
         }
         
         /// <summary>
         /// 成員詳情頁面
         /// </summary>
+        [AuthAuthorize(Roles = "Member")]
         [HttpGet("members/{memberId}")]
         public async Task<ActionResult<MemberViewModel>> MemberDetail([FromRoute] string memberId)
         {
@@ -192,12 +248,14 @@ namespace fcu_ucan.Controllers
         /// <summary>
         /// 新增成員頁面
         /// </summary>
+        [AuthAuthorize(Roles = "Member")]
         [HttpGet("members/add")]
         public IActionResult MemberAdd() => View();
 
         /// <summary>
         /// 新增成員
         /// </summary>
+        [AuthAuthorize(Roles = "Member")]
         [HttpPost("members/add")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> MemberAdd([FromForm] MemberAddViewModel model)
@@ -206,11 +264,11 @@ namespace fcu_ucan.Controllers
             {
                 if (await _dbContext.Members.AnyAsync(x => x.NetworkId == model.NetworkId))
                 {
-                    ModelState.AddModelError("NetworkId", "");
+                    ModelState.AddModelError("NetworkId", "NID 帳號已經被使用");
                 }
                 if (await _dbContext.Members.AnyAsync(x => x.StudentId == model.StudentId))
                 {
-                    ModelState.AddModelError("StudentId", "");
+                    ModelState.AddModelError("StudentId", "UCAN 帳號已經被使用");
                 }
                 if (ModelState.IsValid)
                 {
@@ -226,6 +284,7 @@ namespace fcu_ucan.Controllers
         /// <summary>
         /// 編輯成員頁面
         /// </summary>
+        [AuthAuthorize(Roles = "Member")]
         [HttpGet("members/{memberId}/edit")]
         public async Task<ActionResult<MemberEditViewModel>> MemberEdit([FromRoute] string memberId)
         {
@@ -243,6 +302,7 @@ namespace fcu_ucan.Controllers
         /// <summary>
         /// 編輯成員
         /// </summary>
+        [AuthAuthorize(Roles = "Member")]
         [HttpPost("members/{memberId}/edit")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult<MemberEditViewModel>> MemberEdit([FromRoute] string memberId, [FromForm] MemberEditViewModel model)
@@ -259,14 +319,14 @@ namespace fcu_ucan.Controllers
                 {
                     if (await _dbContext.Members.AnyAsync(x => x.NetworkId == model.NetworkId))
                     {
-                        ModelState.AddModelError("", "");
+                        ModelState.AddModelError("NetworkId", "NID 帳號已經被使用");
                     }
                 }
                 if (entity.StudentId != model.StudentId)
                 {
                     if (await _dbContext.Members.AnyAsync(x => x.StudentId == model.StudentId))
                     {
-                        ModelState.AddModelError("", "");
+                        ModelState.AddModelError("StudentId", "UCAN 帳號已經被使用");
                     }
                 }
                 if (ModelState.IsValid)
@@ -283,6 +343,7 @@ namespace fcu_ucan.Controllers
         /// <summary>
         /// 刪除成員
         /// </summary>
+        [AuthAuthorize(Roles = "Member")]
         [HttpPost("members/{memberId}/delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> MemberDelete([FromRoute] string memberId)

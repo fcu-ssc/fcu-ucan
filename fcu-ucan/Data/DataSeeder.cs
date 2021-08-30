@@ -41,13 +41,30 @@ namespace fcu_ucan.Data
         private static async Task CreateRoleAsync(IServiceProvider services, ILogger<DataSeeder> logger)
         {
             var roleManager = services.GetRequiredService<RoleManager<ApplicationRole>>();
-            var role = new ApplicationRole
+
+            var recorder = new ApplicationRole
             {
-                Name = "Administrator",
-                NormalizedName = "Administrator".ToUpperInvariant()
+                Name = "Recorder",
+                NormalizedName = "Recorder".ToUpperInvariant()
             };
-            await roleManager.CreateAsync(role);
-            await roleManager.AddClaimAsync(role, new Claim(ClaimTypes.Role, "Administrator"));
+            await roleManager.CreateAsync(recorder);
+            await roleManager.AddClaimAsync(recorder, new Claim(ClaimTypes.Role, "Recorder"));
+            
+            var member = new ApplicationRole
+            {
+                Name = "Member",
+                NormalizedName = "Member".ToUpperInvariant()
+            };
+            await roleManager.CreateAsync(member);
+            await roleManager.AddClaimAsync(member, new Claim(ClaimTypes.Role, "Member"));
+            
+            var user = new ApplicationRole
+            {
+                Name = "User",
+                NormalizedName = "User".ToUpperInvariant()
+            };
+            await roleManager.CreateAsync(user);
+            await roleManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "User"));
         }
 
         private static async Task CreateUserAsync(IServiceProvider services, ILogger<DataSeeder> logger)
@@ -64,12 +81,12 @@ namespace fcu_ucan.Data
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id),
-                new Claim(ClaimTypes.Name, user.UserName),
-                new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.Sid, user.SecurityStamp)
             };
             await userManager.AddClaimsAsync(user, claims);
-            await userManager.AddToRoleAsync(user, "Administrator");
+            await userManager.AddToRoleAsync(user, "Recorder");
+            await userManager.AddToRoleAsync(user, "Member");
+            await userManager.AddToRoleAsync(user, "User");
         }
     }
 }

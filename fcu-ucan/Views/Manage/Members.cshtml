@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MemberViewModel>
+﻿@model PaginatedList<MemberViewModel>
 @{
     ViewData["Title"] = "成員";
 }
@@ -66,6 +66,23 @@
                         </tr>
                         </thead>
                         <tbody>
+                        @if (!Model.Any())
+                        {
+                            <tr class="is-empty">
+                                <td colspan="4">
+                                    <section class="section">
+                                        <div class="content has-text-grey has-text-centered">
+                                            <figure class="image">
+                                                <i class="fas fa-inbox fa-5x"></i>
+                                            </figure>
+                                            <p>沒有資料</p>
+                                        </div>
+                                    </section>
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
                             @foreach (var member in Model)
                             {
                                 <tr>
@@ -84,9 +101,20 @@
                                     </td>
                                 </tr>
                             }
+                        }
                         </tbody>
                     </table>
                 </div>
+                @if (Model.Any())
+                {
+                    <nav class="pagination is-centered is-rounded" role="navigation" aria-label="pagination">
+                        <a asp-area="" asp-controller="Manage" asp-action="Members" asp-route-page="@(Model.PageIndex-1)" disabled="@(Model.HasPreviousPage == false)" class="pagination-previous">上一頁</a>
+                        <a asp-area="" asp-controller="Manage" asp-action="Members" asp-route-page="@(Model.PageIndex+1)" disabled="@(Model.HasNextPage == false)" class="pagination-next">下一頁</a>
+                        <ul class="pagination-list">
+                            <li><a asp-area="" asp-controller="Manage" asp-action="Members" asp-route-page="@Model.PageIndex" class="pagination-link is-current" aria-current="page">@Model.PageIndex / @Model.TotalPages</a></li>
+                        </ul>
+                    </nav>
+                }
             </div>
         </div>
     </div>

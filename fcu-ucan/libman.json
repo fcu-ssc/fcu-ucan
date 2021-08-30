@@ -69,6 +69,14 @@
       "files": [
         "css/main.min.css"
       ]
+    },
+    {
+      "provider": "unpkg",
+      "library": "bulma-switch@2.0.0",
+      "destination": "wwwroot/lib/bulma-switch/",
+      "files": [
+        "dist/css/bulma-switch.min.css"
+      ]
     }
   ]
 }
