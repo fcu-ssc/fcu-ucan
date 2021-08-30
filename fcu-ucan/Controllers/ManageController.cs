@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using fcu_ucan.Data;
@@ -130,7 +131,19 @@ namespace fcu_ucan.Controllers
                 {
                     var entity = _mapper.Map<ApplicationUser>(model);
                     await _userManager.CreateAsync(entity);
-                    // TODO: 寄信、權限
+                    if (model.IsRecorder)
+                    {
+                        await _userManager.AddToRoleAsync(entity, "Recorder");
+                    }
+                    if (model.IsMember)
+                    {
+                        await _userManager.AddToRoleAsync(entity, "Member");
+                    }
+                    if (model.IsUser)
+                    {
+                        await _userManager.AddToRoleAsync(entity, "User");
+                    }
+                    // TODO: 寄信
                     return RedirectToAction("Users", "Manage");
                 }
             }

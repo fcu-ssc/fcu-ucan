@@ -9,7 +9,7 @@
             <ul>
                 <li><a asp-area="" asp-controller="Manage" asp-action="Index">管理</a></li>
                 <li><a asp-area="" asp-controller="Manage" asp-action="Members">成員</a></li>
-                <li class="is-active"><a asp-area="" asp-controller="Manage" asp-action="MemberDetail" asp-route-memberId="" aria-current="page">@ViewData["Title"]</a></li>
+                <li class="is-active"><a asp-area="" asp-controller="Manage" asp-action="MemberDetail" asp-route-memberId="@Context.Request.RouteValues["memberId"]" aria-current="page">@ViewData["Title"]</a></li>
             </ul>
         </nav>
         <div class="box content">

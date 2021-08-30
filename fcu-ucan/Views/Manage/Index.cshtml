@@ -23,7 +23,7 @@
                         <a asp-area="" asp-controller="Manage" asp-action="Logs" class="button is-link is-inverted is-fullwidth is-underlined">日誌</a>
                     </div>
                 }
-                @if (User.IsInRole("Member"))
+                @if (User.IsInRole("User"))
                 {
                     <div class="column is-4">
                         <figure class="image">
@@ -32,7 +32,7 @@
                         <a asp-area="" asp-controller="Manage" asp-action="Users" class="button is-link is-inverted is-fullwidth is-underlined">使用者</a>
                     </div>
                 }
-                @if (User.IsInRole("User"))
+                @if (User.IsInRole("Member"))
                 {
                     <div class="column is-4">
                         <figure class="image">

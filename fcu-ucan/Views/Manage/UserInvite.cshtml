@@ -3,6 +3,10 @@
     ViewData["Title"] = "邀請使用者";
 }
 
+@section Styles {
+    <link rel="stylesheet" type="text/css" href="~/lib/bulma-switch/dist/css/bulma-switch.min.css" />
+}
+
 <section class="section is-medium">
     <div class="container is-max-desktop">
         <nav class="breadcrumb" aria-label="breadcrumbs">
@@ -25,6 +29,21 @@
                         </span>
                     </div>
                     <span asp-validation-for="Email" class="help is-danger"></span>
+                </div>
+                <div class="field mb-5">
+                    <input asp-for="IsRecorder" class="switch is-rounded is-rtl" type="checkbox" />
+                    <label asp-for="IsRecorder" class="label">管理日誌權限</label>
+                    <span asp-validation-for="IsRecorder" class="help is-danger"></span>
+                </div>
+                <div class="field mb-5">
+                    <input asp-for="IsMember" class="switch is-rounded is-rtl" type="checkbox" />
+                    <label asp-for="IsMember" class="label">管理成員權限</label>
+                    <span asp-validation-for="IsMember" class="help is-danger"></span>
+                </div>
+                <div class="field mb-5">
+                    <input asp-for="IsUser" class="switch is-rounded is-rtl" type="checkbox" />
+                    <label asp-for="IsUser" class="label">管理使用者權限</label>
+                    <span asp-validation-for="IsUser" class="help is-danger"></span>
                 </div>
                 <div class="field">
                     <div class="control">

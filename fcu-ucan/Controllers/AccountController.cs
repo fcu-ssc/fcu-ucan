@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using AutoMapper;
 using fcu_ucan.Entities;
 using fcu_ucan.Helpers;
 using fcu_ucan.Models.Account;
@@ -11,6 +13,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -27,6 +30,7 @@ namespace fcu_ucan.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<ApplicationRole> _roleManager;
+        private readonly IMapper _mapper;
 
         public AccountController(
             ILogger<AccountController> logger, 
@@ -34,7 +38,8 @@ namespace fcu_ucan.Controllers
             IWebHostEnvironment environment, 
             UserManager<ApplicationUser> userManager, 
             SignInManager<ApplicationUser> signInManager, 
-            RoleManager<ApplicationRole> roleManager)
+            RoleManager<ApplicationRole> roleManager, 
+            IMapper mapper)
         {
             _logger = logger;
             _configuration = configuration;
@@ -42,6 +47,7 @@ namespace fcu_ucan.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
+            _mapper = mapper;
         }
         
         [HttpGet("login")]
@@ -52,7 +58,7 @@ namespace fcu_ucan.Controllers
         
         [HttpPost("login")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login([FromForm] LoginViewModel model)
+        public async Task<ActionResult<LoginViewModel>> Login([FromForm] LoginViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -105,6 +111,8 @@ namespace fcu_ucan.Controllers
                             claims.Add(roleClaim);
                         }
                     }
+                    claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id));
+                    claims.Add(new Claim(ClaimTypes.Sid, user.SecurityStamp));
 
                     #endregion
                     
@@ -126,6 +134,63 @@ namespace fcu_ucan.Controllers
         {
             HttpContext.Session.Clear();
             return RedirectToAction("Index", "Home");
+        }
+        
+        [HttpGet("register/{code}")]
+        public async Task<IActionResult> Register([FromRoute] string code)
+        {
+            var entity = await _userManager.Users
+                .SingleOrDefaultAsync(x => x.SecurityStamp == code);
+            if (entity == null)
+            {
+                return NotFound();
+            }
+            if (entity.IsEnable)
+            {
+                return NotFound();
+            }
+            if (entity.NormalizedUserName != Regex.Replace(entity.Id, "[^A-Za-z0-9]", "").ToUpperInvariant())
+            {
+                return NotFound();
+            }
+            return View();
+        }
+        
+        [HttpPost("register/{code}")]
+        public async Task<ActionResult<RegisterViewModel>> Register([FromRoute] string code, [FromForm] RegisterViewModel model)
+        {
+            var entity = await _userManager.Users
+                .SingleOrDefaultAsync(x => x.SecurityStamp == code);
+            if (entity == null)
+            {
+                return NotFound();
+            }
+            if (entity.IsEnable)
+            {
+                return NotFound();
+            }
+            if (entity.NormalizedUserName != Regex.Replace(entity.Id, "[^A-Za-z0-9]", "").ToUpperInvariant())
+            {
+                return NotFound();
+            }
+            if (ModelState.IsValid)
+            {
+                if (entity.UserName != model.UserName)
+                {
+                    if (await _userManager.Users.AnyAsync(x => x.NormalizedUserName == model.UserName.ToUpperInvariant()))
+                    {
+                        ModelState.AddModelError("UserName", "使用者名稱已經被使用");
+                    }
+                }
+                if (ModelState.IsValid)
+                {
+                    var updateEntity = _mapper.Map(model, entity);
+                    await _userManager.UpdateAsync(updateEntity);
+                    await _userManager.AddPasswordAsync(entity, model.Password);
+                    return RedirectToAction("Login", "Account");
+                }
+            }
+            return View();
         }
         
         private string GenerateJwtToken(IList<Claim> claims)

@@ -78,12 +78,6 @@ namespace fcu_ucan.Data
                 IsEnable = true
             };
             await userManager.CreateAsync(user, "Admin1234");
-            var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.NameIdentifier, user.Id),
-                new Claim(ClaimTypes.Sid, user.SecurityStamp)
-            };
-            await userManager.AddClaimsAsync(user, claims);
             await userManager.AddToRoleAsync(user, "Recorder");
             await userManager.AddToRoleAsync(user, "Member");
             await userManager.AddToRoleAsync(user, "User");
