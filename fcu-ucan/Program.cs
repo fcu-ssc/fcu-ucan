@@ -1,4 +1,6 @@
 using System;
+using System.Threading.Tasks;
+using fcu_ucan.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Serilog;
@@ -8,7 +10,7 @@ namespace fcu_ucan
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
@@ -22,7 +24,9 @@ namespace fcu_ucan
             try
             {
                 Log.Information("Starting web host");
-                CreateHostBuilder(args).Build().Run();
+                var host = CreateHostBuilder(args).Build();
+                await DataSeeder.Initialize(host);
+                await host.RunAsync();
             }
             catch (Exception e)
             {

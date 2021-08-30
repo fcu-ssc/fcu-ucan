@@ -14,33 +14,18 @@ namespace fcu_ucan.Controllers
         }
 
         [HttpGet("")]
-        public IActionResult Index()
-        {
-            return View();
-        }
-        
+        public IActionResult Index() => View();
+
         [HttpGet("facebook")]
-        public IActionResult Facebook()
-        {
-            return Redirect("https://www.facebook.com/fcussc/");
-        }
-        
+        public IActionResult Facebook() => Redirect("https://www.facebook.com/fcussc/");
+
         [HttpGet("instagram")]
-        public IActionResult Instagram()
-        {
-            return Redirect("https://www.instagram.com/fcu.cdc/");
-        }
-        
+        public IActionResult Instagram() => Redirect("https://www.instagram.com/fcu.cdc/");
+
         [HttpGet("github")]
-        public IActionResult GitHub()
-        {
-            return Redirect("https://github.com/fcu-ssc/");
-        }
-        
+        public IActionResult GitHub() => Redirect("https://github.com/fcu-ssc/");
+
         [HttpGet("site")]
-        public IActionResult Site()
-        {
-            return Redirect("https://ssc.fcu.edu.tw/");
-        }
+        public IActionResult Site() => Redirect("https://ssc.fcu.edu.tw/");
     }
 }

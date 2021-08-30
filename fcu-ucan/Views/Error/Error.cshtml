@@ -1,6 +1,20 @@
 ﻿@model ErrorViewModel
 @{
-    ViewData["Title"] = "錯誤";
+    switch (Context.Request.Query["code"])
+    {
+        case "401":
+            ViewData["Title"] = "您尚未經過授權";
+            break;
+        case "403":
+            ViewData["Title"] = "您沒有權限";
+            break;
+        case "404":
+            ViewData["Title"] = "找不到您要的頁面";
+            break;
+        default:
+            ViewData["Title"] = "錯誤";
+            break;
+    }
 }
 
 <section class="hero is-danger is-fullheight">

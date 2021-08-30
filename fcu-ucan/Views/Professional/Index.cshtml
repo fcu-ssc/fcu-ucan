@@ -1,0 +1,198 @@
+﻿@{
+    ViewData["Title"] = "認識 UCAN";
+}
+
+@section Styles {
+    <environment include="Development">
+        <link rel="stylesheet" type="text/css" href="~/css/affix.css" asp-append-version="true" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" type="text/css" href="~/css/affix.min.css" asp-append-version="true" />
+    </environment>
+}
+
+<section class="section">
+    <div class="container is-max-desktop">
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+            <ul>
+                <li><a asp-area="" asp-controller="Intro" asp-action="Index">認識 UCAN</a></li>
+                <li class="is-active"><a asp-area="" asp-controller="Professional" asp-action="Index" aria-current="page">專業職能查詢</a></li>
+            </ul>
+        </nav>
+        <div class="box content">
+            <h1 class="title is-3">專業職能查詢</h1>
+            <p>您可以直接點選下列職涯類型名稱，即可檢視該職涯類型的簡介及相關就業途徑。</p>
+            <p>各項就業途徑內容包含：</p>
+            <ul>
+                <li>各項就業途徑之說明</li>
+                <li>相關執業資格、技能檢定或教育部彙整、公告各中央目的事業主管機關所轄產業之證照</li>
+                <li>職能</li>
+                <li>相關職業及各項職業的簡介</li>
+            </ul>
+            <hr />
+            <div class="columns is-multiline is-centered">
+                <div class="column is-3">
+                    <figure class="image">
+                        <i class="far fa-building fa-5x"></i>
+                    </figure>
+                    <a asp-area="" asp-controller="Professional" asp-action="Construction" class="button is-link is-inverted is-fullwidth is-underlined">建築營造</a>
+                </div>
+                <div class="column is-3">
+                    <figure class="image">
+                        <i class="fas fa-tools fa-5x"></i>
+                    </figure>
+                    <a asp-area="" asp-controller="Professional" asp-action="Manufacturing" class="button is-link is-inverted is-fullwidth is-underlined">製造</a>
+                </div>
+                <div class="column is-3">
+                    <figure class="image">
+                        <i class="fas fa-calculator fa-5x"></i>
+                    </figure>
+                    <a asp-area="" asp-controller="Professional" asp-action="ProfessionalScientificAndTechnicalActivities" class="button is-link is-inverted is-fullwidth is-underlined">科學、技術、工程、數學</a>
+                </div>
+                <div class="column is-3">
+                    <figure class="image">
+                        <i class="fas fa-truck fa-5x"></i>
+                    </figure>
+                    <a asp-area="" asp-controller="Professional" asp-action="TransportationAndStorage" class="button is-link is-inverted is-fullwidth is-underlined">物流運輸</a>
+                </div>
+            </div>
+            <div class="columns is-multiline is-centered">
+                <div class="column is-3">
+                    <figure class="image">
+                        <i class="fas fa-fish fa-5x"></i>
+                    </figure>
+                    <a asp-area="" asp-controller="Professional" asp-action="Natural" class="button is-link is-inverted is-fullwidth is-underlined">天然資源、食品與農業</a>
+                </div>
+                <div class="column is-3">
+                    <figure class="image">
+                        <i class="far fa-hospital fa-5x"></i>
+                    </figure>
+                    <a asp-area="" asp-controller="Professional" asp-action="HumanHealth" class="button is-link is-inverted is-fullwidth is-underlined">醫療保健</a>
+                </div>
+                <div class="column is-3">
+                    <figure class="image">
+                        <i class="fas fa-film fa-5x"></i>
+                    </figure>
+                    <a asp-area="" asp-controller="Professional" asp-action="ArtsEntertainmentAndRecreation" class="button is-link is-inverted is-fullwidth is-underlined">藝文與影音傳播</a>
+                </div>
+                <div class="column is-3">
+                    <figure class="image">
+                        <i class="far fa-keyboard fa-5x"></i>
+                    </figure>
+                    <a asp-area="" asp-controller="Professional" asp-action="InformationAndCommunication" class="button is-link is-inverted is-fullwidth is-underlined">資訊科技</a>
+                </div>
+            </div>
+            <div class="columns is-multiline is-centered">
+                <div class="column is-3">
+                    <figure class="image">
+                        <i class="far fa-money-bill-alt fa-5x"></i>
+                    </figure>
+                    <a asp-area="" asp-controller="Professional" asp-action="FinancialAndInsuranceActivitiesAndRealEstateActivities" class="button is-link is-inverted is-fullwidth is-underlined">金融財務</a>
+                </div>
+                <div class="column is-3">
+                    <figure class="image">
+                        <i class="far fas fa-briefcase fa-5x"></i>
+                    </figure>
+                    <a asp-area="" asp-controller="Professional" asp-action="BusinessManagement" class="button is-link is-inverted is-fullwidth is-underlined">企業經營管理</a>
+                </div>
+                <div class="column is-3">
+                    <figure class="image">
+                        <i class="fas fa-shopping-cart fa-5x"></i>
+                    </figure>
+                    <a asp-area="" asp-controller="Professional" asp-action="WholesaleAndRetailTrade" class="button is-link is-inverted is-fullwidth is-underlined">行銷與銷售</a>
+                </div>
+                <div class="column is-3">
+                    <figure class="image">
+                        <i class="fas fa-landmark fa-5x"></i>
+                    </figure>
+                    <a asp-area="" asp-controller="Professional" asp-action="PublicAdministrationAndDefence" class="button is-link is-inverted is-fullwidth is-underlined">政府公共事務</a>
+                </div>
+            </div>
+            <div class="columns is-multiline is-centered">
+                <div class="column is-3">
+                    <figure class="image">
+                        <i class="fas fa-graduation-cap fa-5x"></i>
+                    </figure>
+                    <a asp-area="" asp-controller="Professional" asp-action="Education" class="button is-link is-inverted is-fullwidth is-underlined">教育與訓練</a>
+                </div>
+                <div class="column is-3">
+                    <figure class="image">
+                        <i class="fas fa-tshirt fa-5x"></i>
+                    </figure>
+                    <a asp-area="" asp-controller="Professional" asp-action="SocialWorkAndOtherServiceActivities" class="button is-link is-inverted is-fullwidth is-underlined">個人及社會服務</a>
+                </div>
+                <div class="column is-3">
+                    <figure class="image">
+                        <i class="fas fa-cloud-sun fa-5x"></i>
+                    </figure>
+                    <a asp-area="" asp-controller="Professional" asp-action="AccommodationAndFoodServiceActivities" class="button is-link is-inverted is-fullwidth is-underlined">休閒與觀光旅遊</a>
+                </div>
+                <div class="column is-3">
+                    <figure class="image">
+                        <i class="fas fa-balance-scale fa-5x"></i>
+                    </figure>
+                    <a asp-area="" asp-controller="Professional" asp-action="CompulsorySocialSecurity" class="button is-link is-inverted is-fullwidth is-underlined">司法、法律與公共安全</a>
+                </div>
+            </div>
+            <figure class="image">
+                <img src="~/images/professional.webp" alt="" class="image-modal" data-target="#professional" asp-append-version="true" />
+            </figure>
+            <div id="professional" class="modal">
+                <div class="modal-background"></div>
+                <div class="modal-content">
+                    <p class="image">
+                        <img src="~/images/professional.webp" alt="" asp-append-version="true" />
+                    </p>
+                </div>
+                <button class="modal-close is-large" aria-label="close"></button>
+            </div>
+            <hr />
+            <h2 class="title is-4 has-text-centered has-text-grey">您可以直接點選下列連結，查詢其他部會相關資源</h2>
+            <div class="column is-full">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="content">
+                            <h3 class="title is-5">國家發展委員會彙整「未來3年重點產業人才供需調查及推估」報告</h3>
+                            <p>主要整合各中央目的事業主管機關辦理「重點產業人才供需調查及推估」之成果，針對重點產業內具高附加價值或生產力之中高階專業人才，推估未來短中期 1-3 年之專業人才需求情況，以利協助產業成長。</p>
+                            <p>你可以由此了解未來 3 年產業需求的關鍵職缺，做為個人職涯參考依據。</p>
+                            <a href="https://ucan.moe.edu.tw/search/search10.aspx" target="_blank" class="is-underlined">更多</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="column is-full">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="content">
+                            <h3 class="title is-5">勞動部產業職能基準</h3>
+                            <p>勞動部勞動力發展署建置「職能發展應用平台（簡稱iCAP）」彙 整由各中央目的事業主管機關建置的職能基準，讓社會大眾了解職業或職類之職能基準內涵，其中包括該特定職業或職類之主要工作任務、行為指標、工作產出、對應之知識、技術、態度及職能級別。</p>
+                            <p>你可以由此更深入了解不同職業的職能內涵，作為個人職涯規劃與職能養成的參考依據。</p>
+                            <a href="https://icap.wda.gov.tw/Resources/resources_Datum.aspx" target="_blank" class="is-underlined">更多</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="column is-full">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="content">
+                            <h3 class="title is-5">經濟部工業局優質工作(Good Job)資訊</h3>
+                            <p>經濟部工業局以升級轉型重點產業為範疇，針對產業關鍵人才的職缺內涵、職涯發展、薪資等條件進行蒐集，歸納出各產業具代表性的優質工作，協助青年了解優質工作的內涵及未來職涯遠景，鼓勵年輕學子朝產業升級轉型高附加價值的智慧化、綠色化、文創化之產業發展，加入我國未來主力產業的優質工作。</p>
+                            <a href="https://www.italent.org.tw/GoodJob/Index/66" target="_blank" class="is-underlined">更多</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="https://ucan.moe.edu.tw/search/search.aspx" target="_blank" id="view-source" class="button is-success is-rounded">查看原文</a>
+</section>
+
+@section Scripts {
+    <environment include="Development">
+        <script src="~/js/image-modal.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/js/image-modal.min.js" asp-append-version="true"></script>
+    </environment>
+} 

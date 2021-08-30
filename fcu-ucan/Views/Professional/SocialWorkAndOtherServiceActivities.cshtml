@@ -1,0 +1,62 @@
+﻿@{
+    ViewData["Title"] = "認識 UCAN";
+}
+
+@section Styles {
+    <environment include="Development">
+        <link rel="stylesheet" type="text/css" href="~/css/affix.css" asp-append-version="true" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" type="text/css" href="~/css/affix.min.css" asp-append-version="true" />
+    </environment>
+}
+
+<section class="section">
+    <div class="container is-max-desktop">
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+            <ul>
+                <li><a asp-area="" asp-controller="Intro" asp-action="Index">認識 UCAN</a></li>
+                <li><a asp-area="" asp-controller="Professional" asp-action="Index">專業職能查詢</a></li>
+                <li class="is-active"><a asp-area="" asp-controller="Professional" asp-action="SocialWorkAndOtherServiceActivities" aria-current="page">個人及社會服務</a></li>
+            </ul>
+        </nav>
+        <div class="box content">
+            <h1 class="title is-3">個人及社會服務</h1>
+            <hr />
+            <h2 class="title is-5">職涯類別簡介</h2>
+            <h3 class="subtitle is-6 has-text-grey">Introduction for Career cluster</h3>
+            <p>針對社會、家庭、個人及學齡前的幼童提供心理及生理的專業性照護與服務，提升其生活品質與身心的健康與福祉。</p>
+            <h2 class="title is-5">就業途徑</h2>
+            <h3 class="subtitle is-6 has-text-grey">Career Pathway</h3>
+            <p>這個職涯類型，在就業的選擇上，可分為以下幾個就業途徑，你可以依照自己的背景及興趣選擇瀏覽，更進一步了解不同就業方向的相關資訊。</p>
+            <hr />
+            <div class="buttons is-centered">
+                <a href="https://ucan.moe.edu.tw/search/search_1.aspx?f1=HMC&f2=39" target="_blank" class="button is-link is-outlined is-rounded is-underlined">
+                    <span class="icon">
+                        <i class="fas fa-external-link-alt"></i>
+                    </span>
+                    <span>學前照護及教育</span>
+                </a>
+                <a href="https://ucan.moe.edu.tw/search/search_1.aspx?f1=HMC&f2=40" target="_blank" class="button is-link is-outlined is-rounded is-underlined">
+                    <span class="icon">
+                        <i class="fas fa-external-link-alt"></i>
+                    </span>
+                    <span>心理諮詢服務</span>
+                </a>
+                <a href="https://ucan.moe.edu.tw/search/search_1.aspx?f1=HMC&f2=41" target="_blank" class="button is-link is-outlined is-rounded is-underlined">
+                    <span class="icon">
+                        <i class="fas fa-external-link-alt"></i>
+                    </span>
+                    <span>社會工作服務</span>
+                </a>
+                <a href="https://ucan.moe.edu.tw/search/search_1.aspx?f1=HMC&f2=42" target="_blank" class="button is-link is-outlined is-rounded is-underlined">
+                    <span class="icon">
+                        <i class="fas fa-external-link-alt"></i>
+                    </span>
+                    <span>個人照護服務</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <a href="https://ucan.moe.edu.tw/search/search.aspx" target="_blank" id="view-source" class="button is-success is-rounded">查看原文</a>
+</section>

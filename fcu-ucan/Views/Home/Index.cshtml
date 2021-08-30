@@ -7,9 +7,11 @@
     <link rel="stylesheet" type="text/css" href="~/lib/bulma-carousel/dist/css/bulma-carousel.min.css" />
     <environment include="Development">
         <link rel="stylesheet" type="text/css" href="~/css/home.css" asp-append-version="true" />
+        <link rel="stylesheet" type="text/css" href="~/css/affix.css" asp-append-version="true" />
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" type="text/css" href="~/css/home.min.css" asp-append-version="true" />
+        <link rel="stylesheet" type="text/css" href="~/css/affix.min.css" asp-append-version="true" />
     </environment>
 }
 
@@ -28,8 +30,8 @@
                     </h1>
                     <h2 class="subtitle is-4 has-text-grey">大專校院就業職能平台</h2>
                     <div class="buttons">
-                        <a class="button is-info is-outlined">開始測驗</a>
-                        <a asp-area="" asp-controller="Introduce" asp-action="About" class="button is-link is-outlined">認識 UCAN</a>
+                        <a asp-area="" asp-controller="NID" asp-action="Login" class="button is-info is-outlined">開始測驗</a>
+                        <a asp-area="" asp-controller="Intro" asp-action="Index" class="button is-link is-outlined">認識 UCAN</a>
                     </div>
                 </div>
                 <div data-aos="fade-down" class="column is-12-mobile is-6-desktop">
@@ -48,34 +50,44 @@
         <div class="columns is-centered mt-6">
             <div class="column is-flex is-justify-content-center" data-aos="fade-in" data-aos-easing="linear">
                 <figure class="image is-128x128">
-                    <img src="~/images/menu-1.webp" alt="" asp-append-version="true" />
+                    <a href="#competency-and-career-exploration">
+                        <img src="~/images/menu-1.webp" alt="" asp-append-version="true"/>
+                    </a>
                 </figure>
             </div>
             <div class="column is-flex is-justify-content-center" data-aos="fade-in" data-aos-easing="linear">
                 <figure class="image is-128x128">
-                    <img src="~/images/menu-2.webp" alt="" asp-append-version="true" />
+                    <a href="#career-interest-survey">
+                        <img src="~/images/menu-2.webp" alt="" asp-append-version="true"/>
+                    </a>
                 </figure>
             </div>
             <div class="column is-flex is-justify-content-center" data-aos="fade-in" data-aos-easing="linear">
                 <figure class="image is-128x128">
-                    <img src="~/images/menu-3.webp" alt="" asp-append-version="true" />
+                    <a href="#competency-assessment">
+                        <img src="~/images/menu-3.webp" alt="" asp-append-version="true"/>
+                    </a>
                 </figure>
             </div>
             <div class="column is-flex is-justify-content-center" data-aos="fade-in" data-aos-easing="linear">
                 <figure class="image is-128x128">
-                    <img src="~/images/menu-4.webp" alt="" asp-append-version="true" />
+                    <a href="#competency-development-plan">
+                        <img src="~/images/menu-4.webp" alt="" asp-append-version="true"/>
+                    </a>
                 </figure>
             </div>
             <div class="column is-flex is-justify-content-center" data-aos="fade-in" data-aos-easing="linear">
                 <figure class="image is-128x128">
-                    <img src="~/images/menu-5.webp" alt="" asp-append-version="true" />
+                    <a href="#advisory-service-file">
+                        <img src="~/images/menu-5.webp" alt="" asp-append-version="true"/>
+                    </a>
                 </figure>
             </div>
         </div>
     </div>
 </section>
 
-<section class="hero">
+<section class="hero" id="competency-and-career-exploration">
     <div class="hero-body">
         <h4 class="title is-4 has-text-centered">職能與職業查詢</h4>
         <h5 class="subtitle is-5 has-text-centered has-text-grey has-text-weight-normal">Competency and career exploration</h5>
@@ -85,7 +97,7 @@
                     <div class="content">
                         <h6>職能介紹</h6>
                         <p>提供職能概念、其他相關職能資源以及本平台職能應用說明。</p>
-                        <a asp-area="" asp-controller="Introduce" asp-action="Competency" target="_blank">更多</a>
+                        <a asp-area="" asp-controller="Intro" asp-action="Competency" class="is-underlined">更多</a>
                     </div>
                 </div>
             </div>
@@ -96,7 +108,7 @@
                     <div class="content">
                         <h6>職場共通職能查詢</h6>
                         <p>提供檢視與查詢職場共通職能資訊，內容包含職場共通職能介紹、相關養成活動資訊、具體的知識技能以及主要目標。</p>
-                        <a asp-area="" asp-controller="Introduce" asp-action="Common" target="_blank">更多</a>
+                        <a asp-area="" asp-controller="Common" asp-action="Index" class="is-underlined">更多</a>
                     </div>
                 </div>
             </div>
@@ -110,7 +122,7 @@
                             提供檢視各項職涯類型與就業途徑介紹以及專業職能內涵。<br />
                             詳細內容包含就業途徑簡介與該就業途徑相關執業資格、勞動部技能檢定、教育部彙整、公告各中央目的事業主管機關所轄產業之執照、專業職能內涵（包含第一層工作任務職能、第二層工作活動、具體行為、知識與技能）以及相關職業說明。詳細內容包含就業途徑簡介與該就業途徑相關執業資格
                         </p>
-                        <a asp-area="" asp-controller="Introduce" asp-action="Professional" target="_blank">更多</a>
+                        <a asp-area="" asp-controller="Professional" asp-action="Index" target="_blank" class="is-underlined">更多</a>
                     </div>
                 </div>
             </div>
@@ -121,7 +133,7 @@
                     <div class="content">
                         <h6>職業查詢</h6>
                         <p>利用關鍵字、職涯類型、科系領域...等條件進行職業查詢。</p>
-                        <a asp-area="" asp-controller="Introduce" asp-action="Occupation" target="_blank">更多</a>
+                        <a asp-area="" asp-controller="Intro" asp-action="Occupation" target="_blank" class="is-underlined">更多</a>
                     </div>
                 </div>
             </div>
@@ -129,7 +141,7 @@
     </div>
 </section>
 
-<section class="section">
+<section class="section" id="career-interest-survey">
     <div class="has-text-centered">
         <h4 class="title is-4">職業興趣探索</h4>
         <h5 class="subtitle is-5 has-text-grey has-text-weight-normal">Career Interest survey</h5>
@@ -160,7 +172,7 @@
     </div>
 </section>
 
-<section class="hero">
+<section class="hero" id="competency-assessment">
     <div class="hero-body">
         <h4 class="title is-4 has-text-centered">職能診斷</h4>
         <h5 class="subtitle is-5 has-text-centered has-text-grey has-text-weight-normal">Competency assessment</h5>
@@ -224,7 +236,7 @@
     </div>
 </section>
 
-<section class="hero is-fullheight">
+<section class="hero" id="competency-development-plan">
     <div class="hero-body">
         <div class="container">
             <div class="columns is-vcentered reverse-columns">
@@ -233,8 +245,8 @@
                     <h5 class="subtitle has-text-grey is-5 has-text-weight-normal">Competency development plan</h5>
                     <p class="mb-5">透過職能診斷結果，你可以依能力狀況，規劃自己的能力養成計畫，並做階段性的檢視紀錄。</p>
                     <div class="buttons">
-                        <button class="button is-info is-outlined">進行職場共通職能能力養成計劃</button>
-                        <button class="button is-link is-outlined">進行專業職能能力養成計劃</button>
+                        <a asp-area="" asp-controller="NID" asp-action="Login" class="button is-info is-outlined">進行職場共通職能能力養成計劃</a>
+                        <a asp-area="" asp-controller="NID" asp-action="Login" class="button is-link is-outlined">進行專業職能能力養成計劃</a>
                     </div>
                 </div>
                 <div data-aos="fade-right" class="column is-12-mobile is-6-desktop">
@@ -247,13 +259,92 @@
     </div>
 </section>
 
+<section class="hero" id="advisory-service-file">
+    <div class="hero-body">
+        <h4 class="title is-4 has-text-centered">諮詢及診斷紀錄</h4>
+        <h5 class="subtitle is-5 has-text-centered has-text-grey has-text-weight-normal">Advisory service file</h5>
+        <article class="message">
+            <div class="message-header">
+                <p>診斷紀錄</p>
+            </div>
+            <div class="message-body p-1">
+                <div class="column is-full" data-aos="fade-in" data-aos-easing="linear">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="content">
+                                <h6>個人診斷結果分析報告</h6>
+                                <p>提供你已經完成的診斷結果分析報告，包含：</p>
+                                <ul>
+                                    <li>職業興趣診斷分析</li>
+                                    <li>職場共通職能診斷分析</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="column is-full" data-aos="fade-in" data-aos-easing="linear">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="content">
+                                <h6>歷次診斷結果</h6>
+                                <p>提供你已經完成的各項診斷結果，包含：</p>
+                                <ul>
+                                    <li>職業興趣探索結果</li>
+                                    <li>職場共通職能診斷結果</li>
+                                    <li>專業職能診斷結果</li>
+                                    <li>結果總表</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+        <article class="message">
+            <div class="message-header">
+                <p>諮詢服務與紀錄</p>
+            </div>
+            <div class="message-body p-1">
+                <div class="column is-full" data-aos="fade-in" data-aos-easing="linear">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="content">
+                                <h6>諮詢服務</h6>
+                                <p>提供你向「本校師長」、「系統管理人員」提出問題</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="column is-full" data-aos="fade-in" data-aos-easing="linear">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="content">
+                                <h6>諮詢紀錄</h6>
+                                <p>透過諮詢紀錄，查詢您所提出的各式問題及輔導諮詢人員針對問題所回覆的內容記錄</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </div>
+</section>
+
+<button id="view-source" class="button is-success is-hidden" onclick="toTop()">
+    <span class="icon is-small">
+        <i class="fas fa-angle-double-up"></i>
+    </span>
+</button>
+
 @section Scripts {
     <script src="~/lib/aos/aos.js"></script>
     <script src="~/lib/bulma-carousel/dist/js/bulma-carousel.min.js"></script>
     <environment include="Development">
         <script src="~/js/home.js" asp-append-version="true"></script>
+        <script src="~/js/to-top.js" asp-append-version="true"></script>
     </environment>
     <environment exclude="Development">
         <script src="~/js/home.min.js" asp-append-version="true"></script>
+        <script src="~/js/to-top.min.js" asp-append-version="true"></script>
     </environment>
 }

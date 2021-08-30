@@ -1,0 +1,60 @@
+﻿@{
+    ViewData["Title"] = "認識 UCAN";
+}
+
+@section Styles {
+    <environment include="Development">
+        <link rel="stylesheet" type="text/css" href="~/css/affix.css" asp-append-version="true" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" type="text/css" href="~/css/affix.min.css" asp-append-version="true" />
+    </environment>
+}
+
+<section class="section">
+    <div class="container is-max-desktop">
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+            <ul>
+                <li><a asp-area="" asp-controller="Intro" asp-action="Index">認識 UCAN</a></li>
+                <li><a asp-area="" asp-controller="Common" asp-action="Index">職場共通職能查詢</a></li>
+                <li class="is-active"><a asp-area="" asp-controller="Common" asp-action="Communication" aria-current="page">溝通表達</a></li>
+            </ul>
+        </nav>
+        <div class="box content">
+            <h1 class="title is-3">溝通表達</h1>
+            <p>透過口頭、書面等方式，表達自己的想法使他人瞭解，並努力理解他人所傳達的資訊。</p>
+            <h2 class="tile is-4">主要指標</h2>
+            <ul>
+                <li>工作上與人談話時，能先確認彼此的主題與目的。</li>
+                <li>與人談話時，能專注傾聽觀察對方傳達的訊息，即使他人和自己意見不相同，仍然樂於傾聽接納。</li>
+                <li>會依據不同對象，運用適當方法技巧，清楚表達訊息及進行對話。</li>
+                <li>能夠正確解讀工作相關文件，如文字或圖表資料、技術文件、測試報告等。</li>
+                <li>能夠使用正確的文法、格式或邏輯製作符合組織或工作所要求之書面資料。</li>
+                <li>能對不同對象，能以書面方式適切地陳述欲表達之訊息。</li>
+                <li>運用組織或工作所要求之外語能力進行資訊溝通傳達。</li>
+            </ul>
+            <h2 class="tile is-4">相關知識技能</h2>
+            <ul>
+                <li>口語表達技巧</li>
+                <li>口語簡報技巧</li>
+                <li>企劃書撰寫技巧</li>
+                <li>肢體語言表達技巧</li>
+                <li>資料收集及分析</li>
+                <li>寫作技巧</li>
+                <li>談判技巧</li>
+                <li>簡報製作技巧</li>
+                <li>溝通表達</li>
+            </ul>
+            <h2 class="tile is-4">相關活動</h2>
+            <ul>
+                <li>參與各類社團的運作或擔任幹部。</li>
+                <li>參加校內外簡報、演說或討論活動。</li>
+                <li>經常寫作，紀錄個人心得，例如筆記、學術文章、專題報告、部落格文章、文學創作。</li>
+                <li>參加說故事、辯論、廣播等活動，練習表達。</li>
+                <li>參加讀書會、經典著作研討會等閱讀活動。</li>
+                <li>志工服務。</li>
+            </ul>
+        </div>
+    </div>
+    <a href="https://ucan.moe.edu.tw/commsearch/search_1.aspx?id=11 " target="_blank" id="view-source" class="button is-success is-rounded">查看原文</a>
+</section>

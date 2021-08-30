@@ -1,0 +1,62 @@
+﻿@{
+    ViewData["Title"] = "認識 UCAN";
+}
+
+@section Styles {
+    <environment include="Development">
+        <link rel="stylesheet" type="text/css" href="~/css/affix.css" asp-append-version="true" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" type="text/css" href="~/css/affix.min.css" asp-append-version="true" />
+    </environment>
+}
+
+<section class="section">
+    <div class="container is-max-desktop">
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+            <ul>
+                <li><a asp-area="" asp-controller="Intro" asp-action="Index">認識 UCAN</a></li>
+                <li><a asp-area="" asp-controller="Professional" asp-action="Index">專業職能查詢</a></li>
+                <li class="is-active"><a asp-area="" asp-controller="Professional" asp-action="InformationAndCommunication" aria-current="page">資訊科技</a></li>
+            </ul>
+        </nav>
+        <div class="box content">
+            <h1 class="title is-3">資訊科技</h1>
+            <hr />
+            <h2 class="title is-5">職涯類別簡介</h2>
+            <h3 class="subtitle is-6 has-text-grey">Introduction for Career cluster</h3>
+            <p>從事網際網路系統或資訊軟硬體、程式語言、多媒體、公用軟體及相關周邊設備之設計、製作、修改、測試、安裝及系統整合，並提供維修及障礙排除等支援服務。</p>
+            <h2 class="title is-5">就業途徑</h2>
+            <h3 class="subtitle is-6 has-text-grey">Career Pathway</h3>
+            <p>這個職涯類型，在就業的選擇上，可分為以下幾個就業途徑，你可以依照自己的背景及興趣選擇瀏覽，更進一步了解不同就業方向的相關資訊。</p>
+            <hr />
+            <div class="buttons is-centered">
+                <a href="https://ucan.moe.edu.tw/search/search_1.aspx?f1=ITC&f2=47" target="_blank" class="button is-link is-outlined is-rounded is-underlined">
+                    <span class="icon">
+                        <i class="fas fa-external-link-alt"></i>
+                    </span>
+                    <span>網路規劃與建置管理</span>
+                </a>
+                <a href="https://ucan.moe.edu.tw/search/search_1.aspx?f1=ITC&f2=48" target="_blank" class="button is-link is-outlined is-rounded is-underlined">
+                    <span class="icon">
+                        <i class="fas fa-external-link-alt"></i>
+                    </span>
+                    <span>資訊支援與服務</span>
+                </a>
+                <a href="https://ucan.moe.edu.tw/search/search_1.aspx?f1=ITC&f2=49" target="_blank" class="button is-link is-outlined is-rounded is-underlined">
+                    <span class="icon">
+                        <i class="fas fa-external-link-alt"></i>
+                    </span>
+                    <span>數位內容與傳播</span>
+                </a>
+                <a href="https://ucan.moe.edu.tw/search/search_1.aspx?f1=ITC&f2=50" target="_blank" class="button is-link is-outlined is-rounded is-underlined">
+                    <span class="icon">
+                        <i class="fas fa-external-link-alt"></i>
+                    </span>
+                    <span>軟體開發及程式設計</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <a href="https://ucan.moe.edu.tw/search/search.aspx" target="_blank" id="view-source" class="button is-success is-rounded">查看原文</a>
+</section>

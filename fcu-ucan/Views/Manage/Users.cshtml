@@ -1,0 +1,128 @@
+﻿@model PaginatedList<UserViewModel>
+@{
+    ViewData["Title"] = "使用者";
+}
+
+@section Styles {
+    <link rel="stylesheet" type="text/css" href="~/lib/bulma-responsive-tables/css/main.min.css" />
+}
+
+<section class="section is-medium">
+    <div class="container is-max-desktop">
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+            <ul>
+                <li><a asp-area="" asp-controller="Manage" asp-action="Index">管理</a></li>
+                <li class="is-active"><a asp-area="" asp-controller="Manage" asp-action="Users" aria-current="page">@ViewData["Title"]</a></li>
+            </ul>
+        </nav>
+        <div class="box content">
+            <div class="is-flex is-justify-content-space-between">
+                <h1 class="title is-3">@ViewData["Title"]</h1>
+                <div class="field has-addons is-hidden-tablet-only is-hidden-desktop-only is-hidden-widescreen-only">
+                    <p class="control">
+                        <a asp-area="" asp-controller="Manage" asp-action="UserInvite" class="button">
+                            <span class="icon is-small">
+                                <i class="fas fa-user-plus"></i>
+                            </span>
+                        </a>
+                    </p>
+                </div>
+                <div class="field has-addons is-hidden-mobile">
+                    <p class="control">
+                        <a asp-area="" asp-controller="Manage" asp-action="UserInvite" class="button">
+                            <span class="icon is-small">
+                                <i class="fas fa-user-plus"></i>
+                            </span>
+                            <span>邀請</span>
+                        </a>
+                    </p>
+                </div>
+            </div>
+            <hr/>
+            <div class="b-table">
+                <div class="table-wrapper has-mobile-cards">
+                    <table class="table is-fullwidth is-striped is-fullwidth">
+                        <thead>
+                        <tr>
+                            <th>識別碼</th>
+                            <th>使用者名稱</th>
+                            <th>電子郵件</th>
+                            <th>電子郵件驗證</th>
+                            <th>啟用帳戶</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @if (!Model.Any())
+                        {
+                            <tr class="is-empty">
+                                <td colspan="6">
+                                    <section class="section">
+                                        <div class="content has-text-grey has-text-centered">
+                                            <figure class="image">
+                                                <i class="fas fa-inbox fa-5x"></i>
+                                            </figure>
+                                            <p>沒有資料</p>
+                                        </div>
+                                    </section>
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            @foreach (var user in Model)
+                            {
+                                <tr>
+                                    <td data-label="識別碼">@user.Id</td>
+                                    <td data-label="使用者名稱">@user.UserName</td>
+                                    <td data-label="電子郵件">@user.Email</td>
+                                    <td data-label="電子郵件驗證">
+                                        @if (user.EmailConfirmed)
+                                        {
+                                            <span class="tag is-success">已驗證</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="tag is-warning">尚未驗證</span>
+                                        }
+                                    </td>
+                                    <td data-label="啟用帳戶">
+                                        @if (user.IsEnable)
+                                        {
+                                            <span class="tag is-success">已啟用</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="tag is-warning">尚未啟用</span>
+                                        }
+                                    </td>
+                                    <td class="is-actions-cell">
+                                        <div class="buttons">
+                                            <a asp-area="" asp-controller="Manage" asp-action="UserDetail" asp-route-userId="@user.Id" class="button is-link is-inverted is-underlined">
+                                                <span class="icon is-small">
+                                                    <i class="far fa-newspaper"></i>
+                                                </span>
+                                                <span>詳情</span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        </tbody>
+                    </table>
+                </div>
+                 @if (Model.Any())
+                 {
+                     <nav class="pagination is-centered is-rounded" role="navigation" aria-label="pagination">
+                         <a asp-area="" asp-controller="Manage" asp-action="Users" asp-route-page="@(Model.PageIndex-1)" disabled="@(Model.HasPreviousPage == false)" class="pagination-previous">上一頁</a>
+                         <a asp-area="" asp-controller="Manage" asp-action="Users" asp-route-page="@(Model.PageIndex+1)" disabled="@(Model.HasNextPage == false)" class="pagination-next">下一頁</a>
+                         <ul class="pagination-list">
+                             <li><a asp-area="" asp-controller="Manage" asp-action="Users" asp-route-page="@Model.PageIndex" class="pagination-link is-current" aria-current="page">@Model.PageIndex / @Model.TotalPages</a></li>
+                         </ul>
+                     </nav>
+                 }
+            </div>
+        </div>
+    </div>
+</section>

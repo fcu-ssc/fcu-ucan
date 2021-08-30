@@ -1,0 +1,59 @@
+﻿@model System.IO.FileInfo[]
+@{
+   ViewData["Title"] = "日誌";
+}
+
+@section Styles {
+    <link rel="stylesheet" type="text/css" href="~/lib/bulma-responsive-tables/css/main.min.css" />
+}
+
+<section class="section is-medium">
+    <div class="container is-max-desktop">
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+            <ul>
+                <li><a asp-area="" asp-controller="Manage" asp-action="Index">管理</a></li>
+                <li class="is-active"><a asp-area="" asp-controller="Manage" asp-action="Logs" aria-current="page">@ViewData["Title"]</a></li>
+            </ul>
+        </nav>
+        <div class="box content">
+            <h1 class="title is-3">@ViewData["Title"]</h1>
+            <hr/>
+            <div class="b-table">
+                <div class="table-wrapper has-mobile-cards">
+                    <table class="table is-fullwidth is-striped is-fullwidth">
+                        <thead>
+                        <tr>
+                            <th>檔案名稱</th>
+                            <th>檔案大小</th>
+                            <th>最後修改時間</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var file in Model)
+                            {
+                                <tr>
+                                    <td data-label="檔案名稱">@file.Name</td>
+                                    <td data-label="檔案大小">@file.Length</td>
+                                    <td data-label="最後修改時間">
+                                        <small class="has-text-grey is-abbr-like">@file.LastWriteTimeUtc</small>
+                                    </td>
+                                    <td class="is-actions-cell">
+                                        <div class="buttons">
+                                            <a asp-area="" asp-controller="Manage" asp-action="Logs" asp-route-filename="@file.Name" class="button is-small is-link is-inverted is-underlined">
+                                                <span class="icon is-small">
+                                                    <i class="fas fa-download"></i>
+                                                </span>
+                                                <span>下載</span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

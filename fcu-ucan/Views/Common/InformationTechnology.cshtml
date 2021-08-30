@@ -1,0 +1,60 @@
+﻿@{
+    ViewData["Title"] = "認識 UCAN";
+}
+
+@section Styles {
+    <environment include="Development">
+        <link rel="stylesheet" type="text/css" href="~/css/affix.css" asp-append-version="true" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" type="text/css" href="~/css/affix.min.css" asp-append-version="true" />
+    </environment>
+}
+
+<section class="section">
+    <div class="container is-max-desktop">
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+            <ul>
+                <li><a asp-area="" asp-controller="Intro" asp-action="Index">認識 UCAN</a></li>
+                <li><a asp-area="" asp-controller="Common" asp-action="Index">職場共通職能查詢</a></li>
+                <li class="is-active"><a asp-area="" asp-controller="Common" asp-action="InformationTechnology" aria-current="page">資訊科技應用</a></li>
+            </ul>
+        </nav>
+        <div class="box content">
+            <h1 class="title is-3">資訊科技應用</h1>
+            <p>運用各行業所需的資訊技術工具，有效存取、管理、整合並傳遞訊息。</p>
+            <h2 class="tile is-4">主要指標</h2>
+            <ul>
+                <li>能夠依據不同的情況，判斷並選擇使用/運用資訊科技工具，有效率地完成工作任務</li>
+                <li>透過網路瀏覽和檢索資訊，經過篩選與衡量後，進一步管理、儲存及分析資料</li>
+                <li>能有效運用資訊科技工具，產出數位內容(如文字、照片、影像)，以符合組織或工作任務之要求</li>
+                <li>能依據不同的狀況與情境，使用適當的資訊科技工具與他人進行溝通及互動</li>
+                <li>瞭解使用資訊/數位內容版權與授權的規範</li>
+                <li>瞭解數位環境中存在的風險及威脅，並以適當的措施保護個人資料及使用裝置之安全</li>
+                <li>能夠透過使用資訊科技工具解決自己碰到的問題或找出相應的解決方法</li>
+                <li>能將產業的相關知識與資訊科技工具結合，並應用在工作任務上</li>
+            </ul>
+            <h2 class="tile is-4">相關知識技能</h2>
+            <ul>
+                <li>文書軟體使用</li>
+                <li>試算表使用</li>
+                <li>簡報工具使用</li>
+                <li>資料庫應用</li>
+                <li>資訊倫理</li>
+                <li>電子郵件使用</li>
+                <li>網路基本知識</li>
+                <li>資料儲存與管理</li>
+                <li>個人裝置防護</li>
+            </ul>
+            <h2 class="tile is-4">相關活動</h2>
+            <ul>
+                <li>參觀資訊展或電腦展，了解資通訊科技(ICT)發展趨勢。</li>
+                <li>利用資訊網路工具進行資料蒐集。</li>
+                <li>運用網路工具與他人聯繫互動。</li>
+                <li>運用電腦管理個人檔案及製作報告、文件、作品。</li>
+                <li>參加校內外相關電腦研習活動 。</li>
+            </ul>
+        </div>
+    </div>
+    <a href="https://ucan.moe.edu.tw/commsearch/search_1.aspx?id=18" target="_blank" id="view-source" class="button is-success is-rounded">查看原文</a>
+</section>
