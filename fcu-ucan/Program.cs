@@ -18,7 +18,7 @@ namespace fcu_ucan
                 .Enrich.FromLogContext()
                 .WriteTo.Console()
                 .WriteTo
-                .File("Logs/fcu-ucan.txt", rollingInterval: RollingInterval.Day, fileSizeLimitBytes: 512 * 1024 * 1024, rollOnFileSizeLimit: true)
+                .File("Logs/fcu-ucan.txt", shared: true, rollingInterval: RollingInterval.Day, fileSizeLimitBytes: 512 * 1024 * 1024, rollOnFileSizeLimit: true)
                 .CreateLogger();
 
             try
