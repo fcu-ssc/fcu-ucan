@@ -28,8 +28,9 @@ namespace fcu_ucan.Services
             
             var bodyBuilder = new BodyBuilder
             {
-                HtmlBody = $"<p>請點擊下方連結註冊</p><a href=\"{new Uri(_configuration["Domain"])}/{code}\">{new Uri(_configuration["Domain"])}/{code}</a>"
+                HtmlBody = $"<p>請點擊下方連結註冊</p><a href=\"{new Uri(_configuration["Domain"])}ucan/account/register/{code}\">{new Uri(_configuration["Domain"])}ucan/account/register/{code}</a>"
             };
+            message.Body = bodyBuilder.ToMessageBody();
 
             #region 寄信
 

@@ -60,10 +60,10 @@ namespace fcu_ucan.Controllers
                         .SingleOrDefaultAsync(x => x.NetworkId == user.StuId);
                     if (member != null)
                     {
-                        _logger.LogInformation($"{user.StuId} 換成 member.StudentId");
+                        _logger.LogInformation($"{user.StuId} 換成 {member.StudentId}");
                     }
-                    var token = await _oAuthService
-                        .GetToken(member == null ? user.StuId : member.StudentId);
+                    var username = member == null ? user.StuId : member.StudentId;
+                    var token = await _oAuthService.GetToken(username);
                     _logger.LogInformation($"獲取 Ucan Token 成功: {token}");
                     switch (token[0])
                     {
@@ -90,7 +90,7 @@ namespace fcu_ucan.Controllers
                             var url = $"{_configuration["Domain"]}/ucann_school/sso.aspx?" +
                                       $"Plugin=o_hdu&" +
                                       $"Action=ohduschoolssologin&" +
-                                      $"username={user.StuId}&" +
+                                      $"username={username}&" +
                                       $"token={token}&" +
                                       $"school=1007";
                             _logger.LogInformation($"Ucan 登入: {url}");
