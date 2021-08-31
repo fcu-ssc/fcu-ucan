@@ -68,16 +68,19 @@ namespace fcu_ucan.Controllers
                 if (user == null)
                 {
                     ModelState.AddModelError("", "登入失敗，請檢查您的帳號密碼是否正確");
+                    _logger.LogInformation($"{model.UserName} 登入失敗，請檢查您的帳號密碼是否正確");
                     return View(model);
                 }
                 if (!user.EmailConfirmed)
                 {
                     ModelState.AddModelError("", "帳戶尚未驗證，請前往您的信箱收取驗證信");
+                    _logger.LogInformation($"{model.UserName} 帳戶尚未驗證，請前往您的信箱收取驗證信");
                     return View(model);
                 }
                 if (!user.IsEnable)
                 {
                     ModelState.AddModelError("", "帳戶尚未啟用，請聯絡管理員");
+                    _logger.LogInformation($"{model.UserName} 帳戶尚未啟用，請聯絡管理員");
                     return View(model);
                 }
 
@@ -89,11 +92,13 @@ namespace fcu_ucan.Controllers
                 if (checkPasswordResult.IsLockedOut)
                 {
                     ModelState.AddModelError("", "帳戶被鎖定，請聯絡管理員");
+                    _logger.LogInformation($"{model.UserName} 帳戶被鎖定，請聯絡管理員");
                     return View(model);
                 }
                 if (checkPasswordResult.IsNotAllowed)
                 {
                     ModelState.AddModelError("", "帳戶尚未驗證，請前往您的信箱收取驗證信");
+                    _logger.LogInformation($"{model.UserName} 帳戶尚未驗證，請前往您的信箱收取驗證信");
                     return View(model);
                 }
                 if (checkPasswordResult.Succeeded)
@@ -117,14 +122,15 @@ namespace fcu_ucan.Controllers
                     #endregion
                     
                     var token = GenerateJwtToken(claims);
-                    _logger.LogInformation(token);
                     HttpContext.Session.SetString("token", token);
+                    _logger.LogInformation($"{model.UserName} 登入成功 {token}");
                     return RedirectToAction("Index", "Manage");
                 }    
 
                 #endregion
             }
             ModelState.AddModelError("", "登入失敗，請檢查您的帳號密碼是否正確");
+            _logger.LogInformation($"{model.UserName} 登入失敗");
             return View(model);
         }
         
@@ -149,7 +155,7 @@ namespace fcu_ucan.Controllers
             {
                 return NotFound();
             }
-            if (entity.NormalizedUserName != Regex.Replace(entity.Id, "[^A-Za-z0-9]", "").ToUpperInvariant())
+            if (entity.NormalizedUserName != null)
             {
                 return NotFound();
             }
@@ -169,24 +175,22 @@ namespace fcu_ucan.Controllers
             {
                 return NotFound();
             }
-            if (entity.NormalizedUserName != Regex.Replace(entity.Id, "[^A-Za-z0-9]", "").ToUpperInvariant())
+            if (entity.NormalizedUserName != null)
             {
                 return NotFound();
             }
             if (ModelState.IsValid)
             {
-                if (entity.UserName != model.UserName)
+                if (await _userManager.Users.AnyAsync(x => x.NormalizedUserName == model.UserName.ToUpperInvariant()))
                 {
-                    if (await _userManager.Users.AnyAsync(x => x.NormalizedUserName == model.UserName.ToUpperInvariant()))
-                    {
-                        ModelState.AddModelError("UserName", "使用者名稱已經被使用");
-                    }
+                    ModelState.AddModelError("UserName", "使用者名稱已經被使用");
                 }
                 if (ModelState.IsValid)
                 {
+                    await _userManager.SetUserNameAsync(entity, model.UserName);
+                    await _userManager.AddPasswordAsync(entity, model.Password);
                     var updateEntity = _mapper.Map(model, entity);
                     await _userManager.UpdateAsync(updateEntity);
-                    await _userManager.AddPasswordAsync(entity, model.Password);
                     return RedirectToAction("Login", "Account");
                 }
             }

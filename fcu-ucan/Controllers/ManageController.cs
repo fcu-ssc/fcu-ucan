@@ -90,12 +90,12 @@ namespace fcu_ucan.Controllers
         {
             var entities = await _dbContext.Users
                 .AsNoTracking()
-                .Skip((page ?? 1 - 1) * 30)
+                .Skip((page ?? 1 - 1) * 50)
                 .Take(30)
                 .ToListAsync();
             var count = await _dbContext.Users.CountAsync();
             var models = _mapper.Map<List<UserViewModel>>(entities);
-            var paginatedModels = new PaginatedList<UserViewModel>(models, count, page ?? 1, 30);
+            var paginatedModels = new PaginatedList<UserViewModel>(models, count, page ?? 1, 50);
             return View(paginatedModels);
         }
 
@@ -245,12 +245,12 @@ namespace fcu_ucan.Controllers
         {
             var entities = await _dbContext.Members
                 .AsNoTracking()
-                .Skip((page ?? 1 - 1) * 30)
+                .Skip((page ?? 1 - 1) * 50)
                 .Take(30)
                 .ToListAsync();
             var count = await _dbContext.Members.CountAsync();
             var models = _mapper.Map<List<MemberViewModel>>(entities);
-            var paginatedModels = new PaginatedList<MemberViewModel>(models, count, page ?? 1, 30);
+            var paginatedModels = new PaginatedList<MemberViewModel>(models, count, page ?? 1, 50);
             return View(paginatedModels);
         }
         
