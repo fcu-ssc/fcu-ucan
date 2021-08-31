@@ -29,7 +29,7 @@
                         <figure class="image">
                             <i class="fas fa-users-cog fa-7x"></i>
                         </figure>
-                        <a asp-area="" asp-controller="Manage" asp-action="Users" class="button is-link is-inverted is-fullwidth is-underlined">使用者</a>
+                        <a asp-area="" asp-controller="User" asp-action="Index" class="button is-link is-inverted is-fullwidth is-underlined">使用者</a>
                     </div>
                 }
                 @if (User.IsInRole("Member"))
@@ -38,7 +38,7 @@
                         <figure class="image">
                             <i class="far fa-address-card fa-7x"></i>
                         </figure>
-                        <a asp-area="" asp-controller="Manage" asp-action="Members" class="button is-link is-inverted is-fullwidth is-underlined">成員</a>
+                        <a asp-area="" asp-controller="Member" asp-action="Index" class="button is-link is-inverted is-fullwidth is-underlined">成員</a>
                     </div>
                 }
             </div>

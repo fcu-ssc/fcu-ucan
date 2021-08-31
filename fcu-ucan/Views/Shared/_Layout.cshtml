@@ -48,7 +48,7 @@
                                 <a asp-area="" asp-controller="Intro" asp-action="Competency" class="navbar-item @Html.IsSelected(controllers: "Intro", actions: "Competency")">職能介紹</a>
                                 <a id="common-link" asp-area="" asp-controller="Common" asp-action="Index" class="navbar-item">職場共通職能查詢</a>
                                 <a id="professional-link" asp-area="" asp-controller="Professional" asp-action="Index" class="navbar-item">專業職能查詢</a>
-                                <a asp-area="" asp-controller="Intro" asp-action="Occupation" class="navbar-item @Html.IsSelected(controllers: "Intro", actions: "Occupation")">職業查詢</a>
+                                <a asp-area="" asp-controller="Intro" asp-action="Occupation" class="navbar-item @Html.IsSelected(controllers: "Intro", actions: "Occupation")" target="_blank">職業查詢</a>
                             </div>
                         </div>
                         <div class="navbar-item has-dropdown is-hoverable">
@@ -84,22 +84,22 @@
     <footer class="footer">
         <div class="content has-text-centered">Copyright &copy; 2021 成就學生中心</div>
         <div class="buttons is-centered">
-            <a asp-area="" asp-controller="Home" asp-action="Facebook" target="_blank" class="button is-medium is-facebook">
+            <a href="https://www.facebook.com/fcussc/" target="_blank" class="button is-medium is-facebook">
                 <span class="icon">
                     <i class="fab fa-facebook-f fa-lg"></i>
                 </span>
             </a>
-            <a asp-area="" asp-controller="Home" asp-action="Instagram" target="_blank" class="button is-medium is-instagram">
+            <a href="https://www.instagram.com/fcu.cdc/" target="_blank" class="button is-medium is-instagram">
                 <span class="icon">
                     <i class="fab fa-instagram fa-lg"></i>
                 </span>
             </a>
-            <a asp-area="" asp-controller="Home" asp-action="Site" target="_blank" class="button is-medium">
+            <a href="https://ssc.fcu.edu.tw/" target="_blank" class="button is-medium">
                 <span class="icon">
                     <i class="fas fa-link fa-lg"></i>
                 </span>
             </a>
-            <a asp-area="" asp-controller="Home" asp-action="GitHub" target="_blank" class="button is-medium is-github">
+            <a href="https://github.com/fcu-ssc/" target="_blank" class="button is-medium is-github">
                 <span class="icon">
                     <i class="fab fa-github fa-lg"></i>
                 </span>

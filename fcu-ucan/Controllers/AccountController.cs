@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using AutoMapper;
 using fcu_ucan.Entities;
@@ -50,12 +49,15 @@ namespace fcu_ucan.Controllers
             _mapper = mapper;
         }
         
+        /// <summary>
+        /// 登入頁面
+        /// </summary>
         [HttpGet("login")]
-        public IActionResult Login()
-        {
-            return View();
-        }
-        
+        public IActionResult Login() => View();
+
+        /// <summary>
+        /// 登入
+        /// </summary>
         [HttpPost("login")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult<LoginViewModel>> Login([FromForm] LoginViewModel model)
@@ -68,19 +70,19 @@ namespace fcu_ucan.Controllers
                 if (user == null)
                 {
                     ModelState.AddModelError("", "登入失敗，請檢查您的帳號密碼是否正確");
-                    _logger.LogInformation($"{model.UserName} 登入失敗，請檢查您的帳號密碼是否正確");
+                    _logger.LogInformation($"{model.UserName} 登入失敗");
                     return View(model);
                 }
                 if (!user.EmailConfirmed)
                 {
                     ModelState.AddModelError("", "帳戶尚未驗證，請前往您的信箱收取驗證信");
-                    _logger.LogInformation($"{model.UserName} 帳戶尚未驗證，請前往您的信箱收取驗證信");
+                    _logger.LogInformation($"{model.UserName} 帳戶尚未驗證");
                     return View(model);
                 }
                 if (!user.IsEnable)
                 {
                     ModelState.AddModelError("", "帳戶尚未啟用，請聯絡管理員");
-                    _logger.LogInformation($"{model.UserName} 帳戶尚未啟用，請聯絡管理員");
+                    _logger.LogInformation($"{model.UserName} 帳戶尚未啟用");
                     return View(model);
                 }
 
@@ -92,13 +94,13 @@ namespace fcu_ucan.Controllers
                 if (checkPasswordResult.IsLockedOut)
                 {
                     ModelState.AddModelError("", "帳戶被鎖定，請聯絡管理員");
-                    _logger.LogInformation($"{model.UserName} 帳戶被鎖定，請聯絡管理員");
+                    _logger.LogInformation($"{model.UserName} 帳戶被鎖定");
                     return View(model);
                 }
                 if (checkPasswordResult.IsNotAllowed)
                 {
                     ModelState.AddModelError("", "帳戶尚未驗證，請前往您的信箱收取驗證信");
-                    _logger.LogInformation($"{model.UserName} 帳戶尚未驗證，請前往您的信箱收取驗證信");
+                    _logger.LogInformation($"{model.UserName} 帳戶尚未驗證");
                     return View(model);
                 }
                 if (checkPasswordResult.Succeeded)
@@ -134,6 +136,9 @@ namespace fcu_ucan.Controllers
             return View(model);
         }
         
+        /// <summary>
+        /// 登出
+        /// </summary>
         [AuthAuthorize]
         [HttpGet("logout")]
         public IActionResult Logout()
@@ -142,40 +147,30 @@ namespace fcu_ucan.Controllers
             return RedirectToAction("Index", "Home");
         }
         
+        /// <summary>
+        /// 註冊頁面
+        /// </summary>
         [HttpGet("register/{code}")]
         public async Task<IActionResult> Register([FromRoute] string code)
         {
             var entity = await _userManager.Users
                 .SingleOrDefaultAsync(x => x.SecurityStamp == code);
-            if (entity == null)
-            {
-                return NotFound();
-            }
-            if (entity.IsEnable)
-            {
-                return NotFound();
-            }
-            if (entity.NormalizedUserName != null)
+            if (entity == null || entity.IsEnable || entity.UserName != null || entity.NormalizedUserName != null)
             {
                 return NotFound();
             }
             return View();
         }
         
+        /// <summary>
+        /// 註冊
+        /// </summary>
         [HttpPost("register/{code}")]
         public async Task<ActionResult<RegisterViewModel>> Register([FromRoute] string code, [FromForm] RegisterViewModel model)
         {
             var entity = await _userManager.Users
                 .SingleOrDefaultAsync(x => x.SecurityStamp == code);
-            if (entity == null)
-            {
-                return NotFound();
-            }
-            if (entity.IsEnable)
-            {
-                return NotFound();
-            }
-            if (entity.NormalizedUserName != null)
+            if (entity == null || entity.IsEnable || entity.UserName != null || entity.NormalizedUserName != null)
             {
                 return NotFound();
             }
@@ -184,28 +179,28 @@ namespace fcu_ucan.Controllers
                 if (await _userManager.Users.AnyAsync(x => x.NormalizedUserName == model.UserName.ToUpperInvariant()))
                 {
                     ModelState.AddModelError("UserName", "使用者名稱已經被使用");
+                    return View(model);
                 }
-                if (ModelState.IsValid)
-                {
-                    await _userManager.SetUserNameAsync(entity, model.UserName);
-                    await _userManager.AddPasswordAsync(entity, model.Password);
-                    var updateEntity = _mapper.Map(model, entity);
-                    await _userManager.UpdateAsync(updateEntity);
-                    return RedirectToAction("Login", "Account");
-                }
+                await _userManager.SetUserNameAsync(entity, model.UserName);
+                await _userManager.AddPasswordAsync(entity, model.Password);
+                var updateEntity = _mapper.Map(model, entity);
+                await _userManager.UpdateAsync(updateEntity);
+                _logger.LogInformation($"{model.UserName} 註冊成功");
+                return RedirectToAction("Login", "Account");
             }
-            return View();
+            ModelState.AddModelError("", "註冊失敗");
+            _logger.LogInformation($"{model.UserName} 註冊失敗");
+            return View(model);
         }
         
+        [NonAction]
         private string GenerateJwtToken(IList<Claim> claims)
         {
             claims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
             
             var userClaimsIdentity = new ClaimsIdentity(claims);
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Key"]));
-            var signingCredentials = new SigningCredentials(securityKey, 
-                _environment.IsDevelopment() ? SecurityAlgorithms.HmacSha256 : SecurityAlgorithms.HmacSha256Signature);
-            
+            var signingCredentials = new SigningCredentials(securityKey, _environment.IsDevelopment() ? SecurityAlgorithms.HmacSha256 : SecurityAlgorithms.HmacSha256Signature);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Issuer = _configuration["JWT:Issuer"],
@@ -216,11 +211,9 @@ namespace fcu_ucan.Controllers
                 Expires = DateTime.Now.AddHours(8), // Token 的逾期時間
                 SigningCredentials = signingCredentials
             };
-            
             var tokenHandler = new JwtSecurityTokenHandler();
             var securityToken = tokenHandler.CreateToken(tokenDescriptor);
             var serializeToken = tokenHandler.WriteToken(securityToken);
-
             return serializeToken;
         }
     }

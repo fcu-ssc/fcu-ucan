@@ -12,15 +12,15 @@
         <nav class="breadcrumb" aria-label="breadcrumbs">
             <ul>
                 <li><a asp-area="" asp-controller="Manage" asp-action="Index">管理</a></li>
-                <li><a asp-area="" asp-controller="Manage" asp-action="Users">使用者</a></li>
-                <li><a asp-area="" asp-controller="Manage" asp-action="UserDetail" asp-route-userId="@Context.Request.RouteValues["userId"]">使用者詳情</a></li>
-                <li class="is-active"><a asp-area="" asp-controller="Manage" asp-action="UserEdit" asp-route-userId="@Context.Request.RouteValues["userId"]" aria-current="page">@ViewData["Title"]</a></li>
+                <li><a asp-area="" asp-controller="User" asp-action="Index">使用者</a></li>
+                <li><a asp-area="" asp-controller="User" asp-action="Detail" asp-route-userId="@Context.Request.RouteValues["userId"]">使用者詳情</a></li>
+                <li class="is-active"><a asp-area="" asp-controller="User" asp-action="Edit" asp-route-userId="@Context.Request.RouteValues["userId"]" aria-current="page">@ViewData["Title"]</a></li>
             </ul>
         </nav>
         <div class="box content">
             <h1 class="title is-3">@ViewData["Title"]</h1>
             <hr/>
-            <form asp-area="" asp-controller="Manage" asp-action="UserEdit" asp-route-memberId="@Context.Request.RouteValues["userId"]" method="post" role="form">
+            <form asp-area="" asp-controller="User" asp-action="Edit" asp-route-memberId="@Context.Request.RouteValues["userId"]" method="post" role="form">
                 <div class="field mb-5">
                     <label asp-for="Email" class="label">電子郵件</label>
                     <div class="control has-icons-left">
