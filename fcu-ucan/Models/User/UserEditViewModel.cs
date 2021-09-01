@@ -33,5 +33,25 @@ namespace fcu_ucan.Models.User
         [JsonPropertyName("IsEnable")]
         [Display(Name = "啟用帳戶")]
         public bool IsEnable { get; set; }
+        
+        [Required(ErrorMessage = "{0}是必填的")]
+        [JsonPropertyName("IsRecorder")]
+        [Display(Name = "管理日誌權限")]
+        public bool IsRecorder { get; set; }
+        
+        [Required(ErrorMessage = "{0}是必填的")]
+        [JsonPropertyName("IsMember")]
+        [Display(Name = "管理成員權限")]
+        public bool IsMember { get; set; }
+        
+        [Required(ErrorMessage = "{0}是必填的")]
+        [JsonPropertyName("IsUser")]
+        [Display(Name = "管理使用者權限")]
+        public bool IsUser { get; set; }
+        
+        [Required(ErrorMessage = "{0}是必填的")]
+        [JsonPropertyName("IsUCAN")]
+        [Display(Name = "UCAN 登入權限")]
+        public bool IsUCAN { get; set; }
     }
 }

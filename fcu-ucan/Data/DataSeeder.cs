@@ -64,6 +64,14 @@ namespace fcu_ucan.Data
             };
             await roleManager.CreateAsync(user);
             await roleManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "User"));
+            
+            var ucan = new ApplicationRole
+            {
+                Name = "UCAN",
+                NormalizedName = "UCAN".ToUpperInvariant()
+            };
+            await roleManager.CreateAsync(ucan);
+            await roleManager.AddClaimAsync(ucan, new Claim(ClaimTypes.Role, "UCAN"));
         }
 
         private static async Task CreateUserAsync(IServiceProvider services, ILogger<DataSeeder> logger)
@@ -80,6 +88,7 @@ namespace fcu_ucan.Data
             await userManager.AddToRoleAsync(user, "Recorder");
             await userManager.AddToRoleAsync(user, "Member");
             await userManager.AddToRoleAsync(user, "User");
+            await userManager.AddToRoleAsync(user, "UCAN");
         }
     }
 }

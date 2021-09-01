@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Linq;
+using AutoMapper;
 using fcu_ucan.Entities;
 using fcu_ucan.Models.Account;
 using fcu_ucan.Models.User;
@@ -25,7 +26,15 @@ namespace fcu_ucan.Mappers
                 .ForMember(dest => dest.PhoneNumberConfirmed,
                     opt => opt.MapFrom(src => src.PhoneNumberConfirmed))
                 .ForMember(dest => dest.IsEnable,
-                    opt => opt.MapFrom(src => src.IsEnable));
+                    opt => opt.MapFrom(src => src.IsEnable))
+                .ForMember(dest => dest.IsRecorder,
+                    opt => opt.MapFrom(src => src.UserRoles.Any(x => x.Role.NormalizedName == "Recorder".ToUpperInvariant())))
+                .ForMember(dest => dest.IsMember,
+                    opt => opt.MapFrom(src => src.UserRoles.Any(x => x.Role.NormalizedName == "Member".ToUpperInvariant())))
+                .ForMember(dest => dest.IsUser,
+                    opt => opt.MapFrom(src => src.UserRoles.Any(x => x.Role.NormalizedName == "User".ToUpperInvariant())))
+                .ForMember(dest => dest.IsUCAN,
+                    opt => opt.MapFrom(src => src.UserRoles.Any(x => x.Role.NormalizedName == "UCAN".ToUpperInvariant())));
 
             #endregion
             
@@ -37,7 +46,15 @@ namespace fcu_ucan.Mappers
                 .ForMember(dest => dest.PhoneNumberConfirmed,
                     opt => opt.MapFrom(src => src.PhoneNumberConfirmed))
                 .ForMember(dest => dest.IsEnable,
-                    opt => opt.MapFrom(src => src.IsEnable));
+                    opt => opt.MapFrom(src => src.IsEnable))
+                .ForMember(dest => dest.IsRecorder,
+                    opt => opt.MapFrom(src => src.UserRoles.Any(x => x.Role.NormalizedName == "Recorder".ToUpperInvariant())))
+                .ForMember(dest => dest.IsMember,
+                    opt => opt.MapFrom(src => src.UserRoles.Any(x => x.Role.NormalizedName == "Member".ToUpperInvariant())))
+                .ForMember(dest => dest.IsUser,
+                    opt => opt.MapFrom(src => src.UserRoles.Any(x => x.Role.NormalizedName == "User".ToUpperInvariant())))
+                .ForMember(dest => dest.IsUCAN,
+                    opt => opt.MapFrom(src => src.UserRoles.Any(x => x.Role.NormalizedName == "UCAN".ToUpperInvariant())));
 
             #endregion
             

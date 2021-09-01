@@ -45,6 +45,11 @@
                     <label asp-for="IsUser" class="label">管理使用者權限</label>
                     <span asp-validation-for="IsUser" class="help is-danger"></span>
                 </div>
+                <div class="field mb-5">
+                    <input asp-for="IsUCAN" class="switch is-rounded is-rtl" type="checkbox" />
+                    <label asp-for="IsUCAN" class="label">UCAN 登入權限</label>
+                    <span asp-validation-for="IsUCAN" class="help is-danger"></span>
+                </div>
                 <div class="field">
                     <div class="control">
                         <button class="button is-link" type="submit">邀請</button>

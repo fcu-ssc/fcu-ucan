@@ -27,5 +27,10 @@ namespace fcu_ucan.Models.User
         [JsonPropertyName("IsUser")]
         [Display(Name = "管理使用者權限")]
         public bool IsUser { get; set; }
+        
+        [Required(ErrorMessage = "{0}是必填的")]
+        [JsonPropertyName("IsUCAN")]
+        [Display(Name = "UCAN 登入權限")]
+        public bool IsUCAN { get; set; }
     }
 }

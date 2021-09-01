@@ -16,6 +16,7 @@
                 </div>
                 <div class="column box">
                     <h1 class="title is-3 has-text-centered">@ViewData["Title"]</h1>
+                    <hr />
                     @if (!ViewData.ModelState.IsValid)
                     {
                         @foreach (var modelError in ViewData.ModelState.SelectMany(keyValuePair => keyValuePair.Value.Errors))

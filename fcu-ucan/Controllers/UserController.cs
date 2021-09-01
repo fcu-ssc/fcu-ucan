@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using fcu_ucan.Data;
@@ -47,6 +48,8 @@ namespace fcu_ucan.Controllers
         {
             var entities = await _dbContext.Users
                 .AsNoTracking()
+                .Include(x => x.UserRoles)
+                .ThenInclude(x => x.Role)
                 .Skip((page ?? 1 - 1) * 50)
                 .Take(30)
                 .ToListAsync();
@@ -64,6 +67,8 @@ namespace fcu_ucan.Controllers
         {
             var entity = await _dbContext.Users
                 .AsNoTracking()
+                .Include(x => x.UserRoles)
+                .ThenInclude(x => x.Role)
                 .SingleOrDefaultAsync(x => x.Id == userId);
             if (entity == null)
             {
@@ -107,6 +112,10 @@ namespace fcu_ucan.Controllers
                     {
                         await _userManager.AddToRoleAsync(entity, "User");
                     }
+                    if (model.IsUCAN)
+                    {
+                        await _userManager.AddToRoleAsync(entity, "UCAN");
+                    }
                     await _mailService.SendRegisterEmailAsync(model.Email, entity.SecurityStamp);
                     return RedirectToAction("Index", "User");
                 }
@@ -122,6 +131,8 @@ namespace fcu_ucan.Controllers
         {
             var entity = await _dbContext.Users
                 .AsNoTracking()
+                .Include(x => x.UserRoles)
+                .ThenInclude(x => x.Role)
                 .SingleOrDefaultAsync(x => x.Id == userId);
             if (entity == null)
             {
@@ -164,6 +175,62 @@ namespace fcu_ucan.Controllers
                 {
                     var updateEntity = _mapper.Map(model, entity);
                     await _userManager.UpdateAsync(updateEntity);
+                    var isRecorder = await _userManager.IsInRoleAsync(entity, "Recorder");
+                    if (isRecorder != model.IsRecorder)
+                    {
+                        if (model.IsRecorder)
+                        {
+                            await _userManager.AddToRoleAsync(entity, "Recorder");
+                        }
+                        else
+                        {
+                            await _userManager.RemoveFromRoleAsync(entity, "Recorder");
+                        }
+                    }
+                    var isMember = await _userManager.IsInRoleAsync(entity, "Member");
+                    if  (isMember != model.IsMember)
+                    {
+                        if (model.IsMember)
+                        {
+                            await _userManager.AddToRoleAsync(entity, "Member");
+                        }
+                        else
+                        {
+                            await _userManager.RemoveFromRoleAsync(entity, "Member");
+                        }
+                    }
+                    var isUser = await _userManager.IsInRoleAsync(entity, "User");
+                    if (isUser != model.IsUser)
+                    {
+                        if (model.IsUser)
+                        {
+                            await _userManager.AddToRoleAsync(entity, "User");
+                        }
+                        else
+                        {
+                            await _userManager.RemoveFromRoleAsync(entity, "User");
+                        }
+                    }
+                    var isUCAN = await _userManager.IsInRoleAsync(entity, "UCAN");
+                    if (isUCAN != model.IsUCAN)
+                    {
+                        if (model.IsUCAN)
+                        {
+                            await _userManager.AddToRoleAsync(entity, "UCAN");
+                        }
+                        else
+                        {
+                            await _userManager.RemoveFromRoleAsync(entity, "UCAN");
+                        }
+                    }
+                    await _userManager.UpdateSecurityStampAsync(entity);
+                    var currentUserId = User.Claims
+                        .Single(p => p.Type == ClaimTypes.NameIdentifier).Value;
+                    if (currentUserId == entity.Id)
+                    {
+                        HttpContext.Session.Clear();
+                        return RedirectToAction("Login", "Account");
+                    }
                     return RedirectToAction("Detail", "User", new{ userId });
                 }
             }

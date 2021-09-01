@@ -41,6 +41,15 @@
                         <a asp-area="" asp-controller="Member" asp-action="Index" class="button is-link is-inverted is-fullwidth is-underlined">成員</a>
                     </div>
                 }
+                @if (User.IsInRole("UCAN"))
+                {
+                    <div class="column is-4">
+                        <figure class="image">
+                            <i class="fas fa-cogs fa-7x"></i>
+                        </figure>
+                        <a asp-area="" asp-controller="Manage" asp-action="UCANLogin" class="button is-link is-inverted is-fullwidth is-underlined">UCAN 登入</a>
+                    </div>
+                }
             </div>
         </div>
     </div>

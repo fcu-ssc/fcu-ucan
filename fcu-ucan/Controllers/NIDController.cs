@@ -91,7 +91,7 @@ namespace fcu_ucan.Controllers
                                       $"Action=ohduschoolssologin&" +
                                       $"username={username}&" +
                                       $"token={token}&" +
-                                      $"school=1007";
+                                      $"school={_configuration["UCAN:School"]}";
                             _logger.LogInformation($"Ucan 登入: {url}");
                             return Redirect(url);
                     }
