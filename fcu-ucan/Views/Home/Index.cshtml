@@ -3,8 +3,15 @@
 }
 
 @section Styles {
-    <link rel="stylesheet" type="text/css" href="~/lib/aos/aos.css" />
-    <link rel="stylesheet" type="text/css" href="~/lib/bulma-carousel/dist/css/bulma-carousel.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"
+          asp-fallback-href="~/lib/aos/aos.css"
+          asp-fallback-test-class="aos-animate"
+          integrity="sha512-1cK78a1o+ht2JcaW6g8OXYwqpev9+6GqOkz9xmBN9iUUhIndKtxwILGWYOSibOKjLsEdjyjZvYDq/cZwNeak0w=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.24/dist/css/bulma-carousel.min.css"
+          asp-fallback-href="~/lib/bulma-carousel/dist/css/bulma-carousel.min.css"
+          asp-fallback-test-class="carousel"
+          integrity="sha256-nVhrDZU/ne3I/z6LXWEbyUOEmv79sPGKEbsP7SWLkHI=" crossorigin="anonymous">
     <environment include="Development">
         <link rel="stylesheet" type="text/css" href="~/css/home.css" asp-append-version="true" />
         <link rel="stylesheet" type="text/css" href="~/css/affix.css" asp-append-version="true" />
@@ -337,8 +344,15 @@
 </button>
 
 @section Scripts {
-    <script src="~/lib/aos/aos.js"></script>
-    <script src="~/lib/bulma-carousel/dist/js/bulma-carousel.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"
+            asp-fallback-src="~/lib/aos/aos.js"
+            asp-fallback-test="window.AOS"
+            integrity="sha512-A7AYk1fGKX6S2SsHywmPkrnzTZHrgiVT7GcQkLGDe2ev0aWb8zejytzS8wjo7PGEXKqJOrjQ4oORtnimIRZBtw=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.24/dist/js/bulma-carousel.min.js"
+            asp-fallback-src="~/lib/bulma-carousel/dist/js/bulma-carousel.min.js"
+            asp-fallback-test="window.bulmaCarousel"
+            integrity="sha256-qKR77yzVBkDYKuoSg2BpAIbMtmF8aFjuTHFVnIjkpzI=" crossorigin="anonymous"></script>
     <environment include="Development">
         <script src="~/js/home.js" asp-append-version="true"></script>
         <script src="~/js/to-top.js" asp-append-version="true"></script>

@@ -4,7 +4,10 @@
 }
 
 @section Styles {
-    <link rel="stylesheet" type="text/css" href="~/lib/bulma-responsive-tables/css/main.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-responsive-tables@1.2.3/css/main.min.css"
+              asp-fallback-href="~/lib/bulma-responsive-tables/css/main.min.css"
+              asp-fallback-test-class="b-table"
+              integrity="sha256-qqSeWOTrQzPLIhRfuz3KWtWjWqI9X60r0piSbhCdNKY=" crossorigin="anonymous">
 }
 
 <section class="section is-medium">
@@ -18,7 +21,7 @@
         <div class="box content">
             <div class="is-flex is-justify-content-space-between">
                 <h1 class="title is-3">@ViewData["Title"]</h1>
-                <div class="field has-addons is-hidden-tablet-only is-hidden-desktop-only is-hidden-widescreen-only">
+                <div class="field has-addons is-hidden-tablet">
                     <p class="control">
                         <a asp-area="" asp-controller="User" asp-action="Invite" class="button">
                             <span class="icon is-small">

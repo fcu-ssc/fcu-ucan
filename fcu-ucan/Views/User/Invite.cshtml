@@ -4,7 +4,10 @@
 }
 
 @section Styles {
-    <link rel="stylesheet" type="text/css" href="~/lib/bulma-switch/dist/css/bulma-switch.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-switch@2.0.0/dist/css/bulma-switch.min.css"
+              asp-fallback-href="~/lib/bulma-switch/dist/css/bulma-switch.min.css"
+              asp-fallback-test-class="switch"
+              integrity="sha256-jCV/cXwP13w0GNHLgFx6SFgTNAvJPvS5MIhuE30Ng08=" crossorigin="anonymous">
 }
 
 <section class="section is-medium">
