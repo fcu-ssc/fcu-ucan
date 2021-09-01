@@ -61,7 +61,7 @@ namespace fcu_ucan.Controllers
             {
                 return NotFound();
             }
-            return File(System.IO.File.OpenRead(file.FullName), MimeTypeMap.GetMimeType(file.Extension), file.Name);
+            return File(System.IO.File.Open(file.FullName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite), MimeTypeMap.GetMimeType(file.Extension), file.Name);
         }
         
         /// <summary>
