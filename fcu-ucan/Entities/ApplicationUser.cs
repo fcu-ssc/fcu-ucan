@@ -28,7 +28,6 @@ namespace fcu_ucan.Entities
         /// <summary>
         /// 使用者名稱
         /// </summary>
-        [Required]
         [MaxLength(256)]
         [ProtectedPersonalData]
         public override string UserName { get; set; }

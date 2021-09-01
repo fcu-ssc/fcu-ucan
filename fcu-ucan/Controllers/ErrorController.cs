@@ -15,6 +15,9 @@ namespace fcu_ucan.Controllers
             _logger = logger;
         }
         
+        /// <summary>
+        /// 錯誤頁面
+        /// </summary>
         [HttpGet("")]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
@@ -22,6 +25,10 @@ namespace fcu_ucan.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
+        /// <summary>
+        /// UCAN 錯誤頁面
+        /// </summary>
+        /// <returns></returns>
         [Route("nid")]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult NIDError()
@@ -34,6 +41,10 @@ namespace fcu_ucan.Controllers
             });
         }
         
+        /// <summary>
+        /// NID 錯誤頁面
+        /// </summary>
+        /// <returns></returns>
         [Route("ucan")]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult UCANError()

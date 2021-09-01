@@ -4,7 +4,10 @@
 }
 
 @section Styles {
-    <link rel="stylesheet" type="text/css" href="~/lib/bulma-switch/dist/css/bulma-switch.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-switch@2.0.0/dist/css/bulma-switch.min.css"
+              asp-fallback-href="~/lib/bulma-switch/dist/css/bulma-switch.min.css"
+              asp-fallback-test-class="switch"
+              integrity="sha256-jCV/cXwP13w0GNHLgFx6SFgTNAvJPvS5MIhuE30Ng08=" crossorigin="anonymous">
 }
 
 <section class="section is-medium">
@@ -12,15 +15,15 @@
         <nav class="breadcrumb" aria-label="breadcrumbs">
             <ul>
                 <li><a asp-area="" asp-controller="Manage" asp-action="Index">管理</a></li>
-                <li><a asp-area="" asp-controller="Manage" asp-action="Users">使用者</a></li>
-                <li><a asp-area="" asp-controller="Manage" asp-action="UserDetail" asp-route-userId="@Context.Request.RouteValues["userId"]">使用者詳情</a></li>
-                <li class="is-active"><a asp-area="" asp-controller="Manage" asp-action="UserEdit" asp-route-userId="@Context.Request.RouteValues["userId"]" aria-current="page">@ViewData["Title"]</a></li>
+                <li><a asp-area="" asp-controller="User" asp-action="Index">使用者</a></li>
+                <li><a asp-area="" asp-controller="User" asp-action="Detail" asp-route-userId="@Context.Request.RouteValues["userId"]">使用者詳情</a></li>
+                <li class="is-active"><a asp-area="" asp-controller="User" asp-action="Edit" asp-route-userId="@Context.Request.RouteValues["userId"]" aria-current="page">@ViewData["Title"]</a></li>
             </ul>
         </nav>
         <div class="box content">
             <h1 class="title is-3">@ViewData["Title"]</h1>
             <hr/>
-            <form asp-area="" asp-controller="Manage" asp-action="UserEdit" asp-route-memberId="@Context.Request.RouteValues["userId"]" method="post" role="form">
+            <form asp-area="" asp-controller="User" asp-action="Edit" asp-route-memberId="@Context.Request.RouteValues["userId"]" method="post" role="form">
                 <div class="field mb-5">
                     <label asp-for="Email" class="label">電子郵件</label>
                     <div class="control has-icons-left">
@@ -56,6 +59,26 @@
                     <label asp-for="IsEnable" class="label">啟用帳戶</label>
                     <span asp-validation-for="IsEnable" class="help is-danger"></span>
                 </div>
+                <div class="field mb-5">
+                    <input asp-for="IsRecorder" class="switch is-rounded is-rtl" type="checkbox" />
+                    <label asp-for="IsRecorder" class="label">管理日誌權限</label>
+                    <span asp-validation-for="IsRecorder" class="help is-danger"></span>
+                </div>
+                <div class="field mb-5">
+                    <input asp-for="IsMember" class="switch is-rounded is-rtl" type="checkbox" />
+                    <label asp-for="IsMember" class="label">管理成員權限</label>
+                    <span asp-validation-for="IsMember" class="help is-danger"></span>
+                </div>
+                <div class="field mb-5">
+                    <input asp-for="IsUser" class="switch is-rounded is-rtl" type="checkbox" />
+                    <label asp-for="IsUser" class="label">管理使用者權限</label>
+                    <span asp-validation-for="IsUser" class="help is-danger"></span>
+                </div>
+                <div class="field mb-5">
+                    <input asp-for="IsUCAN" class="switch is-rounded is-rtl" type="checkbox" />
+                    <label asp-for="IsUCAN" class="label">UCAN 登入權限</label>
+                    <span asp-validation-for="IsUCAN" class="help is-danger"></span>
+                </div>
                 <div class="field">
                     <div class="control">
                         <button class="button is-link" type="submit">修改</button>
@@ -65,3 +88,7 @@
         </div>
     </div>
 </section>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

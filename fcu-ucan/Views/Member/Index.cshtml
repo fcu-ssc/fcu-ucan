@@ -4,7 +4,10 @@
 }
 
 @section Styles {
-    <link rel="stylesheet" type="text/css" href="~/lib/bulma-responsive-tables/css/main.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-responsive-tables@1.2.3/css/main.min.css"
+              asp-fallback-href="~/lib/bulma-responsive-tables/css/main.min.css"
+              asp-fallback-test-class="b-table"
+              integrity="sha256-qqSeWOTrQzPLIhRfuz3KWtWjWqI9X60r0piSbhCdNKY=" crossorigin="anonymous">
 }
 
 <section class="section is-medium">
@@ -12,22 +15,22 @@
         <nav class="breadcrumb" aria-label="breadcrumbs">
             <ul>
                 <li><a asp-area="" asp-controller="Manage" asp-action="Index">管理</a></li>
-                <li class="is-active"><a asp-area="" asp-controller="Manage" asp-action="Members" aria-current="page">@ViewData["Title"]</a></li>
+                <li class="is-active"><a asp-area="" asp-controller="Member" asp-action="Index" aria-current="page">@ViewData["Title"]</a></li>
             </ul>
         </nav>
         <div class="box content">
             <div class="is-flex is-justify-content-space-between">
                 <h1 class="title is-3">@ViewData["Title"]</h1>
-                <div class="field has-addons is-hidden-tablet-only is-hidden-desktop-only is-hidden-widescreen-only">
+                <div class="field has-addons is-hidden-tablet">
                     <p class="control">
-                        <a asp-area="" asp-controller="Manage" asp-action="MemberAdd" class="button">
+                        <a asp-area="" asp-controller="Member" asp-action="Add" class="button">
                             <span class="icon is-small">
                                 <i class="fas fa-plus"></i>
                             </span>
                         </a>
                     </p>
                     <p class="control">
-                        <button id="upload-btn-1" class="button" type="button">
+                        <button id="upload-button-1" class="button" type="button">
                             <span class="icon is-small">
                                 <i class="fas fa-upload"></i>
                             </span>
@@ -36,7 +39,7 @@
                 </div>
                 <div class="field has-addons is-hidden-mobile">
                     <p class="control">
-                        <a asp-area="" asp-controller="Manage" asp-action="MemberAdd" class="button">
+                        <a asp-area="" asp-controller="Member" asp-action="Add" class="button">
                             <span class="icon is-small">
                                 <i class="fas fa-plus"></i>
                             </span>
@@ -44,7 +47,7 @@
                         </a>
                     </p>
                     <p class="control">
-                        <button id="upload-btn-2" class="button" type="button">
+                        <button id="upload-button-2" class="button" type="button">
                             <span class="icon is-small">
                                 <i class="fas fa-upload"></i>
                             </span>
@@ -91,7 +94,7 @@
                                     <td data-label="UCAN 帳號">@member.StudentId</td>
                                     <td class="is-actions-cell">
                                         <div class="buttons">
-                                            <a asp-area="" asp-controller="Manage" asp-action="MemberDetail" asp-route-memberId="@member.Id" class="button is-link is-inverted is-underlined">
+                                            <a asp-area="" asp-controller="Member" asp-action="Detail" asp-route-memberId="@member.Id" class="button is-link is-inverted is-underlined">
                                                 <span class="icon is-small">
                                                     <i class="far fa-newspaper"></i>
                                                 </span>
@@ -108,10 +111,10 @@
                 @if (Model.Any())
                 {
                     <nav class="pagination is-centered is-rounded" role="navigation" aria-label="pagination">
-                        <a asp-area="" asp-controller="Manage" asp-action="Members" asp-route-page="@(Model.PageIndex-1)" disabled="@(Model.HasPreviousPage == false)" class="pagination-previous">上一頁</a>
-                        <a asp-area="" asp-controller="Manage" asp-action="Members" asp-route-page="@(Model.PageIndex+1)" disabled="@(Model.HasNextPage == false)" class="pagination-next">下一頁</a>
+                        <a asp-area="" asp-controller="Member" asp-action="Index" asp-route-page="@(Model.PageIndex-1)" disabled="@(Model.HasPreviousPage == false)" class="pagination-previous">上一頁</a>
+                        <a asp-area="" asp-controller="Member" asp-action="Index" asp-route-page="@(Model.PageIndex+1)" disabled="@(Model.HasNextPage == false)" class="pagination-next">下一頁</a>
                         <ul class="pagination-list">
-                            <li><a asp-area="" asp-controller="Manage" asp-action="Members" asp-route-page="@Model.PageIndex" class="pagination-link is-current" aria-current="page">@Model.PageIndex / @Model.TotalPages</a></li>
+                            <li><a asp-area="" asp-controller="Member" asp-action="Index" asp-route-page="@Model.PageIndex" class="pagination-link is-current" aria-current="page">@Model.PageIndex / @Model.TotalPages</a></li>
                         </ul>
                     </nav>
                 }
@@ -120,10 +123,10 @@
     </div>
     <div id="upload-modal" class="modal">
         <div class="modal-background"></div>
-        <form asp-area="" asp-controller="Manage" asp-action="MemberImport" method="post" role="form" enctype="multipart/form-data" class="modal-card">
+        <form asp-area="" asp-controller="Member" asp-action="Import" method="post" role="form" enctype="multipart/form-data" class="modal-card">
             <header class="modal-card-head">
                 <p class="modal-card-title">匯入成員</p>
-                <button class="delete" aria-label="close" data-bulma-modal="close" type="button"></button>
+                <button class="delete" aria-label="close" type="button"></button>
             </header>
             <section class="modal-card-body is-flex is-flex-direction-column is-align-items-center">
                 <p class="mb-3">第一行請擺學號，第二行請擺帳號，不要有標題</p>
@@ -144,7 +147,7 @@
             </section>
             <footer class="modal-card-foot">
                 <button class="button is-link" type="submit">上傳</button>
-                <button class="button" data-bulma-modal="close" type="button">取消</button>
+                <button id="cancel-button" class="button" aria-label="close" type="button">取消</button>
             </footer>
         </form>
     </div>

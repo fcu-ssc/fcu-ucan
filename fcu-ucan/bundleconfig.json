@@ -18,6 +18,17 @@
     ]
   },
   {
+    "outputFileName": "wwwroot/js/contact-modal.min.js",
+    "inputFiles": [
+      "wwwroot/js/contact-modal.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
     "outputFileName": "wwwroot/js/delete-modal.min.js",
     "inputFiles": [
       "wwwroot/js/delete-modal.js"
@@ -51,20 +62,9 @@
     "sourceMap": false
   },
   {
-    "outputFileName": "wwwroot/js/notification-close.min.js",
+    "outputFileName": "wwwroot/js/link-active.min.js",
     "inputFiles": [
-      "wwwroot/js/notification-close.js"
-    ],
-    "minify": {
-      "enabled": true,
-      "renameLocals": true
-    },
-    "sourceMap": false
-  },
-  {
-    "outputFileName": "wwwroot/js/site.min.js",
-    "inputFiles": [
-      "wwwroot/js/site.js"
+      "wwwroot/js/link-active.js"
     ],
     "minify": {
       "enabled": true,

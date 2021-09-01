@@ -4,7 +4,10 @@
 }
 
 @section Styles {
-    <link rel="stylesheet" type="text/css" href="~/lib/bulma-switch/dist/css/bulma-switch.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-switch@2.0.0/dist/css/bulma-switch.min.css"
+          asp-fallback-href="~/lib/bulma-switch/dist/css/bulma-switch.min.css"
+          asp-fallback-test-class="switch"
+          integrity="sha256-jCV/cXwP13w0GNHLgFx6SFgTNAvJPvS5MIhuE30Ng08=" crossorigin="anonymous">
 }
 
 <section class="section is-medium">
@@ -12,8 +15,8 @@
         <nav class="breadcrumb" aria-label="breadcrumbs">
             <ul>
                 <li><a asp-area="" asp-controller="Manage" asp-action="Index">管理</a></li>
-                <li><a asp-area="" asp-controller="Manage" asp-action="Users">使用者</a></li>
-                <li class="is-active"><a asp-area="" asp-controller="Manage" asp-action="UserDetail" asp-route-userId="@Context.Request.RouteValues["userId"]" aria-current="page">@ViewData["Title"]</a></li>
+                <li><a asp-area="" asp-controller="User" asp-action="Index">使用者</a></li>
+                <li class="is-active"><a asp-area="" asp-controller="User" asp-action="Detail" asp-route-userId="@Context.Request.RouteValues["userId"]" aria-current="page">@ViewData["Title"]</a></li>
             </ul>
         </nav>
         <div class="box content">
@@ -75,10 +78,30 @@
                     <label asp-for="IsEnable" class="label">啟用帳戶</label>
                     <span asp-validation-for="IsEnable" class="help is-danger"></span>
                 </div>
+                <div class="field mb-5">
+                    <input asp-for="IsRecorder" class="switch is-rounded is-rtl" type="checkbox" disabled />
+                    <label asp-for="IsRecorder" class="label">管理日誌權限</label>
+                    <span asp-validation-for="IsRecorder" class="help is-danger"></span>
+                </div>
+                <div class="field mb-5">
+                    <input asp-for="IsMember" class="switch is-rounded is-rtl" type="checkbox" disabled />
+                    <label asp-for="IsMember" class="label">管理成員權限</label>
+                    <span asp-validation-for="IsMember" class="help is-danger"></span>
+                </div>
+                <div class="field mb-5">
+                    <input asp-for="IsUser" class="switch is-rounded is-rtl" type="checkbox" disabled />
+                    <label asp-for="IsUser" class="label">管理使用者權限</label>
+                    <span asp-validation-for="IsUser" class="help is-danger"></span>
+                </div>
+                <div class="field mb-5">
+                    <input asp-for="IsUCAN" class="switch is-rounded is-rtl" type="checkbox" disabled />
+                    <label asp-for="IsUCAN" class="label">UCAN 登入權限</label>
+                    <span asp-validation-for="IsUCAN" class="help is-danger"></span>
+                </div>
                 <div class="field">
                     <div class="control">
-                        <a asp-area="" asp-controller="Manage" asp-action="UserEdit" asp-route-userId="@Model.Id" class="button is-link">編輯</a>
-                        <button id="delete-btn" class="button is-danger" type="button">刪除</button>
+                        <a asp-area="" asp-controller="User" asp-action="Edit" asp-route-userId="@Model.Id" class="button is-link">編輯</a>
+                        <button id="delete-button" class="button is-danger" type="button">刪除</button>
                     </div>
                 </div>
             </form>
@@ -86,10 +109,10 @@
     </div>
     <div id="delete-modal" class="modal">
         <div class="modal-background"></div>
-        <form asp-area="" asp-controller="Manage" asp-action="UserDelete" asp-route-userId="@Model.Id" method="post" role="form" class="modal-card">
+        <form asp-area="" asp-controller="User" asp-action="Delete" asp-route-userId="@Model.Id" method="post" role="form" class="modal-card">
             <header class="modal-card-head">
                 <p class="modal-card-title">您確定要刪除?</p>
-                <button class="delete" aria-label="close" data-bulma-modal="close" type="button"></button>
+                <button class="delete" aria-label="close" type="button"></button>
             </header>
             <section class="modal-card-body">
                 <div class="field mb-5">
@@ -147,10 +170,30 @@
                     <label asp-for="IsEnable" class="label">啟用帳戶</label>
                     <span asp-validation-for="IsEnable" class="help is-danger"></span>
                 </div>
+                <div class="field mb-5">
+                    <input asp-for="IsRecorder" class="switch is-rounded is-rtl" type="checkbox" disabled />
+                    <label asp-for="IsRecorder" class="label">管理日誌權限</label>
+                    <span asp-validation-for="IsRecorder" class="help is-danger"></span>
+                </div>
+                <div class="field mb-5">
+                    <input asp-for="IsMember" class="switch is-rounded is-rtl" type="checkbox" disabled />
+                    <label asp-for="IsMember" class="label">管理成員權限</label>
+                    <span asp-validation-for="IsMember" class="help is-danger"></span>
+                </div>
+                <div class="field mb-5">
+                    <input asp-for="IsUser" class="switch is-rounded is-rtl" type="checkbox" disabled />
+                    <label asp-for="IsUser" class="label">管理使用者權限</label>
+                    <span asp-validation-for="IsUser" class="help is-danger"></span>
+                </div>
+                <div class="field mb-5">
+                    <input asp-for="IsUCAN" class="switch is-rounded is-rtl" type="checkbox" disabled />
+                    <label asp-for="IsUCAN" class="label">UCAN 登入權限</label>
+                    <span asp-validation-for="IsUCAN" class="help is-danger"></span>
+                </div>
             </section>
             <footer class="modal-card-foot">
                 <button class="button is-danger" type="submit">確定</button>
-                <button class="button" data-bulma-modal="close" type="button">取消</button>
+                <button id="cancel-button" class="button" aria-label="close" type="button">取消</button>
             </footer>
         </form>
     </div>

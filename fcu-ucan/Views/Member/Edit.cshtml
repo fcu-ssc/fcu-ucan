@@ -8,15 +8,15 @@
         <nav class="breadcrumb" aria-label="breadcrumbs">
             <ul>
                 <li><a asp-area="" asp-controller="Manage" asp-action="Index">管理</a></li>
-                <li><a asp-area="" asp-controller="Manage" asp-action="Members">成員</a></li>
-                <li><a asp-area="" asp-controller="Manage" asp-action="MemberDetail" asp-route-memberId="@Context.Request.RouteValues["memberId"]">成員詳情</a></li>
-                <li class="is-active"><a asp-area="" asp-controller="Manage" asp-action="MemberEdit" asp-route-memberId="@Context.Request.RouteValues["memberId"]" aria-current="page">@ViewData["Title"]</a></li>
+                <li><a asp-area="" asp-controller="Member" asp-action="Index">成員</a></li>
+                <li><a asp-area="" asp-controller="Member" asp-action="Detail" asp-route-memberId="@Context.Request.RouteValues["memberId"]">成員詳情</a></li>
+                <li class="is-active"><a asp-area="" asp-controller="Member" asp-action="Edit" asp-route-memberId="@Context.Request.RouteValues["memberId"]" aria-current="page">@ViewData["Title"]</a></li>
             </ul>
         </nav>
         <div class="box content">
             <h1 class="title is-3">@ViewData["Title"]</h1>
             <hr/>
-            <form asp-area="" asp-controller="Manage" asp-action="MemberEdit" asp-route-memberId="@Context.Request.RouteValues["memberId"]" method="post" role="form">
+            <form asp-area="" asp-controller="Member" asp-action="Edit" asp-route-memberId="@Context.Request.RouteValues["memberId"]" method="post" role="form">
                 <div class="field mb-5">
                     <label asp-for="NetworkId" class="label">NID 帳號</label>
                     <div class="control has-icons-left">
@@ -46,3 +46,7 @@
         </div>
     </div>
 </section>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

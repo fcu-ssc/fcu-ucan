@@ -36,7 +36,6 @@ namespace fcu_ucan.Controllers
             var url = $"{_configuration["NID:Url"]}/fcuOauth/Auth.aspx?" +
                       $"client_id={_configuration["NID:ClientId"]}&" +
                       $"client_url={_configuration["Domain"]}/ucan/nid";
-
             return Redirect(url);
         }
         
@@ -92,7 +91,7 @@ namespace fcu_ucan.Controllers
                                       $"Action=ohduschoolssologin&" +
                                       $"username={username}&" +
                                       $"token={token}&" +
-                                      $"school=1007";
+                                      $"school={_configuration["UCAN:School"]}";
                             _logger.LogInformation($"Ucan 登入: {url}");
                             return Redirect(url);
                     }

@@ -4,7 +4,10 @@
 }
 
 @section Styles {
-    <link rel="stylesheet" type="text/css" href="~/lib/bulma-responsive-tables/css/main.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-responsive-tables@1.2.3/css/main.min.css"
+              asp-fallback-href="~/lib/bulma-responsive-tables/css/main.min.css"
+              asp-fallback-test-class="b-table"
+              integrity="sha256-qqSeWOTrQzPLIhRfuz3KWtWjWqI9X60r0piSbhCdNKY=" crossorigin="anonymous">
 }
 
 <section class="section is-medium">
@@ -12,15 +15,15 @@
         <nav class="breadcrumb" aria-label="breadcrumbs">
             <ul>
                 <li><a asp-area="" asp-controller="Manage" asp-action="Index">管理</a></li>
-                <li class="is-active"><a asp-area="" asp-controller="Manage" asp-action="Users" aria-current="page">@ViewData["Title"]</a></li>
+                <li class="is-active"><a asp-area="" asp-controller="User" asp-action="Index" aria-current="page">@ViewData["Title"]</a></li>
             </ul>
         </nav>
         <div class="box content">
             <div class="is-flex is-justify-content-space-between">
                 <h1 class="title is-3">@ViewData["Title"]</h1>
-                <div class="field has-addons is-hidden-tablet-only is-hidden-desktop-only is-hidden-widescreen-only">
+                <div class="field has-addons is-hidden-tablet">
                     <p class="control">
-                        <a asp-area="" asp-controller="Manage" asp-action="UserInvite" class="button">
+                        <a asp-area="" asp-controller="User" asp-action="Invite" class="button">
                             <span class="icon is-small">
                                 <i class="fas fa-user-plus"></i>
                             </span>
@@ -29,7 +32,7 @@
                 </div>
                 <div class="field has-addons is-hidden-mobile">
                     <p class="control">
-                        <a asp-area="" asp-controller="Manage" asp-action="UserInvite" class="button">
+                        <a asp-area="" asp-controller="User" asp-action="Invite" class="button">
                             <span class="icon is-small">
                                 <i class="fas fa-user-plus"></i>
                             </span>
@@ -98,7 +101,7 @@
                                     </td>
                                     <td class="is-actions-cell">
                                         <div class="buttons">
-                                            <a asp-area="" asp-controller="Manage" asp-action="UserDetail" asp-route-userId="@user.Id" class="button is-link is-inverted is-underlined">
+                                            <a asp-area="" asp-controller="User" asp-action="Detail" asp-route-userId="@user.Id" class="button is-link is-inverted is-underlined">
                                                 <span class="icon is-small">
                                                     <i class="far fa-newspaper"></i>
                                                 </span>
@@ -115,10 +118,10 @@
                  @if (Model.Any())
                  {
                      <nav class="pagination is-centered is-rounded" role="navigation" aria-label="pagination">
-                         <a asp-area="" asp-controller="Manage" asp-action="Users" asp-route-page="@(Model.PageIndex-1)" disabled="@(Model.HasPreviousPage == false)" class="pagination-previous">上一頁</a>
-                         <a asp-area="" asp-controller="Manage" asp-action="Users" asp-route-page="@(Model.PageIndex+1)" disabled="@(Model.HasNextPage == false)" class="pagination-next">下一頁</a>
+                         <a asp-area="" asp-controller="User" asp-action="Index" asp-route-page="@(Model.PageIndex-1)" disabled="@(Model.HasPreviousPage == false)" class="pagination-previous">上一頁</a>
+                         <a asp-area="" asp-controller="User" asp-action="Index" asp-route-page="@(Model.PageIndex+1)" disabled="@(Model.HasNextPage == false)" class="pagination-next">下一頁</a>
                          <ul class="pagination-list">
-                             <li><a asp-area="" asp-controller="Manage" asp-action="Users" asp-route-page="@Model.PageIndex" class="pagination-link is-current" aria-current="page">@Model.PageIndex / @Model.TotalPages</a></li>
+                             <li><a asp-area="" asp-controller="User" asp-action="Index" asp-route-page="@Model.PageIndex" class="pagination-link is-current" aria-current="page">@Model.PageIndex / @Model.TotalPages</a></li>
                          </ul>
                      </nav>
                  }
