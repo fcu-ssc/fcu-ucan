@@ -37,32 +37,8 @@
                         {
                             <a id="manage-link" class="navbar-item" asp-area="" asp-controller="Manage" asp-action="Index">管理</a>
                         }
-                        <div class="navbar-item has-dropdown is-hoverable">
-                            <a id="intro-link" asp-area="" asp-controller="Intro" asp-action="Index" class="navbar-link">
-                                認識 UCAN
-                            </a>
-                            <div class="navbar-dropdown is-boxed">
-                                <a asp-area="" asp-controller="Intro" asp-action="Intent" class="navbar-item @Html.IsSelected(controllers: "Intro", actions: "Intent")">平台緣起及建置目的</a>
-                                <a asp-area="" asp-controller="Intro" asp-action="Foundation" class="navbar-item @Html.IsSelected(controllers: "Intro", actions: "Foundation")">平台發展及依據</a>
-                                <a asp-area="" asp-controller="Intro" asp-action="Feature" class="navbar-item @Html.IsSelected(controllers: "Intro", actions: "Feature")">主要功能簡介</a>
-                                <a asp-area="" asp-controller="Intro" asp-action="Competency" class="navbar-item @Html.IsSelected(controllers: "Intro", actions: "Competency")">職能介紹</a>
-                                <a id="common-link" asp-area="" asp-controller="Common" asp-action="Index" class="navbar-item">職場共通職能查詢</a>
-                                <a id="professional-link" asp-area="" asp-controller="Professional" asp-action="Index" class="navbar-item">專業職能查詢</a>
-                                <a asp-area="" asp-controller="Intro" asp-action="Occupation" class="navbar-item @Html.IsSelected(controllers: "Intro", actions: "Occupation")" target="_blank">職業查詢</a>
-                            </div>
-                        </div>
-                        <div class="navbar-item has-dropdown is-hoverable">
-                            <a id="privacy-link" asp-area="" asp-controller="Privacy" asp-action="Index" class="navbar-link">隱私權</a>
-                            <div class="navbar-dropdown is-boxed">
-                                <a asp-area="" asp-controller="Privacy" asp-action="Personal" class="navbar-item @Html.IsSelected(controllers: "Privacy", actions: "Personal")">UCAN 個人資料蒐集、處理及利用之告知說明</a>
-                                <a asp-area="" asp-controller="Privacy" asp-action="Terms" class="navbar-item @Html.IsSelected(controllers: "Privacy", actions: "Terms")">UCAN 使用者條款</a>
-                                <hr class="navbar-divider">
-                                <a asp-area="" asp-controller="Privacy" asp-action="Announcement" class="navbar-item @Html.IsSelected(controllers: "Privacy", actions: "Announcement")">逢甲大學 個資保護宣導事項</a>
-                                <a asp-area="" asp-controller="Privacy" asp-action="Protection" class="navbar-item @Html.IsSelected(controllers: "Privacy", actions: "Protection")">逢甲大學 個人資料保護政策</a>
-                                <a asp-area="" asp-controller="Privacy" asp-action="Rights" class="navbar-item @Html.IsSelected(controllers: "Privacy", actions: "Rights")">逢甲大學 個人資料權利行使</a>
-                                <a asp-area="" asp-controller="Privacy" asp-action="Statement" class="navbar-item @Html.IsSelected(controllers: "Privacy", actions: "Statement")">逢甲大學 隱私權聲明</a>
-                            </div>
-                        </div>
+                        <a id="intro-link" class="navbar-item" asp-area="" asp-controller="Intro" asp-action="Index">認識 UCAN</a>
+                        <a id="privacy-link" class="navbar-item" asp-area="" asp-controller="Privacy" asp-action="Index">隱私權</a>
                     </div>
                     <div class="navbar-end">
                         <div class="navbar-item">
@@ -124,11 +100,12 @@
     </footer>
     <script src="~/lib/font-awesome/js/all.min.js"></script>
     <script src="~/lib/jquery/jquery.min.js"></script>
+    <script src="~/lib/vizuaalog/bulmajs/dist/bulma.js"></script>
     <environment include="Development">
-        <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="~/js/link-active.js" asp-append-version="true"></script>
     </environment>
     <environment exclude="Development">
-        <script src="~/js/site.min.js" asp-append-version="true"></script>
+        <script src="~/js/link-active.min.js" asp-append-version="true"></script>
     </environment>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

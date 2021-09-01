@@ -27,7 +27,7 @@
                         </a>
                     </p>
                     <p class="control">
-                        <button id="upload-btn-1" class="button" type="button">
+                        <button id="upload-button-1" class="button" type="button">
                             <span class="icon is-small">
                                 <i class="fas fa-upload"></i>
                             </span>
@@ -44,7 +44,7 @@
                         </a>
                     </p>
                     <p class="control">
-                        <button id="upload-btn-2" class="button" type="button">
+                        <button id="upload-button-2" class="button" type="button">
                             <span class="icon is-small">
                                 <i class="fas fa-upload"></i>
                             </span>
@@ -123,7 +123,7 @@
         <form asp-area="" asp-controller="Member" asp-action="Import" method="post" role="form" enctype="multipart/form-data" class="modal-card">
             <header class="modal-card-head">
                 <p class="modal-card-title">匯入成員</p>
-                <button class="delete" aria-label="close" data-bulma-modal="close" type="button"></button>
+                <button class="delete" aria-label="close" type="button"></button>
             </header>
             <section class="modal-card-body is-flex is-flex-direction-column is-align-items-center">
                 <p class="mb-3">第一行請擺學號，第二行請擺帳號，不要有標題</p>
@@ -144,7 +144,7 @@
             </section>
             <footer class="modal-card-foot">
                 <button class="button is-link" type="submit">上傳</button>
-                <button class="button" data-bulma-modal="close" type="button">取消</button>
+                <button id="cancel-button" class="button" aria-label="close" type="button">取消</button>
             </footer>
         </form>
     </div>

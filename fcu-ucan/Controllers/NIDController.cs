@@ -36,7 +36,6 @@ namespace fcu_ucan.Controllers
             var url = $"{_configuration["NID:Url"]}/fcuOauth/Auth.aspx?" +
                       $"client_id={_configuration["NID:ClientId"]}&" +
                       $"client_url={_configuration["Domain"]}/ucan/nid";
-
             return Redirect(url);
         }
         

@@ -49,7 +49,7 @@
                 <div class="field">
                     <div class="control">
                         <a asp-area="" asp-controller="Member" asp-action="Edit" asp-route-memberId="@Model.Id" class="button is-link">編輯</a>
-                        <button id="delete-btn" class="button is-danger" type="button">刪除</button>
+                        <button id="delete-button" class="button is-danger" type="button">刪除</button>
                     </div>
                 </div>
             </form>
@@ -96,7 +96,7 @@
             </section>
             <footer class="modal-card-foot">
                 <button class="button is-danger" type="submit">確定</button>
-                <button class="button" data-bulma-modal="close" type="button">取消</button>
+                <button id="cancel-button" class="button" aria-label="close" type="button">取消</button>
             </footer>
         </form>
     </div>
