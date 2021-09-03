@@ -122,6 +122,7 @@ namespace fcu_ucan.Controllers
                         await _userManager.AddToRoleAsync(entity, "UCAN");
                     }
                     await _mailService.SendRegisterEmailAsync(model.Email, entity.SecurityStamp);
+                    _logger.LogInformation($"{model.Email} 註冊邀請 {entity.SecurityStamp}");
                     return RedirectToAction("Index", "User");
                 }
             }
