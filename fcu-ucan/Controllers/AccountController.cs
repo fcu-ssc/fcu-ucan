@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using AutoMapper;
 using fcu_ucan.Entities;
@@ -155,8 +156,19 @@ namespace fcu_ucan.Controllers
         {
             var entity = await _userManager.Users
                 .SingleOrDefaultAsync(x => x.SecurityStamp == code);
-            if (entity == null || entity.IsEnable || entity.UserName != null || entity.NormalizedUserName != null)
+            if (entity == null)
             {
+                _logger.LogInformation($"{code} 無效");
+                return NotFound();
+            }
+            if (entity.IsEnable)
+            {
+                _logger.LogInformation($"帳戶已經啟用，禁止註冊");
+                return NotFound();
+            }
+            if (entity.NormalizedUserName != Regex.Replace(entity.Id, "[^A-Za-z0-9]", "").ToUpperInvariant())
+            {
+                _logger.LogInformation($"{entity.Id} {entity.UserName} {entity.NormalizedUserName} 已經被註冊");
                 return NotFound();
             }
             return View();
@@ -170,8 +182,19 @@ namespace fcu_ucan.Controllers
         {
             var entity = await _userManager.Users
                 .SingleOrDefaultAsync(x => x.SecurityStamp == code);
-            if (entity == null || entity.IsEnable || entity.UserName != null || entity.NormalizedUserName != null)
+            if (entity == null)
             {
+                _logger.LogInformation($"{code} 無效");
+                return NotFound();
+            }
+            if (entity.IsEnable)
+            {
+                _logger.LogInformation($"帳戶已經啟用，禁止註冊");
+                return NotFound();
+            }
+            if (entity.NormalizedUserName != Regex.Replace(entity.Id, "[^A-Za-z0-9]", "").ToUpperInvariant())
+            {
+                _logger.LogInformation($"{entity.Id} {entity.UserName} {entity.NormalizedUserName} 已經被註冊");
                 return NotFound();
             }
             if (ModelState.IsValid)

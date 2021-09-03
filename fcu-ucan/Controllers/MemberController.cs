@@ -34,14 +34,19 @@ namespace fcu_ucan.Controllers
         /// 成員頁面
         /// </summary>
         [HttpGet("")]
-        public async Task<ActionResult<PaginatedList<MemberViewModel>>> Index([FromQuery] int? page)
+        public async Task<ActionResult<PaginatedList<MemberViewModel>>> Index([FromQuery] int? page, [FromQuery] string search)
         {
-            var entities = await _dbContext.Members
-                .AsNoTracking()
+            var query = _dbContext.Members.AsNoTracking();
+            if (!string.IsNullOrEmpty(search))
+            {
+                query = query.Where(x => x.NetworkId.Contains(search) || 
+                                         x.StudentId.Contains(search));
+            }
+            var entities = await query
                 .Skip((page ?? 1 - 1) * 50)
-                .Take(30)
+                .Take(50)
                 .ToListAsync();
-            var count = await _dbContext.Members.CountAsync();
+            var count = await query.CountAsync();
             var models = _mapper.Map<List<MemberViewModel>>(entities);
             var paginatedModels = new PaginatedList<MemberViewModel>(models, count, page ?? 1, 50);
             return View(paginatedModels);

@@ -9,7 +9,7 @@ using fcu_ucan.Data;
 namespace fcu_ucan.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210901161121_InitialCreate")]
+    [Migration("20210903044209_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -110,7 +110,6 @@ namespace fcu_ucan.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("NormalizedUserName")
-                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("TEXT");
 

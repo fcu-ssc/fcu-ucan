@@ -44,16 +44,21 @@ namespace fcu_ucan.Controllers
         /// 使用者頁面
         /// </summary>
         [HttpGet("")]
-        public async Task<ActionResult<PaginatedList<UserViewModel>>> Index([FromQuery] int? page)
+        public async Task<ActionResult<PaginatedList<UserViewModel>>> Index([FromQuery] int? page, [FromQuery] string search)
         {
-            var entities = await _dbContext.Users
-                .AsNoTracking()
+            var query = _dbContext.Users.AsNoTracking();
+            if (!string.IsNullOrEmpty(search))
+            {
+                query = query.Where(x => x.NormalizedUserName.Contains(search.ToUpperInvariant()) || 
+                                         x.NormalizedEmail.Contains(search.ToUpperInvariant()));
+            }
+            var entities = await query
                 .Include(x => x.UserRoles)
                 .ThenInclude(x => x.Role)
                 .Skip((page ?? 1 - 1) * 50)
-                .Take(30)
+                .Take(50)
                 .ToListAsync();
-            var count = await _dbContext.Users.CountAsync();
+            var count = await query.CountAsync();
             var models = _mapper.Map<List<UserViewModel>>(entities);
             var paginatedModels = new PaginatedList<UserViewModel>(models, count, page ?? 1, 50);
             return View(paginatedModels);
@@ -117,6 +122,7 @@ namespace fcu_ucan.Controllers
                         await _userManager.AddToRoleAsync(entity, "UCAN");
                     }
                     await _mailService.SendRegisterEmailAsync(model.Email, entity.SecurityStamp);
+                    _logger.LogInformation($"{model.Email} 註冊邀請 {entity.SecurityStamp}");
                     return RedirectToAction("Index", "User");
                 }
             }

@@ -35,7 +35,6 @@ namespace fcu_ucan.Entities
         /// <summary>
         /// 標準化使用者名稱
         /// </summary>
-        [Required]
         [MaxLength(256)]
         public override string NormalizedUserName { get; set; }
 

@@ -147,13 +147,14 @@ namespace fcu_ucan
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseStatusCodePagesWithRedirects("/error?code={0}");
             }
             else
             {
-                app.UseExceptionHandler("/error");
+                app.UseExceptionHandler("/ucan/error");
                 app.UseHsts();
+                app.UseStatusCodePagesWithRedirects("/ucan/error?code={0}");
             }
-            app.UseStatusCodePagesWithRedirects("/error?code={0}");
 
             app.UseSession();
             
