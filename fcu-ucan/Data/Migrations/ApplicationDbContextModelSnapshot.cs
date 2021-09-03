@@ -108,7 +108,6 @@ namespace fcu_ucan.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("NormalizedUserName")
-                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("TEXT");
 
