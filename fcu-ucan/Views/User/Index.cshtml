@@ -18,6 +18,10 @@
                 <li class="is-active"><a asp-area="" asp-controller="User" asp-action="Index" aria-current="page">@ViewData["Title"]</a></li>
             </ul>
         </nav>
+        <div class="notification">
+            <button class="delete"></button>
+            只能搜尋使用者名稱及電子郵件且不區分大小寫
+        </div>
         <div class="box content">
             <div class="is-flex is-justify-content-space-between">
                 <h1 class="title is-3">@ViewData["Title"]</h1>
@@ -41,6 +45,17 @@
                     </p>
                 </div>
             </div>
+            <form asp-area="" asp-controller="User" asp-action="Index" class="field has-addons" method="get">
+                <div class="control has-icons-left is-expanded">
+                    <input class="input" type="text" name="search" placeholder="搜尋"/>
+                    <span class="icon is-left">
+                        <i class="fas fa-search" aria-hidden="true"></i>
+                    </span>
+                </div>
+                <div class="control">
+                    <button type="submit" class="button is-info">搜尋</button>
+                </div>
+            </form>
             <hr/>
             <div class="b-table">
                 <div class="table-wrapper has-mobile-cards">
