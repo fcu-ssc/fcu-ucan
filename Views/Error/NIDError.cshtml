@@ -1,0 +1,43 @@
+@model NIDErrorViewModel
+@{
+    ViewData["Title"] = "NID 錯誤";
+}
+
+<section class="hero is-danger is-fullheight">
+    <div class="hero-body">
+        <div class="container has-text-centered">
+            <h1 class="title">@ViewData["Title"]</h1>
+            <div class="card">
+                <div class="card-content">
+                    <div class="content">
+                        @if (Model.ShowRequestId)
+                        {
+                            <p>
+                                <strong>Request ID:</strong> <code>@Model.RequestId</code>
+                            </p>
+                        }
+                        <p>
+                            <strong>錯誤代碼:</strong> <code>@Model.HttpCode</code>
+                        </p>
+                        <p>
+                            <strong>錯誤訊息:</strong> <code>@Model.Message</code>
+                        </p>
+                    </div>
+                </div>
+                <footer class="card-footer">
+                    <a asp-controller="Home" asp-action="Index" class="card-footer-item has-text-success">回首頁</a>
+                    <a id="contact-link" class="card-footer-item has-text-primary" type="button">聯絡我們</a>
+                </footer>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <environment include="Development">
+        <script src="~/js/contact-modal.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/js/contact-modal.min.js" asp-append-version="true"></script>
+    </environment>
+}

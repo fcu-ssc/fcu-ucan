@@ -1,0 +1,51 @@
+﻿@model ErrorViewModel
+@{
+    switch (Context.Request.Query["code"])
+    {
+        case "401":
+            ViewData["Title"] = "您尚未經過授權";
+            break;
+        case "403":
+            ViewData["Title"] = "您沒有權限";
+            break;
+        case "404":
+            ViewData["Title"] = "找不到您要的頁面";
+            break;
+        default:
+            ViewData["Title"] = "錯誤";
+            break;
+    }
+}
+
+<section class="hero is-danger is-fullheight">
+    <div class="hero-body">
+        <div class="container has-text-centered">
+            <h1 class="title">@ViewData["Title"]</h1>
+            <div class="card">
+                <div class="card-content">
+                    <div class="content">
+                        @if (Model.ShowRequestId)
+                        {
+                            <p>
+                                <strong>Request ID:</strong> <code>@Model.RequestId</code>
+                            </p>
+                        }
+                    </div>
+                </div>
+                <footer class="card-footer">
+                    <a asp-controller="Home" asp-action="Index" class="card-footer-item has-text-success">回首頁</a>
+                    <a id="contact-link" class="card-footer-item has-text-primary" type="button">聯絡我們</a>
+                </footer>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <environment include="Development">
+        <script src="~/js/contact-modal.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/js/contact-modal.min.js" asp-append-version="true"></script>
+    </environment>
+}
