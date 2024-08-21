@@ -110,8 +110,6 @@ try
 
     builder.Services.AddSingleton<IMailService, MailService>();
 
-    builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
     var app = builder.Build();
 
     app.UseResponseCompression();

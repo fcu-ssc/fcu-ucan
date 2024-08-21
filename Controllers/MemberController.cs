@@ -1,4 +1,3 @@
-using AutoMapper;
 using ClosedXML.Excel;
 using fcu_ucan.Data;
 using fcu_ucan.Entities;
@@ -12,7 +11,7 @@ namespace fcu_ucan.Controllers;
 
 [AuthAuthorize(Roles = "Member")]
 [Route("manage/members")]
-public class MemberController(ApplicationDbContext dbContext, IMapper mapper) : Controller
+public class MemberController(ApplicationDbContext dbContext) : Controller
 {
     /// <summary>
     /// 成員頁面
@@ -31,7 +30,12 @@ public class MemberController(ApplicationDbContext dbContext, IMapper mapper) : 
             .Take(50)
             .ToListAsync();
         var count = await query.CountAsync();
-        var models = mapper.Map<List<MemberViewModel>>(entities);
+        var models = entities.Select(e => new MemberViewModel
+        {
+           Id = e.Id,
+           NetworkId = e.NetworkId,
+           StudentId = e.StudentId
+        }).ToList();
         var paginatedModels = new PaginatedList<MemberViewModel>(models, count, page ?? 1, 50);
         return View(paginatedModels);
     }
@@ -45,7 +49,17 @@ public class MemberController(ApplicationDbContext dbContext, IMapper mapper) : 
         var entity = await dbContext.Members
             .AsNoTracking()
             .SingleOrDefaultAsync(x => x.Id == memberId);
-        var model = mapper.Map<MemberViewModel>(entity);
+        if (entity is null)
+        {
+            return NotFound();
+        }
+        
+        var model = new MemberViewModel
+        {
+            Id = entity.Id,
+            NetworkId = entity.NetworkId,
+            StudentId = entity.StudentId
+        };
         return View(model);
     }
         
@@ -74,7 +88,11 @@ public class MemberController(ApplicationDbContext dbContext, IMapper mapper) : 
             }
             if (ModelState.IsValid)
             {
-                var entity = mapper.Map<Member>(model);
+                var entity = new Member
+                {
+                    NetworkId = model.NetworkId,
+                    StudentId = model.StudentId
+                };
                 await dbContext.Members.AddAsync(entity);
                 await dbContext.SaveChangesAsync();
                 return RedirectToAction("Detail", "Member", new{ memberId = entity.Id });
@@ -120,7 +138,12 @@ public class MemberController(ApplicationDbContext dbContext, IMapper mapper) : 
         {
             return NotFound();
         }
-        var model = mapper.Map<MemberEditViewModel>(entity);
+
+        var model = new MemberEditViewModel
+        {
+            NetworkId = entity.NetworkId,
+            StudentId = entity.StudentId
+        };
         return View(model);
     }
     
@@ -155,8 +178,9 @@ public class MemberController(ApplicationDbContext dbContext, IMapper mapper) : 
             }
             if (ModelState.IsValid)
             {
-                var updateEntity = mapper.Map(model, entity);
-                dbContext.Members.Update(updateEntity);
+                entity.NetworkId = model.NetworkId;
+                entity.StudentId = model.StudentId;
+                dbContext.Members.Update(entity);
                 await dbContext.SaveChangesAsync();
                 return RedirectToAction("Detail", "Member", new{ memberId });
             }

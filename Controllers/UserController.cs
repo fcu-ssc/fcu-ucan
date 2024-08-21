@@ -1,5 +1,4 @@
 using System.Security.Claims;
-using AutoMapper;
 using fcu_ucan.Data;
 using fcu_ucan.Entities;
 using fcu_ucan.Helpers;
@@ -17,7 +16,6 @@ namespace fcu_ucan.Controllers;
 public class UserController(
     ILogger<UserController> logger,
     ApplicationDbContext dbContext,
-    IMapper mapper,
     UserManager<ApplicationUser> userManager,
     IMailService mailService) : Controller
 {
@@ -40,7 +38,20 @@ public class UserController(
             .Take(50)
             .ToListAsync();
         var count = await query.CountAsync();
-        var models = mapper.Map<List<UserViewModel>>(entities);
+        var models = entities.Select(e => new UserViewModel
+        {
+            Id = e.Id,
+            UserName = e.UserName!,
+            Email = e.Email!,
+            EmailConfirmed = e.EmailConfirmed,
+            PhoneNumber = e.PhoneNumber,
+            PhoneNumberConfirmed = e.PhoneNumberConfirmed,
+            IsEnable = e.IsEnable,
+            IsRecorder = e.UserRoles!.Any(x => x.Role.NormalizedName == "Recorder".ToUpperInvariant()),
+            IsMember = e.UserRoles!.Any(x => x.Role.NormalizedName == "Member".ToUpperInvariant()),
+            IsUser = e.UserRoles!.Any(x => x.Role.NormalizedName == "User".ToUpperInvariant()),
+            IsUCAN = e.UserRoles!.Any(x => x.Role.NormalizedName == "UCAN".ToUpperInvariant())
+        }).ToList();
         var paginatedModels = new PaginatedList<UserViewModel>(models, count, page ?? 1, 50);
         return View(paginatedModels);
     }
@@ -60,7 +71,21 @@ public class UserController(
         {
             return NotFound();
         }
-        var model = mapper.Map<UserViewModel>(entity);
+        
+        var model = new UserViewModel
+        {
+            Id = entity.Id,
+            UserName = entity.UserName!,
+            Email = entity.Email!,
+            EmailConfirmed = entity.EmailConfirmed,
+            PhoneNumber = entity.PhoneNumber,
+            PhoneNumberConfirmed = entity.PhoneNumberConfirmed,
+            IsEnable = entity.IsEnable,
+            IsRecorder = entity.UserRoles!.Any(x => x.Role.NormalizedName == "Recorder".ToUpperInvariant()),
+            IsMember = entity.UserRoles!.Any(x => x.Role.NormalizedName == "Member".ToUpperInvariant()),
+            IsUser = entity.UserRoles!.Any(x => x.Role.NormalizedName == "User".ToUpperInvariant()),
+            IsUCAN = entity.UserRoles!.Any(x => x.Role.NormalizedName == "UCAN".ToUpperInvariant())
+        };
         return View(model);
     }
     
@@ -84,7 +109,11 @@ public class UserController(
             }
             if (ModelState.IsValid)
             {
-                var entity = mapper.Map<ApplicationUser>(model);
+                var entity = new ApplicationUser
+                {
+                    Email = model.Email,
+                    NormalizedEmail = model.Email.ToUpperInvariant()
+                };
                 await userManager.CreateAsync(entity);
                 if (model.IsRecorder)
                 {
@@ -125,7 +154,17 @@ public class UserController(
         {
             return NotFound();
         }
-        var model = mapper.Map<UserEditViewModel>(entity);
+
+        var model = new UserEditViewModel
+        {
+            PhoneNumber = entity.PhoneNumber,
+            PhoneNumberConfirmed = entity.PhoneNumberConfirmed,
+            IsEnable = entity.IsEnable,
+            IsRecorder = entity.UserRoles!.Any(x => x.Role.NormalizedName == "Recorder".ToUpperInvariant()),
+            IsMember = entity.UserRoles!.Any(x => x.Role.NormalizedName == "Member".ToUpperInvariant()),
+            IsUser = entity.UserRoles!.Any(x => x.Role.NormalizedName == "User".ToUpperInvariant()),
+            IsUCAN = entity.UserRoles!.Any(x => x.Role.NormalizedName == "UCAN".ToUpperInvariant())
+        };
         return View(model);
     }
     
@@ -160,8 +199,12 @@ public class UserController(
             }
             if (ModelState.IsValid)
             {
-                var updateEntity = mapper.Map(model, entity);
-                await userManager.UpdateAsync(updateEntity);
+                entity.Email = model.Email;
+                entity.NormalizedEmail = model.Email.ToUpperInvariant();
+                entity.PhoneNumber = model.PhoneNumber;
+                entity.PhoneNumberConfirmed = model.PhoneNumberConfirmed;
+                entity.IsEnable = model.IsEnable;
+                await userManager.UpdateAsync(entity);
                 var isRecorder = await userManager.IsInRoleAsync(entity, "Recorder");
                 if (isRecorder != model.IsRecorder)
                 {

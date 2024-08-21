@@ -2,7 +2,6 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Text.RegularExpressions;
-using AutoMapper;
 using fcu_ucan.Entities;
 using fcu_ucan.Helpers;
 using fcu_ucan.Models.Account;
@@ -20,8 +19,7 @@ public class AccountController(
     IWebHostEnvironment environment,
     UserManager<ApplicationUser> userManager,
     SignInManager<ApplicationUser> signInManager,
-    RoleManager<ApplicationRole> roleManager,
-    IMapper mapper) : Controller
+    RoleManager<ApplicationRole> roleManager) : Controller
 {
     /// <summary>
     /// 登入頁面
@@ -179,8 +177,11 @@ public class AccountController(
             }
             await userManager.SetUserNameAsync(entity, model.UserName);
             await userManager.AddPasswordAsync(entity, model.Password);
-            var updateEntity = mapper.Map(model, entity);
-            await userManager.UpdateAsync(updateEntity);
+            entity.UserName = model.UserName;
+            entity.NormalizedUserName = model.UserName.ToUpperInvariant();
+            entity.EmailConfirmed = true;
+            entity.IsEnable = true;
+            await userManager.UpdateAsync(entity);
             logger.LogInformation($"{model.UserName} 註冊成功");
             return RedirectToAction("Login", "Account");
         }
