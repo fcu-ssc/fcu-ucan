@@ -56,7 +56,7 @@ try
     {
         options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
     });
-
+    
     builder.Services.AddIdentity<IdentityUser, IdentityRole>()
         .AddEntityFrameworkStores<ApplicationDbContext>()
         .AddDefaultTokenProviders();

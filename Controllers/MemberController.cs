@@ -11,15 +11,15 @@ namespace fcu_ucan.Controllers;
 
 [Authorize]
 [Route("manage/members")]
-public class MemberController(ApplicationDbContext dbContext) : Controller
+public class MemberController(ApplicationDbContext db) : Controller
 {
     /// <summary>
     /// 成員頁面
     /// </summary>
     [HttpGet("")]
-    public async Task<ActionResult<PaginatedList<MemberViewModel>>> Index([FromQuery] int? page, [FromQuery] string search)
+    public async Task<ActionResult<PaginatedList<MemberViewModel>>> IndexAsync([FromQuery] int? page, [FromQuery] string search)
     {
-        var query = dbContext.Members.AsNoTracking();
+        var query = db.Members.AsNoTracking();
         if (!string.IsNullOrEmpty(search))
         {
             query = query.Where(x => x.NetworkId.Contains(search) || x.StudentId.Contains(search));
@@ -44,9 +44,9 @@ public class MemberController(ApplicationDbContext dbContext) : Controller
     /// 成員詳情頁面
     /// </summary>
     [HttpGet("{memberId}")]
-    public async Task<ActionResult<MemberViewModel>> Detail([FromRoute] string memberId)
+    public async Task<ActionResult<MemberViewModel>> DetailAsync([FromRoute] string memberId)
     {
-        var entity = await dbContext.Members
+        var entity = await db.Members
             .AsNoTracking()
             .SingleOrDefaultAsync(x => x.Id == memberId);
         if (entity is null)
@@ -74,18 +74,19 @@ public class MemberController(ApplicationDbContext dbContext) : Controller
     /// </summary>
     [HttpPost("add")]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Add([FromForm] MemberAddViewModel model)
+    public async Task<IActionResult> AddAsync([FromForm] MemberAddViewModel model)
     {
         if (ModelState.IsValid)
         {
-            if (await dbContext.Members.AnyAsync(x => x.NetworkId == model.NetworkId))
+            if (await db.Members.AnyAsync(x => x.NetworkId == model.NetworkId))
             {
                 ModelState.AddModelError(nameof(model.NetworkId), "NID 帳號已經被使用");
             }
-            if (await dbContext.Members.AnyAsync(x => x.StudentId == model.StudentId))
+            if (await db.Members.AnyAsync(x => x.StudentId == model.StudentId))
             {
                 ModelState.AddModelError(nameof(model.StudentId), "UCAN 帳號已經被使用");
             }
+            
             if (ModelState.IsValid)
             {
                 var entity = new Member
@@ -93,9 +94,9 @@ public class MemberController(ApplicationDbContext dbContext) : Controller
                     NetworkId = model.NetworkId,
                     StudentId = model.StudentId
                 };
-                await dbContext.Members.AddAsync(entity);
-                await dbContext.SaveChangesAsync();
-                return RedirectToAction("Detail", "Member", new{ memberId = entity.Id });
+                await db.Members.AddAsync(entity);
+                await db.SaveChangesAsync();
+                return RedirectToAction(controllerName: "Member", actionName: "Detail", routeValues: new{ memberId = entity.Id });
             }
         }
         return View(model);
@@ -105,36 +106,34 @@ public class MemberController(ApplicationDbContext dbContext) : Controller
     /// 匯入成員
     /// </summary>
     [HttpPost("import")]
-    public async Task<IActionResult> Import(IFormFile file)
+    public async Task<IActionResult> ImportAsync(IFormFile file)
     {
-        using (var wbook = new XLWorkbook(file.OpenReadStream()))
+        using (var workbook = new XLWorkbook(file.OpenReadStream()))
         {
-            var worksheet = wbook.Worksheet(1);
-            var entities = new List<Member>();
-            foreach (IXLRow row in worksheet.Rows())
-            {
-                entities.Add(new Member
+            var worksheet = workbook.Worksheet(1);
+            var entities = worksheet.Rows()
+                .Select(row => new Member
                 {
-                    NetworkId = row.Cell(1).Value.ToString(),
+                    NetworkId = row.Cell(1).Value.ToString(), 
                     StudentId = row.Cell(2).Value.ToString()
-                });
-            }
-            await dbContext.Members.AddRangeAsync(entities);
-            await dbContext.SaveChangesAsync();
+                })
+                .ToList();
+            await db.Members.AddRangeAsync(entities);
+            await db.SaveChangesAsync();
         }
-        return RedirectToAction("Index", "Member");
+        return RedirectToAction(controllerName: "Member", actionName: "Index");
     }
     
     /// <summary>
     /// 編輯成員頁面
     /// </summary>
     [HttpGet("{memberId}/edit")]
-    public async Task<ActionResult<MemberEditViewModel>> Edit([FromRoute] string memberId)
+    public async Task<ActionResult<MemberEditViewModel>> EditAsync([FromRoute] string memberId)
     {
-        var entity = await dbContext.Members
+        var entity = await db.Members
             .AsNoTracking()
             .SingleOrDefaultAsync(x => x.Id == memberId);
-        if (entity == null)
+        if (entity is null)
         {
             return NotFound();
         }
@@ -152,37 +151,38 @@ public class MemberController(ApplicationDbContext dbContext) : Controller
     /// </summary>
     [HttpPost("{memberId}/edit")]
     [ValidateAntiForgeryToken]
-    public async Task<ActionResult<MemberEditViewModel>> Edit([FromRoute] string memberId, [FromForm] MemberEditViewModel model)
+    public async Task<ActionResult<MemberEditViewModel>> EditAsync([FromRoute] string memberId, [FromForm] MemberEditViewModel model)
     {
-        var entity = await dbContext.Members
-            .SingleOrDefaultAsync(x => x.Id == memberId);
-        if (entity == null)
+        var entity = await db.Members.SingleOrDefaultAsync(x => x.Id == memberId);
+        if (entity is null)
         {
             return NotFound();
         }
+        
         if (ModelState.IsValid)
         {
             if (entity.NetworkId != model.NetworkId)
             {
-                if (await dbContext.Members.AnyAsync(x => x.NetworkId == model.NetworkId))
+                if (await db.Members.AnyAsync(x => x.NetworkId == model.NetworkId))
                 {
                     ModelState.AddModelError(nameof(model.NetworkId), "NID 帳號已經被使用");
                 }
             }
             if (entity.StudentId != model.StudentId)
             {
-                if (await dbContext.Members.AnyAsync(x => x.StudentId == model.StudentId))
+                if (await db.Members.AnyAsync(x => x.StudentId == model.StudentId))
                 {
                     ModelState.AddModelError(nameof(model.StudentId), "UCAN 帳號已經被使用");
                 }
             }
+            
             if (ModelState.IsValid)
             {
                 entity.NetworkId = model.NetworkId;
                 entity.StudentId = model.StudentId;
-                dbContext.Members.Update(entity);
-                await dbContext.SaveChangesAsync();
-                return RedirectToAction("Detail", "Member", new{ memberId });
+                db.Members.Update(entity);
+                await db.SaveChangesAsync();
+                return RedirectToAction(controllerName: "Member", actionName: "Detail", routeValues: new{ memberId });
             }
         }
         return View(model);
@@ -193,16 +193,16 @@ public class MemberController(ApplicationDbContext dbContext) : Controller
     /// </summary>
     [HttpPost("{memberId}/delete")]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Delete([FromRoute] string memberId)
+    public async Task<IActionResult> DeleteAsync([FromRoute] string memberId)
     {
-        var entity = await dbContext.Members
-            .SingleOrDefaultAsync(x => x.Id == memberId);
-        if (entity == null)
+        var entity = await db.Members.SingleOrDefaultAsync(x => x.Id == memberId);
+        if (entity is null)
         {
             return NotFound();
         }
-        dbContext.Members.Remove(entity);
-        await dbContext.SaveChangesAsync();
-        return RedirectToAction("Index", "Member");
+        
+        db.Members.Remove(entity);
+        await db.SaveChangesAsync();
+        return RedirectToAction(controllerName: "Member", actionName: "Index");
     }
 }

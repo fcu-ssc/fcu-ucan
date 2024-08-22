@@ -5,17 +5,17 @@
 
 @section Styles {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-responsive-tables@1.2.3/css/main.min.css"
-              asp-fallback-href="~/lib/bulma-responsive-tables/css/main.min.css"
-              asp-fallback-test-class="b-table"
-              integrity="sha256-qqSeWOTrQzPLIhRfuz3KWtWjWqI9X60r0piSbhCdNKY=" crossorigin="anonymous">
+          asp-fallback-href="~/lib/bulma-responsive-tables/css/main.min.css"
+          asp-fallback-test-class="b-table"
+          integrity="sha256-qqSeWOTrQzPLIhRfuz3KWtWjWqI9X60r0piSbhCdNKY=" crossorigin="anonymous">
 }
 
 <section class="section is-medium">
     <div class="container is-max-desktop">
         <nav class="breadcrumb" aria-label="breadcrumbs">
             <ul>
-                <li><a asp-area="" asp-controller="Manage" asp-action="Index">管理</a></li>
-                <li class="is-active"><a asp-area="" asp-controller="Member" asp-action="Index" aria-current="page">@ViewData["Title"]</a></li>
+                <li><a asp-controller="Manage" asp-action="Index">管理</a></li>
+                <li class="is-active"><a asp-controller="Member" asp-action="Index" aria-current="page">@ViewData["Title"]</a></li>
             </ul>
         </nav>
         <div class="notification">
@@ -27,7 +27,7 @@
                 <h1 class="title is-3">@ViewData["Title"]</h1>
                 <div class="field has-addons is-hidden-tablet">
                     <p class="control">
-                        <a asp-area="" asp-controller="Member" asp-action="Add" class="button">
+                        <a asp-controller="Member" asp-action="Add" class="button">
                             <span class="icon is-small">
                                 <i class="fas fa-plus"></i>
                             </span>
@@ -43,7 +43,7 @@
                 </div>
                 <div class="field has-addons is-hidden-mobile">
                     <p class="control">
-                        <a asp-area="" asp-controller="Member" asp-action="Add" class="button">
+                        <a asp-controller="Member" asp-action="Add" class="button">
                             <span class="icon is-small">
                                 <i class="fas fa-plus"></i>
                             </span>
@@ -60,9 +60,9 @@
                     </p>
                 </div>
             </div>
-            <form asp-area="" asp-controller="User" asp-action="Index" class="field has-addons" method="get">
+            <form asp-controller="Member" asp-action="Index" asp-route-search="@Context.Request.Query["search"]" asp-route-page="@Model.PageIndex" class="field has-addons" method="get">
                 <div class="control has-icons-left is-expanded">
-                    <input class="input" type="text" name="search" placeholder="搜尋"/>
+                    <input class="input" type="text" name="search" value="@Context.Request.Query["search"]" placeholder="搜尋" />
                     <span class="icon is-left">
                         <i class="fas fa-search" aria-hidden="true"></i>
                     </span>
@@ -81,7 +81,7 @@
                             <th>識別碼</th>
                             <th>NID 帳號</th>
                             <th>UCAN 帳號</th>
-                            <th></th>
+                            <th>操作</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -110,7 +110,7 @@
                                     <td data-label="UCAN 帳號">@member.StudentId</td>
                                     <td class="is-actions-cell">
                                         <div class="buttons">
-                                            <a asp-area="" asp-controller="Member" asp-action="Detail" asp-route-memberId="@member.Id" class="button is-link is-inverted is-underlined">
+                                            <a asp-controller="Member" asp-action="Detail" asp-route-memberId="@member.Id" class="button is-link is-inverted is-underlined">
                                                 <span class="icon is-small">
                                                     <i class="far fa-newspaper"></i>
                                                 </span>
@@ -127,10 +127,10 @@
                 @if (Model.Any())
                 {
                     <nav class="pagination is-centered is-rounded" role="navigation" aria-label="pagination">
-                        <a asp-area="" asp-controller="Member" asp-action="Index" asp-route-page="@(Model.PageIndex-1)" disabled="@(Model.HasPreviousPage == false)" class="pagination-previous">上一頁</a>
-                        <a asp-area="" asp-controller="Member" asp-action="Index" asp-route-page="@(Model.PageIndex+1)" disabled="@(Model.HasNextPage == false)" class="pagination-next">下一頁</a>
+                        <a asp-controller="Member" asp-action="Index" asp-route-search="@Context.Request.Query["search"]" asp-route-page="@(Model.PageIndex-1)" disabled="@(Model.HasPreviousPage == false)" class="pagination-previous">上一頁</a>
+                        <a asp-controller="Member" asp-action="Index" asp-route-search="@Context.Request.Query["search"]" asp-route-page="@(Model.PageIndex+1)" disabled="@(Model.HasNextPage == false)" class="pagination-next">下一頁</a>
                         <ul class="pagination-list">
-                            <li><a asp-area="" asp-controller="Member" asp-action="Index" asp-route-page="@Model.PageIndex" class="pagination-link is-current" aria-current="page">@Model.PageIndex / @Model.TotalPages</a></li>
+                            <li><a asp-controller="Member" asp-action="Index" asp-route-search="@Context.Request.Query["search"]" asp-route-page="@Model.PageIndex" class="pagination-link is-current" aria-current="page">@Model.PageIndex / @Model.TotalPages</a></li>
                         </ul>
                     </nav>
                 }
@@ -139,7 +139,7 @@
     </div>
     <div id="upload-modal" class="modal">
         <div class="modal-background"></div>
-        <form asp-area="" asp-controller="Member" asp-action="Import" method="post" role="form" enctype="multipart/form-data" class="modal-card">
+        <form asp-controller="Member" asp-action="Import" method="post" role="form" enctype="multipart/form-data" class="modal-card">
             <header class="modal-card-head">
                 <p class="modal-card-title">匯入成員</p>
                 <button class="delete" aria-label="close" type="button"></button>
