@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ValueGeneration;
 
 namespace fcu_ucan.Entities;
 
@@ -16,7 +15,7 @@ public class Member
     /// </summary>
     [Key]
     [MaxLength(36)]
-    public string Id { get; set; } = new SequentialGuidValueGenerator().Next(null!).ToString();
+    public string Id { get; set; } = Guid.NewGuid().ToString();
 
     /// <summary>
     /// NID 帳號

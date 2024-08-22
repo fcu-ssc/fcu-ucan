@@ -1,13 +1,9 @@
-using System.Text;
 using fcu_ucan.Data;
-using fcu_ucan.Entities;
 using fcu_ucan.Services;
 using fcu_ucan.Services.Interface;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using Serilog.Events;
 
@@ -55,13 +51,13 @@ try
                 ServerCertificateCustomValidationCallback = (_, _, _, _) => true
             };
         });
-
+    
     builder.Services.AddDbContext<ApplicationDbContext>(options =>
     {
         options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
     });
 
-    builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
+    builder.Services.AddIdentity<IdentityUser, IdentityRole>()
         .AddEntityFrameworkStores<ApplicationDbContext>()
         .AddDefaultTokenProviders();
 
@@ -75,40 +71,21 @@ try
         options.Password.RequiredUniqueChars = 1;
         options.SignIn.RequireConfirmedEmail = true;
         options.SignIn.RequireConfirmedPhoneNumber = false;
-        options.User.AllowedUserNameCharacters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         options.User.RequireUniqueEmail = true;
-        options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(2);
+        options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromHours(1);
         options.Lockout.MaxFailedAccessAttempts = 10;
         options.Lockout.AllowedForNewUsers = true;
     });
-
-    builder.Services.AddSession();
-
-    builder.Services.AddAuthentication(options =>
-        {
-            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        })
-        .AddJwtBearer(options =>
-        {
-            options.RequireHttpsMetadata = false;
-
-            options.TokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateIssuer = true,
-                ValidIssuer = builder.Configuration["JWT:Issuer"]!,
-                ValidateAudience = true,
-                ValidAudience = builder.Configuration["JWT:Audience"]!,
-                ValidateIssuerSigningKey = true,
-                ValidateLifetime = true,
-                ClockSkew = TimeSpan.Zero,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"]!))
-            };
-        });
+    
+    builder.Services.ConfigureApplicationCookie(options =>
+    {
+        options.Cookie.HttpOnly = true;
+        options.ExpireTimeSpan = TimeSpan.FromHours(8);
+        options.SlidingExpiration = true;
+    });
 
     builder.Services.AddScoped<IOAuthService, OAuthService>();
-
-    builder.Services.AddSingleton<IMailService, MailService>();
 
     var app = builder.Build();
 
@@ -125,19 +102,6 @@ try
         app.UseHsts();
         app.UseStatusCodePagesWithRedirects("/ucan/error?code={0}");
     }
-
-    app.UseSession();
-
-    app.Use(async (context, next) =>
-    {
-        var token = context.Session.GetString("token");
-        if (!string.IsNullOrEmpty(token))
-        {
-            context.Request.Headers.Append("Authorization", $"Bearer {token}");
-        }
-
-        await next();
-    });
 
     app.UseSerilogRequestLogging();
 

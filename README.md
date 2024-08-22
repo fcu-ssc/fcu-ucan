@@ -3,19 +3,20 @@
 ## 部署
 
 1. 請先修改 `appsettings.json`
-2. 執行 `dotnet publish -c Release`
+2. 執行 `dotnet publish -c Release -r win-x64`
 3. 修改 `web.config`
+4. 修改 `Default.db` 的寫入權限，內容 => 安全性 => 編輯 => 新增 => 進階 => 立即尋找 => `IIS_IUSERS` => 勾選修改權限
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <configuration>
-  <!-- 加入以下內容 -->
   <system.webServer>
-      <httpProtocol>
-          <customHeaders>
-              <remove name="X-Frame-Options" />
-          </customHeaders>
-      </httpProtocol>
+    <!-- 加入以下內容 -->
+    <httpProtocol>
+      <customHeaders>
+        <remove name="X-Frame-Options" />
+      </customHeaders>
+    </httpProtocol>
   </system.webServer>
 </configuration>
 ```

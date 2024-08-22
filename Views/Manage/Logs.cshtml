@@ -14,8 +14,8 @@
     <div class="container is-max-desktop">
         <nav class="breadcrumb" aria-label="breadcrumbs">
             <ul>
-                <li><a asp-area="" asp-controller="Manage" asp-action="Index">管理</a></li>
-                <li class="is-active"><a asp-area="" asp-controller="Manage" asp-action="Logs" aria-current="page">@ViewData["Title"]</a></li>
+                <li><a asp-controller="Manage" asp-action="Index">管理</a></li>
+                <li class="is-active"><a asp-controller="Manage" asp-action="Logs" aria-current="page">@ViewData["Title"]</a></li>
             </ul>
         </nav>
         <div class="box content">
@@ -29,7 +29,7 @@
                             <th>檔案名稱</th>
                             <th>檔案大小</th>
                             <th>最後修改時間</th>
-                            <th></th>
+                            <th>操作</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -43,7 +43,7 @@
                                     </td>
                                     <td class="is-actions-cell">
                                         <div class="buttons">
-                                            <a asp-area="" asp-controller="Manage" asp-action="Logs" asp-route-filename="@file.Name" class="button is-small is-link is-inverted is-underlined">
+                                            <a asp-controller="Manage" asp-action="Logs" asp-route-filename="@file.Name" class="button is-small is-link is-inverted is-underlined">
                                                 <span class="icon is-small">
                                                     <i class="fas fa-download"></i>
                                                 </span>

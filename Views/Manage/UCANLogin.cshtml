@@ -7,24 +7,24 @@
     <div class="container is-max-desktop">
         <nav class="breadcrumb" aria-label="breadcrumbs">
             <ul>
-                <li><a asp-area="" asp-controller="Manage" asp-action="Index">管理</a></li>
-                <li class="is-active"><a asp-area="" asp-controller="Manage" asp-action="UCANLogin" aria-current="page">@ViewData["Title"]</a></li>
+                <li><a asp-controller="Manage" asp-action="Index">管理</a></li>
+                <li class="is-active"><a asp-controller="Manage" asp-action="UCANLogin" aria-current="page">@ViewData["Title"]</a></li>
             </ul>
         </nav>
         <div class="box content">
             <h1 class="title is-3">@ViewData["Title"]</h1>
             <hr />
-            @if (!ViewData.ModelState.IsValid)
+            @if (!ViewData.ModelState.IsValid && ViewData.ModelState[string.Empty] is not null)
             {
-                @foreach (var modelError in ViewData.ModelState.SelectMany(keyValuePair => keyValuePair.Value.Errors))
+                @foreach (var error in ViewData.ModelState[string.Empty]!.Errors)
                 {
                     <div class="notification is-danger">
                         <button class="delete"></button>
-                        @modelError.ErrorMessage
+                        <span>@error.ErrorMessage</span>
                     </div>
                 }
             }
-            <form asp-area="" asp-controller="Manage" asp-action="UCANLogin" method="post" role="form">
+            <form asp-controller="Manage" asp-action="UCANLogin" method="post" role="form">
                 <div class="field mb-5">
                     <label asp-for="UserName" class="label">UCAN 帳號</label>
                     <div class="control has-icons-left">

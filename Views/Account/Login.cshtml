@@ -7,6 +7,15 @@
     <div class="hero-body">
         <div class="container is-max-desktop">
             <div class="columns is-multiline is-center">
+                @if (TempData.TryGetValue("message", out var message))
+                {
+                    <div class="column is-full">
+                        <div class="notification is-success">
+                            <button class="delete"></button>
+                            <span>@message</span>
+                        </div>
+                    </div>
+                }
                 <div class="column is-full">
                     <article class="message is-warning">
                         <div class="message-body">
@@ -16,14 +25,14 @@
                 </div>
                 <div class="column box">
                     <h1 class="title is-3 has-text-centered">@ViewData["Title"]</h1>
-                    <hr />
-                    @if (!ViewData.ModelState.IsValid)
+                    <hr/>
+                    @if (!ViewData.ModelState.IsValid && ViewData.ModelState[string.Empty] is not null)
                     {
-                        @foreach (var modelError in ViewData.ModelState.SelectMany(keyValuePair => keyValuePair.Value!.Errors))
+                        @foreach (var error in ViewData.ModelState[string.Empty]!.Errors)
                         {
                             <div class="notification is-danger">
                                 <button class="delete"></button>
-                                @modelError.ErrorMessage
+                                <span>@error.ErrorMessage</span>
                             </div>
                         }
                     }

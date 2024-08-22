@@ -5,25 +5,25 @@
 
 @section Styles {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-switch@2.0.0/dist/css/bulma-switch.min.css"
-              asp-fallback-href="~/lib/bulma-switch/dist/css/bulma-switch.min.css"
-              asp-fallback-test-class="switch"
-              integrity="sha256-jCV/cXwP13w0GNHLgFx6SFgTNAvJPvS5MIhuE30Ng08=" crossorigin="anonymous">
+          asp-fallback-href="~/lib/bulma-switch/dist/css/bulma-switch.min.css"
+          asp-fallback-test-class="switch"
+          integrity="sha256-jCV/cXwP13w0GNHLgFx6SFgTNAvJPvS5MIhuE30Ng08=" crossorigin="anonymous">
 }
 
 <section class="section is-medium">
     <div class="container is-max-desktop">
         <nav class="breadcrumb" aria-label="breadcrumbs">
             <ul>
-                <li><a asp-area="" asp-controller="Manage" asp-action="Index">管理</a></li>
-                <li><a asp-area="" asp-controller="User" asp-action="Index">使用者</a></li>
-                <li><a asp-area="" asp-controller="User" asp-action="Detail" asp-route-userId="@Context.Request.RouteValues["userId"]">使用者詳情</a></li>
-                <li class="is-active"><a asp-area="" asp-controller="User" asp-action="Edit" asp-route-userId="@Context.Request.RouteValues["userId"]" aria-current="page">@ViewData["Title"]</a></li>
+                <li><a asp-controller="Manage" asp-action="Index">管理</a></li>
+                <li><a asp-controller="User" asp-action="Index">使用者</a></li>
+                <li><a asp-controller="User" asp-action="Detail" asp-route-userId="@Context.Request.RouteValues["userId"]">使用者詳情</a></li>
+                <li class="is-active"><a asp-controller="User" asp-action="Edit" asp-route-userId="@Context.Request.RouteValues["userId"]" aria-current="page">@ViewData["Title"]</a></li>
             </ul>
         </nav>
         <div class="box content">
             <h1 class="title is-3">@ViewData["Title"]</h1>
             <hr/>
-            <form asp-area="" asp-controller="User" asp-action="Edit" asp-route-memberId="@Context.Request.RouteValues["userId"]" method="post" role="form">
+            <form asp-controller="User" asp-action="Edit" asp-route-memberId="@Context.Request.RouteValues["userId"]" method="post" role="form">
                 <div class="field mb-5">
                     <label asp-for="Email" class="label">電子郵件</label>
                     <div class="control has-icons-left">
@@ -38,46 +38,6 @@
                     <input asp-for="EmailConfirmed" class="switch is-rounded is-rtl" type="checkbox" />
                     <label asp-for="EmailConfirmed" class="label">電子郵件驗證</label>
                     <span asp-validation-for="EmailConfirmed" class="help is-danger"></span>
-                </div>
-                <div class="field mb-5">
-                    <label asp-for="PhoneNumber" class="label">手機號碼</label>
-                    <div class="control has-icons-left">
-                        <input asp-for="PhoneNumber" class="input" type="tel" placeholder="請輸入手機號碼"/>
-                        <span class="icon is-small is-left">
-                            <i class="fas fa-mobile-alt"></i>
-                        </span>
-                    </div>
-                    <span asp-validation-for="PhoneNumber" class="help is-danger"></span>
-                </div>
-                <div class="field mb-5">
-                    <input asp-for="PhoneNumberConfirmed" class="switch is-rounded is-rtl" type="checkbox"/>
-                    <label asp-for="PhoneNumberConfirmed" class="label">手機號碼驗證</label>
-                    <span asp-validation-for="PhoneNumberConfirmed" class="help is-danger"></span>
-                </div>
-                <div class="field mb-5">
-                    <input asp-for="IsEnable" class="switch is-rounded is-rtl" type="checkbox"/>
-                    <label asp-for="IsEnable" class="label">啟用帳戶</label>
-                    <span asp-validation-for="IsEnable" class="help is-danger"></span>
-                </div>
-                <div class="field mb-5">
-                    <input asp-for="IsRecorder" class="switch is-rounded is-rtl" type="checkbox" />
-                    <label asp-for="IsRecorder" class="label">管理日誌權限</label>
-                    <span asp-validation-for="IsRecorder" class="help is-danger"></span>
-                </div>
-                <div class="field mb-5">
-                    <input asp-for="IsMember" class="switch is-rounded is-rtl" type="checkbox" />
-                    <label asp-for="IsMember" class="label">管理成員權限</label>
-                    <span asp-validation-for="IsMember" class="help is-danger"></span>
-                </div>
-                <div class="field mb-5">
-                    <input asp-for="IsUser" class="switch is-rounded is-rtl" type="checkbox" />
-                    <label asp-for="IsUser" class="label">管理使用者權限</label>
-                    <span asp-validation-for="IsUser" class="help is-danger"></span>
-                </div>
-                <div class="field mb-5">
-                    <input asp-for="IsUCAN" class="switch is-rounded is-rtl" type="checkbox" />
-                    <label asp-for="IsUCAN" class="label">UCAN 登入權限</label>
-                    <span asp-validation-for="IsUCAN" class="help is-danger"></span>
                 </div>
                 <div class="field">
                     <div class="control">

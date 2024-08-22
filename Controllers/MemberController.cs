@@ -1,15 +1,15 @@
 using ClosedXML.Excel;
 using fcu_ucan.Data;
 using fcu_ucan.Entities;
-using fcu_ucan.Helpers;
 using fcu_ucan.Models;
 using fcu_ucan.Models.Member;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace fcu_ucan.Controllers;
 
-[AuthAuthorize(Roles = "Member")]
+[Authorize]
 [Route("manage/members")]
 public class MemberController(ApplicationDbContext dbContext) : Controller
 {
@@ -22,10 +22,10 @@ public class MemberController(ApplicationDbContext dbContext) : Controller
         var query = dbContext.Members.AsNoTracking();
         if (!string.IsNullOrEmpty(search))
         {
-            query = query.Where(x => x.NetworkId.Contains(search) || 
-                                     x.StudentId.Contains(search));
+            query = query.Where(x => x.NetworkId.Contains(search) || x.StudentId.Contains(search));
         }
         var entities = await query
+            .OrderBy(x => x.Id)
             .Skip((page ?? 1 - 1) * 50)
             .Take(50)
             .ToListAsync();
@@ -80,11 +80,11 @@ public class MemberController(ApplicationDbContext dbContext) : Controller
         {
             if (await dbContext.Members.AnyAsync(x => x.NetworkId == model.NetworkId))
             {
-                ModelState.AddModelError("NetworkId", "NID 帳號已經被使用");
+                ModelState.AddModelError(nameof(model.NetworkId), "NID 帳號已經被使用");
             }
             if (await dbContext.Members.AnyAsync(x => x.StudentId == model.StudentId))
             {
-                ModelState.AddModelError("StudentId", "UCAN 帳號已經被使用");
+                ModelState.AddModelError(nameof(model.StudentId), "UCAN 帳號已經被使用");
             }
             if (ModelState.IsValid)
             {
@@ -166,14 +166,14 @@ public class MemberController(ApplicationDbContext dbContext) : Controller
             {
                 if (await dbContext.Members.AnyAsync(x => x.NetworkId == model.NetworkId))
                 {
-                    ModelState.AddModelError("NetworkId", "NID 帳號已經被使用");
+                    ModelState.AddModelError(nameof(model.NetworkId), "NID 帳號已經被使用");
                 }
             }
             if (entity.StudentId != model.StudentId)
             {
                 if (await dbContext.Members.AnyAsync(x => x.StudentId == model.StudentId))
                 {
-                    ModelState.AddModelError("StudentId", "UCAN 帳號已經被使用");
+                    ModelState.AddModelError(nameof(model.StudentId), "UCAN 帳號已經被使用");
                 }
             }
             if (ModelState.IsValid)

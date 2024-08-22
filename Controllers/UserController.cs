@@ -1,56 +1,39 @@
-using System.Security.Claims;
-using fcu_ucan.Data;
-using fcu_ucan.Entities;
-using fcu_ucan.Helpers;
+using System.Text;
 using fcu_ucan.Models;
 using fcu_ucan.Models.User;
-using fcu_ucan.Services.Interface;
+using MailKit.Net.Smtp;
+using MailKit.Security;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
+using MimeKit;
 
 namespace fcu_ucan.Controllers;
 
-[AuthAuthorize(Roles = "User")]
+[Authorize]
 [Route("manage/users")]
-public class UserController(
-    ILogger<UserController> logger,
-    ApplicationDbContext dbContext,
-    UserManager<ApplicationUser> userManager,
-    IMailService mailService) : Controller
+public class UserController(IConfiguration configuration, UserManager<IdentityUser> userManager) : Controller
 {
     /// <summary>
     /// 使用者頁面
     /// </summary>
     [HttpGet("")]
-    public async Task<ActionResult<PaginatedList<UserViewModel>>> Index([FromQuery] int? page, [FromQuery] string search)
+    public async Task<ActionResult<PaginatedList<UserViewModel>>> IndexAsync([FromQuery] int? page)
     {
-        var query = dbContext.Users.AsNoTracking();
-        if (!string.IsNullOrEmpty(search))
-        {
-            query = query.Where(x => x.NormalizedUserName!.Contains(search.ToUpperInvariant()) || 
-                                     x.NormalizedEmail!.Contains(search.ToUpperInvariant()));
-        }
-        var entities = await query
-            .Include(x => x.UserRoles!)
-            .ThenInclude(x => x.Role)
+        var entities = await userManager.Users.AsNoTracking()
+            .OrderBy(x => x.Id)
             .Skip((page ?? 1 - 1) * 50)
             .Take(50)
             .ToListAsync();
-        var count = await query.CountAsync();
+        var count = await userManager.Users.CountAsync();
         var models = entities.Select(e => new UserViewModel
         {
             Id = e.Id,
             UserName = e.UserName!,
             Email = e.Email!,
-            EmailConfirmed = e.EmailConfirmed,
-            PhoneNumber = e.PhoneNumber,
-            PhoneNumberConfirmed = e.PhoneNumberConfirmed,
-            IsEnable = e.IsEnable,
-            IsRecorder = e.UserRoles!.Any(x => x.Role.NormalizedName == "Recorder".ToUpperInvariant()),
-            IsMember = e.UserRoles!.Any(x => x.Role.NormalizedName == "Member".ToUpperInvariant()),
-            IsUser = e.UserRoles!.Any(x => x.Role.NormalizedName == "User".ToUpperInvariant()),
-            IsUCAN = e.UserRoles!.Any(x => x.Role.NormalizedName == "UCAN".ToUpperInvariant())
+            EmailConfirmed = e.EmailConfirmed
         }).ToList();
         var paginatedModels = new PaginatedList<UserViewModel>(models, count, page ?? 1, 50);
         return View(paginatedModels);
@@ -60,33 +43,92 @@ public class UserController(
     /// 使用者詳情頁面
     /// </summary>
     [HttpGet("{userId}")]
-    public async Task<ActionResult<UserViewModel>> Detail([FromRoute] string userId)
+    public async Task<ActionResult<UserViewModel>> DetailAsync([FromRoute] string userId)
     {
-        var entity = await dbContext.Users
-            .AsNoTracking()
-            .Include(x => x.UserRoles!)
-            .ThenInclude(x => x.Role)
-            .SingleOrDefaultAsync(x => x.Id == userId);
-        if (entity == null)
+        var entity = await userManager.FindByIdAsync(userId);
+        if (entity is null)
         {
             return NotFound();
         }
-        
         var model = new UserViewModel
         {
             Id = entity.Id,
             UserName = entity.UserName!,
             Email = entity.Email!,
-            EmailConfirmed = entity.EmailConfirmed,
-            PhoneNumber = entity.PhoneNumber,
-            PhoneNumberConfirmed = entity.PhoneNumberConfirmed,
-            IsEnable = entity.IsEnable,
-            IsRecorder = entity.UserRoles!.Any(x => x.Role.NormalizedName == "Recorder".ToUpperInvariant()),
-            IsMember = entity.UserRoles!.Any(x => x.Role.NormalizedName == "Member".ToUpperInvariant()),
-            IsUser = entity.UserRoles!.Any(x => x.Role.NormalizedName == "User".ToUpperInvariant()),
-            IsUCAN = entity.UserRoles!.Any(x => x.Role.NormalizedName == "UCAN".ToUpperInvariant())
+            EmailConfirmed = entity.EmailConfirmed
         };
         return View(model);
+    }
+    
+    /// <summary>
+    /// 編輯使用者頁面
+    /// </summary>
+    [HttpGet("{userId}/edit")]
+    public async Task<ActionResult<UserEditViewModel>> EditAsync([FromRoute] string userId)
+    {
+        var user = await userManager.FindByIdAsync(userId);
+        if (user is null)
+        {
+            return NotFound();
+        }
+
+        var model = new UserEditViewModel
+        {
+            Email = user.Email!,
+            EmailConfirmed = user.EmailConfirmed
+        };
+        return View(model);
+    }
+    
+    /// <summary>
+    /// 編輯使用者
+    /// </summary>
+    [HttpPost("{userId}/edit")]
+    [ValidateAntiForgeryToken]
+    public async Task<ActionResult<UserEditViewModel>> EditAsync([FromRoute] string userId, [FromForm] UserEditViewModel model)
+    {
+        var user = await userManager.FindByIdAsync(userId);
+        if (user is null)
+        {
+            return NotFound();
+        }
+        
+        if (ModelState.IsValid)
+        {
+            if (model.Email != user.Email)
+            {
+                var existEmail = await userManager.FindByEmailAsync(model.Email);
+                if (existEmail is not null)
+                {
+                    ModelState.AddModelError(nameof(model.Email), "電子郵件已經被使用");
+                    return View(model);
+                }
+            }
+            
+            user.Email = model.Email;
+            user.EmailConfirmed = model.EmailConfirmed;
+            await userManager.UpdateAsync(user);
+            
+            return RedirectToAction(controllerName: "User", actionName: "Detail", routeValues: new{ userId });
+        }
+        return View(model);
+    }
+    
+    /// <summary>
+    /// 刪除使用者
+    /// </summary>
+    [HttpPost("{userId}/delete")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteAsync([FromRoute] string userId)
+    {
+        var user = await userManager.FindByIdAsync(userId);
+        if (user is null)
+        {
+            return NotFound();
+        }
+        
+        await userManager.DeleteAsync(user);
+        return RedirectToAction(controllerName: "User", actionName: "Index");
     }
     
     /// <summary>
@@ -99,188 +141,71 @@ public class UserController(
     /// 邀請使用者
     /// </summary>
     [HttpPost("invite")]
-    public async Task<ActionResult<UserInviteViewModel>> Invite([FromForm] UserInviteViewModel model)
+    [ValidateAntiForgeryToken]
+    public async Task<ActionResult<UserInviteViewModel>> InviteAsync([FromForm] UserInviteViewModel model)
     {
         if (ModelState.IsValid)
         {
-            if (await dbContext.Users.AnyAsync(x => x.NormalizedEmail == model.Email.ToUpperInvariant()))
+            var existUserName = await userManager.FindByNameAsync(model.UserName);
+            if (existUserName is not null)
             {
-                ModelState.AddModelError("Email", "電子郵件已經被使用");
+                ModelState.AddModelError(nameof(model.UserName), "使用者名稱已經被使用");
             }
+            
+            var existEmail = await userManager.FindByEmailAsync(model.Email);
+            if (existEmail is not null)
+            {
+                ModelState.AddModelError(nameof(model.Email), "電子郵件已經被使用");
+            }
+            
             if (ModelState.IsValid)
             {
-                var entity = new ApplicationUser
+                var user = new IdentityUser
                 {
-                    Email = model.Email,
-                    NormalizedEmail = model.Email.ToUpperInvariant()
+                    UserName = model.UserName,
+                    Email = model.Email
                 };
-                await userManager.CreateAsync(entity);
-                if (model.IsRecorder)
+                var result = await userManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
                 {
-                    await userManager.AddToRoleAsync(entity, "Recorder");
+                    var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
+                    var url = Url.ActionLink(controller: "Account", action: "ConfirmEmail", values: new
+                    {
+                        id = user.Id, 
+                        token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token))
+                    })!;
+                    
+                    var message = new MimeMessage {Importance = MessageImportance.High};
+                    message.From.Add(new MailboxAddress(
+                        name: configuration.GetSection("Mail").GetValue<string>("SenderName"), 
+                        address: configuration.GetSection("Mail").GetValue<string>("SenderEmail")));
+                    message.To.Add(new MailboxAddress(name: model.UserName, address: model.Email));
+                    message.Subject = "FCU x UCAN 電子郵件驗證信";
+                    
+                    var bodyBuilder = new BodyBuilder
+                    {
+                        HtmlBody = $"""<p>請點擊下方連結註冊</p><a href="{url}">{url}</a>"""
+                    };
+                    message.Body = bodyBuilder.ToMessageBody();
+                    
+                    using var client = new SmtpClient();
+                    client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+                    await client.ConnectAsync(
+                        host: configuration.GetSection("Mail").GetValue<string>("Server"), 
+                        port: configuration.GetSection("Mail").GetValue<int>("Port"), 
+                        options: SecureSocketOptions.StartTls);
+                    await client.AuthenticateAsync(
+                        userName: configuration.GetSection("Mail").GetValue<string>("UserName"), 
+                        password: configuration.GetSection("Mail").GetValue<string>("Password"));
+                    await client.SendAsync(message);
+                    await client.DisconnectAsync(true);
+                
+                    return RedirectToAction(controllerName: "User", actionName: "Index");
                 }
-                if (model.IsMember)
-                {
-                    await userManager.AddToRoleAsync(entity, "Member");
-                }
-                if (model.IsUser)
-                {
-                    await userManager.AddToRoleAsync(entity, "User");
-                }
-                if (model.IsUCAN)
-                {
-                    await userManager.AddToRoleAsync(entity, "UCAN");
-                }
-                await mailService.SendRegisterEmailAsync(model.Email, entity.SecurityStamp!);
-                logger.LogInformation($"{model.Email} 註冊邀請 {entity.SecurityStamp}");
-                return RedirectToAction("Index", "User");
+                
+                ModelState.AddModelError(string.Empty, "發生錯誤，請稍候再試");
             }
         }
         return View(model);
-    }
-    
-    /// <summary>
-    /// 編輯使用者頁面
-    /// </summary>
-    [HttpGet("{userId}/edit")]
-    public async Task<ActionResult<UserEditViewModel>> Edit([FromRoute] string userId)
-    {
-        var entity = await dbContext.Users
-            .AsNoTracking()
-            .Include(x => x.UserRoles!)
-            .ThenInclude(x => x.Role)
-            .SingleOrDefaultAsync(x => x.Id == userId);
-        if (entity == null)
-        {
-            return NotFound();
-        }
-
-        var model = new UserEditViewModel
-        {
-            PhoneNumber = entity.PhoneNumber,
-            PhoneNumberConfirmed = entity.PhoneNumberConfirmed,
-            IsEnable = entity.IsEnable,
-            IsRecorder = entity.UserRoles!.Any(x => x.Role.NormalizedName == "Recorder".ToUpperInvariant()),
-            IsMember = entity.UserRoles!.Any(x => x.Role.NormalizedName == "Member".ToUpperInvariant()),
-            IsUser = entity.UserRoles!.Any(x => x.Role.NormalizedName == "User".ToUpperInvariant()),
-            IsUCAN = entity.UserRoles!.Any(x => x.Role.NormalizedName == "UCAN".ToUpperInvariant())
-        };
-        return View(model);
-    }
-    
-    /// <summary>
-    /// 編輯使用者
-    /// </summary>
-    [HttpPost("{userId}/edit")]
-    [ValidateAntiForgeryToken]
-    public async Task<ActionResult<UserEditViewModel>> Edit([FromRoute] string userId, [FromForm] UserEditViewModel model)
-    {
-        var entity = await dbContext.Users
-            .SingleOrDefaultAsync(x => x.Id == userId);
-        if (entity == null)
-        {
-            return NotFound();
-        }
-        if (ModelState.IsValid)
-        {
-            if (model.Email != entity.Email)
-            {
-                if (await dbContext.Users.AnyAsync(x => x.NormalizedEmail == model.Email.ToUpperInvariant()))
-                {
-                    ModelState.AddModelError("Email", "電子郵件已經被使用");
-                }
-            }
-            if (string.IsNullOrEmpty(model.PhoneNumber) && model.PhoneNumber != entity.PhoneNumber)
-            {
-                if (await dbContext.Users.AnyAsync(x => x.PhoneNumber == model.PhoneNumber))
-                {
-                    ModelState.AddModelError("PhoneNumber", "手機號碼已經被使用");
-                }
-            }
-            if (ModelState.IsValid)
-            {
-                entity.Email = model.Email;
-                entity.NormalizedEmail = model.Email.ToUpperInvariant();
-                entity.PhoneNumber = model.PhoneNumber;
-                entity.PhoneNumberConfirmed = model.PhoneNumberConfirmed;
-                entity.IsEnable = model.IsEnable;
-                await userManager.UpdateAsync(entity);
-                var isRecorder = await userManager.IsInRoleAsync(entity, "Recorder");
-                if (isRecorder != model.IsRecorder)
-                {
-                    if (model.IsRecorder)
-                    {
-                        await userManager.AddToRoleAsync(entity, "Recorder");
-                    }
-                    else
-                    {
-                        await userManager.RemoveFromRoleAsync(entity, "Recorder");
-                    }
-                }
-                var isMember = await userManager.IsInRoleAsync(entity, "Member");
-                if  (isMember != model.IsMember)
-                {
-                    if (model.IsMember)
-                    {
-                        await userManager.AddToRoleAsync(entity, "Member");
-                    }
-                    else
-                    {
-                        await userManager.RemoveFromRoleAsync(entity, "Member");
-                    }
-                }
-                var isUser = await userManager.IsInRoleAsync(entity, "User");
-                if (isUser != model.IsUser)
-                {
-                    if (model.IsUser)
-                    {
-                        await userManager.AddToRoleAsync(entity, "User");
-                    }
-                    else
-                    {
-                        await userManager.RemoveFromRoleAsync(entity, "User");
-                    }
-                }
-                var isUCAN = await userManager.IsInRoleAsync(entity, "UCAN");
-                if (isUCAN != model.IsUCAN)
-                {
-                    if (model.IsUCAN)
-                    {
-                        await userManager.AddToRoleAsync(entity, "UCAN");
-                    }
-                    else
-                    {
-                        await userManager.RemoveFromRoleAsync(entity, "UCAN");
-                    }
-                }
-                await userManager.UpdateSecurityStampAsync(entity);
-                var currentUserId = User.Claims
-                    .Single(p => p.Type == ClaimTypes.NameIdentifier).Value;
-                if (currentUserId == entity.Id)
-                {
-                    HttpContext.Session.Clear();
-                    return RedirectToAction("Login", "Account");
-                }
-                return RedirectToAction("Detail", "User", new{ userId });
-            }
-        }
-        return View(model);
-    }
-    
-    /// <summary>
-    /// 刪除使用者
-    /// </summary>
-    [HttpPost("{userId}/delete")]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Delete([FromRoute] string userId)
-    {
-        var entity = await dbContext.Users
-            .SingleOrDefaultAsync(x => x.Id == userId);
-        if (entity == null)
-        {
-            return NotFound();
-        }
-        await userManager.DeleteAsync(entity);
-        return RedirectToAction("Index", "User");
     }
 }

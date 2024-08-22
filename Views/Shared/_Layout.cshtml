@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@inject SignInManager<IdentityUser> SignInManager
+
+<!DOCTYPE html>
 <html lang="zh-Hant" class="has-navbar-fixed-top">
 <head>
     <meta charset="utf-8" />
@@ -40,7 +42,7 @@
             <div id="navMenu" class="navbar-menu">
                 <div class="navbar-start">
                     <a class="navbar-item @Html.IsSelected(controllers: "Home", actions: "Index")" asp-controller="Home" asp-action="Index">首頁</a>
-                    @if (User.IsInRole("Recorder") || User.IsInRole("Member") || User.IsInRole("User"))
+                    @if (SignInManager.IsSignedIn(User))
                     {
                         <a id="manage-link" class="navbar-item" asp-controller="Manage" asp-action="Index">管理</a>
                     }
@@ -49,7 +51,7 @@
                 </div>
                 <div class="navbar-end">
                     <div class="navbar-item">
-                        @if (User.Claims.Any(x => x.Type == Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames.Jti))
+                        @if (SignInManager.IsSignedIn(User))
                         {
                             <a asp-controller="Account" asp-action="Logout" class="button is-primary is-light">登出</a>
                         }
@@ -87,7 +89,7 @@
                 <i class="fab fa-github fa-lg"></i>
             </span>
         </a>
-        @if (User.Claims.Any(x => x.Type == Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames.Jti))
+        @if (SignInManager.IsSignedIn(User))
         {
             <a asp-controller="Account" asp-action="Logout" class="button is-medium is-warning is-light">
                 <span class="icon">
