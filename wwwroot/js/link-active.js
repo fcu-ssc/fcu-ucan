@@ -1,5 +1,10 @@
 ﻿$(document).ready(function() {
     const path = window.location.pathname.split('/');
+    if (path[1] === '') {
+        $("#home-link").addClass('has-text-link');
+    } else {
+        $("#home-link").removeClass('has-text-link');
+    }
     if (path[1] === 'intro') {
         $("#intro-link").addClass('has-text-link');
     } else {

@@ -41,7 +41,7 @@
             </div>
             <div id="navMenu" class="navbar-menu">
                 <div class="navbar-start">
-                    <a class="navbar-item @Html.IsSelected(controllers: "Home", actions: "Index")" asp-controller="Home" asp-action="Index">首頁</a>
+                    <a id="home-link" class="navbar-item" asp-controller="Home" asp-action="Index">首頁</a>
                     @if (SignInManager.IsSignedIn(User))
                     {
                         <a id="manage-link" class="navbar-item" asp-controller="Manage" asp-action="Index">管理</a>
