@@ -1,6 +1,4 @@
 using fcu_ucan.Data;
-using fcu_ucan.Services;
-using fcu_ucan.Services.Interface;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
@@ -39,18 +37,6 @@ try
             "application/manifest+json"
         });
     });
-
-    builder.Services.AddHttpClient("NID", c => { c.BaseAddress = new Uri(builder.Configuration["NID:Url"]!); });
-
-    builder.Services.AddHttpClient("UCAN", c => { c.BaseAddress = new Uri(builder.Configuration["Domain"]!); })
-        .ConfigurePrimaryHttpMessageHandler(() =>
-        {
-            return new HttpClientHandler
-            {
-                ClientCertificateOptions = ClientCertificateOption.Manual,
-                ServerCertificateCustomValidationCallback = (_, _, _, _) => true
-            };
-        });
     
     builder.Services.AddDbContext<ApplicationDbContext>(options =>
     {
@@ -85,8 +71,6 @@ try
         options.SlidingExpiration = true;
     });
 
-    builder.Services.AddScoped<IOAuthService, OAuthService>();
-
     var app = builder.Build();
 
     app.UseResponseCompression();
@@ -98,8 +82,8 @@ try
     }
     else
     {
-        app.UseExceptionHandler("/ucan/error");
         app.UseHsts();
+        app.UseExceptionHandler("/ucan/error");
         app.UseStatusCodePagesWithRedirects("/ucan/error?code={0}");
     }
 

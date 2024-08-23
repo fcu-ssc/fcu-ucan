@@ -1,5 +1,6 @@
 using fcu_ucan.Models.Manage;
-using fcu_ucan.Services.Interface;
+using Flurl;
+using Flurl.Http;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MimeTypes;
@@ -8,7 +9,7 @@ namespace fcu_ucan.Controllers;
 
 [Authorize]
 [Route("manage")]
-public class ManageController(IOAuthService oAuthService, IConfiguration configuration) : Controller
+public class ManageController(ILogger<ManageController> logger, IConfiguration configuration) : Controller
 {
     /// <summary>
     /// 管理頁面
@@ -56,7 +57,7 @@ public class ManageController(IOAuthService oAuthService, IConfiguration configu
     {
         if (ModelState.IsValid)
         {
-            var token = await oAuthService.GetToken(model.UserName);
+            var token = await GetTokenAsync(model.UserName);
             switch (token[0])
             {
                 case '0':
@@ -69,15 +70,58 @@ public class ManageController(IOAuthService oAuthService, IConfiguration configu
                     ModelState.AddModelError(string.Empty, "會員帳號不存在");
                     break;
                 default:
-                    var url = $"{configuration["Domain"]}/ucann_school/sso.aspx?" +
-                              $"Plugin=o_hdu&" +
-                              $"Action=ohduschoolssologin&" +
-                              $"username={model.UserName}&" +
-                              $"token={token}&" +
-                              $"school={configuration["UCAN:School"]}";
+                    var url = $"{Request.Scheme}://{Request.Host}"
+                        .AppendPathSegment("ucann_school")
+                        .AppendPathSegment("sso.aspx")
+                        .SetQueryParams(new
+                        {
+                            Plugin = "o_hdu",
+                            Action = "ohduschoolssologin",
+                            username = model.UserName,
+                            token = token,
+                            school = configuration.GetSection("UCAN").GetValue<string>("School")
+                        });
                     return Redirect(url);
             }
         }
         return View(model);
+    }
+    
+    /// <summary>
+    /// 使用帳號獲得 UCAN Token
+    /// </summary>
+    [NonAction]
+    private async Task<string> GetTokenAsync(string username)
+    {
+        var url = $"{Request.Scheme}://{Request.Host}"
+            .AppendPathSegment("ucann_school")
+            .AppendPathSegment("sso.aspx")
+            .SetQueryParams(new
+            {
+                Plugin = "o_hdu",
+                Action = "ohduschoolssogettoken",
+                username = username,
+                school = configuration.GetSection("UCAN").GetValue<string>("School")
+            });
+        
+        logger.LogInformation($"獲取 Ucan Token 開始: {url}");
+
+        try
+        {
+            var response = await url.GetStringAsync();
+            if (response is null)
+            {
+                logger.LogInformation("獲取 Ucan Token 為 null");
+                throw new Exception();
+            }
+            
+            logger.LogInformation($"獲取 Ucan Token 成功: {response}");
+            return response;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 }

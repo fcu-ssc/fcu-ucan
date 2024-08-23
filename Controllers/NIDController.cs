@@ -1,7 +1,8 @@
 using System.Diagnostics;
 using fcu_ucan.Data;
 using fcu_ucan.Models.NID;
-using fcu_ucan.Services.Interface;
+using Flurl;
+using Flurl.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,15 +12,23 @@ namespace fcu_ucan.Controllers;
 public class NIDController(
     ILogger<NIDController> logger,
     IConfiguration configuration,
-    IOAuthService oAuthService,
     ApplicationDbContext dbContext) : Controller
 {
     [HttpGet("login")]
     public IActionResult Login()
     {
-        var url = $"{configuration["NID:Url"]}/fcuOauth/Auth.aspx?" +
-                  $"client_id={configuration["NID:ClientId"]}&" +
-                  $"client_url={configuration["Domain"]}/ucan/nid";
+        var url = configuration.GetSection("NID").GetValue<string>("Url")
+            .AppendPathSegment("fcuOauth")
+            .AppendPathSegment("Auth.aspx")
+            .SetQueryParams(new
+            {
+                client_id = configuration.GetSection("NID").GetValue<string>("ClientId"),
+                client_url = $"{Request.Scheme}://{Request.Host}"
+                    .AppendPathSegment("ucan")
+                    .AppendPathSegment("nid"),
+            });
+        
+        logger.LogInformation($"開始 NID 登入: {url}");
         return Redirect(url);
     }
     
@@ -36,17 +45,17 @@ public class NIDController(
                 TempData["Message"] = "使用者拒絕授權";
                 return RedirectToAction("NIDError", "Error");
             case 200:
-                var user = await oAuthService.GetLoginUser(model.UserCode);
+                var user = await GetLoginUserAsync(model.UserCode);
                 logger.LogInformation($"NID 登入成功: {user.Status}, {user.Message}, {user.StuId}");
                 var member = await dbContext.Members
                     .AsNoTracking()
                     .SingleOrDefaultAsync(x => x.NetworkId == user.StuId);
-                if (member != null)
+                if (member is not null)
                 {
                     logger.LogInformation($"{user.StuId} 換成 {member.StudentId}");
                 }
-                var username = member == null ? user.StuId : member.StudentId;
-                var token = await oAuthService.GetToken(username);
+                var username = member is null ? user.StuId : member.StudentId;
+                var token = await GetTokenAsync(username);
                 logger.LogInformation($"獲取 Ucan Token 成功: {token}");
                 switch (token[0])
                 {
@@ -70,12 +79,17 @@ public class NIDController(
                         return RedirectToAction("UcanError", "Error");
                     default:
                         logger.LogInformation("Ucan Token 解析成功");
-                        var url = $"{configuration["Domain"]}/ucann_school/sso.aspx?" +
-                                  $"Plugin=o_hdu&" +
-                                  $"Action=ohduschoolssologin&" +
-                                  $"username={username}&" +
-                                  $"token={token}&" +
-                                  $"school={configuration["UCAN:School"]}";
+                        var url = $"{Request.Scheme}://{Request.Host}"
+                            .AppendPathSegment("ucann_school")
+                            .AppendPathSegment("sso.aspx")
+                            .SetQueryParams(new
+                            {
+                                Plugin = "o_hdu",
+                                Action = "ohduschoolssologin",
+                                username = username,
+                                token = token,
+                                school = configuration.GetSection("UCAN").GetValue<string>("School")
+                            });
                         logger.LogInformation($"Ucan 登入: {url}");
                         return Redirect(url);
                 }
@@ -103,6 +117,82 @@ public class NIDController(
                 TempData["HttpCode"] = 500;
                 TempData["Message"] = "發生例外況狀";
                 return RedirectToAction("NIDError", "Error");
+        }
+    }
+    
+    /// <summary>
+    /// 使用 NID 獲得資訊
+    /// </summary>
+    [NonAction]
+    private async Task<UserInfoViewModel> GetLoginUserAsync(string userCode)
+    {
+        var url = configuration.GetSection("NID").GetValue<string>("Url")
+            .AppendPathSegment("fcuapi")
+            .AppendPathSegment("api")
+            .AppendPathSegment("GetLoginUser")
+            .SetQueryParams(new
+            {
+                client_id = configuration.GetSection("NID").GetValue<string>("ClientId"),
+                user_code = userCode
+            });
+        
+        logger.LogInformation($"NID 登入開始: {url}");
+
+        try
+        {
+            var response = await url.GetJsonAsync<LoginRespondViewModel>();
+            if (response is null)
+            {
+                logger.LogInformation("NID 登入解析為 null");
+                throw new Exception();
+            }
+            
+            var model = response.UserInfo.First();
+            logger.LogInformation($"NID 登入解析: {model.Status}, {model.Message}, {model.StuId}");
+            return model;
+        }
+        catch (Exception e)
+        {
+            logger.LogInformation($"NID 登入失敗: {e}");
+            throw;
+        }
+    }
+    
+    /// <summary>
+    /// 使用帳號獲得 UCAN Token
+    /// </summary>
+    [NonAction]
+    private async Task<string> GetTokenAsync(string username)
+    {
+        var url = $"{Request.Scheme}://{Request.Host}"
+            .AppendPathSegment("ucann_school")
+            .AppendPathSegment("sso.aspx")
+            .SetQueryParams(new
+            {
+                Plugin = "o_hdu",
+                Action = "ohduschoolssogettoken",
+                username = username,
+                school = configuration.GetSection("UCAN").GetValue<string>("School")
+            });
+        
+        logger.LogInformation($"獲取 Ucan Token 開始: {url}");
+
+        try
+        {
+            var response = await url.GetStringAsync();
+            if (response is null)
+            {
+                logger.LogInformation("獲取 Ucan Token 為 null");
+                throw new Exception();
+            }
+            
+            logger.LogInformation($"獲取 Ucan Token 成功: {response}");
+            return response;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
         }
     }
 }
